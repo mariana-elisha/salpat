@@ -23,6 +23,14 @@ class PageController extends Controller
     }
 
     /**
+     * Display the Gallery page.
+     */
+    public function gallery()
+    {
+        return view('pages.gallery');
+    }
+
+    /**
      * Handle contact form submission.
      */
     public function submitContact(Request $request)

@@ -3,56 +3,121 @@
 @section('title', 'Register')
 
 @section('content')
-<div class="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="bg-white rounded-lg shadow-lg p-8">
-        <h1 class="text-2xl font-bold text-slate-800 mb-6">Create an Account</h1>
+@extends('layouts.app')
 
-        @if($errors->any())
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                <ul class="list-disc list-inside text-sm">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+@section('title', 'Register')
+
+@section('content')
+    <div class="min-h-[80vh] flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-slate-50 relative overflow-hidden">
+        <!-- Background Decoration -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                alt="Background" class="h-full w-full object-cover opacity-10 blur-sm">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-50 via-slate-50/80 to-transparent"></div>
+        </div>
+
+        <div class="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+            <div class="flex justify-center">
+                <div
+                    class="h-12 w-12 rounded-xl bg-primary-600 flex items-center justify-center text-white shadow-lg shadow-primary-600/30">
+                    <span class="text-2xl font-serif font-bold">S</span>
+                </div>
             </div>
-        @endif
+            <h2 class="mt-6 text-center text-3xl font-serif font-bold tracking-tight text-slate-900 leading-tight">Create an
+                account</h2>
+            <p class="mt-2 text-center text-sm text-slate-600">
+                Join Salpat Camp and start your adventure
+            </p>
+        </div>
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+            <div
+                class="bg-white py-8 px-4 shadow-xl shadow-slate-200/50 sm:rounded-2xl sm:px-10 border border-slate-100 ring-1 ring-slate-900/5">
+                @if($errors->any())
+                    <div class="rounded-md bg-red-50 p-4 mb-6 border border-red-100">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-red-800">There were errors with your submission</h3>
+                                <div class="mt-2 text-sm text-red-700">
+                                    <ul role="list" class="list-disc pl-5 space-y-1">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
 
-            <div class="mb-4">
-                <label for="name" class="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
-                <input type="text" name="name" id="name" value="{{ old('name') }}" required autofocus
-                       class="w-full border-slate-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500">
+                <form class="space-y-6" action="{{ route('register') }}" method="POST">
+                    @csrf
+                    <div>
+                        <label for="name" class="block text-sm font-medium leading-6 text-slate-900">Full Name</label>
+                        <div class="mt-2">
+                            <input id="name" name="name" type="text" autocomplete="name" required value="{{ old('name') }}"
+                                class="block w-full rounded-lg border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="email" class="block text-sm font-medium leading-6 text-slate-900">Email address</label>
+                        <div class="mt-2">
+                            <input id="email" name="email" type="email" autocomplete="email" required
+                                value="{{ old('email') }}"
+                                class="block w-full rounded-lg border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium leading-6 text-slate-900">Password</label>
+                        <div class="mt-2">
+                            <input id="password" name="password" type="password" autocomplete="new-password" required
+                                class="block w-full rounded-lg border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6">
+                            <p class="mt-2 text-xs text-slate-500">Must be at least 8 characters.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="password_confirmation"
+                            class="block text-sm font-medium leading-6 text-slate-900">Confirm Password</label>
+                        <div class="mt-2">
+                            <input id="password_confirmation" name="password_confirmation" type="password"
+                                autocomplete="new-password" required
+                                class="block w-full rounded-lg border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit"
+                            class="flex w-full justify-center rounded-lg bg-primary-600 px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-colors">Register</button>
+                    </div>
+                </form>
+
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-slate-200"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="bg-white px-2 text-slate-500">Already have an account?</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <a href="{{ route('login') }}"
+                            class="flex w-full justify-center rounded-lg bg-white px-3 py-2.5 text-sm font-semibold leading-6 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50 transition-colors">Sign
+                            in</a>
+                    </div>
+                </div>
             </div>
-
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-slate-700 mb-2">Email</label>
-                <input type="email" name="email" id="email" value="{{ old('email') }}" required
-                       class="w-full border-slate-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500">
-            </div>
-
-            <div class="mb-4">
-                <label for="password" class="block text-sm font-medium text-slate-700 mb-2">Password</label>
-                <input type="password" name="password" id="password" required
-                       class="w-full border-slate-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500">
-                <p class="mt-1 text-xs text-slate-500">Minimum 8 characters</p>
-            </div>
-
-            <div class="mb-6">
-                <label for="password_confirmation" class="block text-sm font-medium text-slate-700 mb-2">Confirm Password</label>
-                <input type="password" name="password_confirmation" id="password_confirmation" required
-                       class="w-full border-slate-300 rounded-md shadow-sm focus:border-orange-500 focus:ring-orange-500">
-            </div>
-
-            <button type="submit" class="w-full bg-orange-600 text-white px-6 py-3 rounded-md hover:bg-orange-700 font-semibold">
-                Register
-            </button>
-        </form>
-
-        <p class="mt-6 text-center text-sm text-slate-600">
-            Already have an account? <a href="{{ route('login') }}" class="text-orange-600 hover:text-orange-800 font-medium">Login</a>
-        </p>
+        </div>
     </div>
-</div>
 @endsection

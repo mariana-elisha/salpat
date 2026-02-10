@@ -1,39 +1,36 @@
-/* Salpat Camp Theme - Orange & Blue Bahar */
+/* Salpat Camp Theme - Premium Emerald & Gold */
 :root {
-  --lodge-orange: #ea580c;
-  --lodge-orange-dark: #c2410c;
-  --lodge-bahar: #0ea5e9;
-  --lodge-bahar-dark: #0284c7;
+  --lodge-primary: #047857;
+  --lodge-primary-dark: #065f46;
+  --lodge-accent: #d97706;
+  --lodge-accent-dark: #b45309;
 }
 
-/* Buttons - force orange */
-a.bg-orange-500, button.bg-orange-500, .bg-orange-500,
-a.bg-orange-600, button.bg-orange-600, .bg-orange-600 {
-  background-color: var(--lodge-orange) !important;
-}
-a.bg-orange-500:hover, button.bg-orange-500:hover,
-a.bg-orange-600:hover, button.bg-orange-600:hover {
-  background-color: var(--lodge-orange-dark) !important;
+/* Force overrides for legacy classes if they exist */
+.bg-orange-600,
+.bg-orange-500 {
+  background-color: var(--lodge-primary) !important;
 }
 
-/* Hero gradient - orange to blue */
-.bg-gradient-to-r.from-orange-500 {
-  background: linear-gradient(to right, #ea580c, #c2410c, #0ea5e9) !important;
+.text-orange-600,
+.text-orange-500 {
+  color: var(--lodge-primary) !important;
 }
 
-/* Register button in nav */
-nav a.bg-orange-500 { background-color: var(--lodge-orange) !important; }
-nav a.bg-orange-500:hover { background-color: var(--lodge-orange-dark) !important; }
+.hover\:bg-orange-700:hover {
+  background-color: var(--lodge-primary-dark) !important;
+}
 
-/* Links and accents */
-a.text-orange-600, .text-orange-600 { color: var(--lodge-orange) !important; }
-a.text-sky-600, .text-sky-600 { color: var(--lodge-bahar) !important; }
+.hover\:text-orange-700:hover {
+  color: var(--lodge-primary-dark) !important;
+}
 
-/* Logo gradient */
-a.bg-gradient-to-r.from-orange-600.to-sky-600 {
-  background: linear-gradient(to right, #ea580c, #0ea5e9) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  color: transparent !important;
+.bg-sky-600,
+.bg-blue-600 {
+  background-color: var(--lodge-accent) !important;
+}
+
+.text-sky-600,
+.text-blue-600 {
+  color: var(--lodge-accent) !important;
 }

@@ -26,6 +26,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
+Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery');
 
 // Rooms (public)
 Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
@@ -41,13 +42,13 @@ Route::patch('/bookings/{booking}/status', [BookingController::class, 'updateSta
 // Admin panel
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/bookings', fn () => redirect()->route('bookings.index'))->name('bookings');
+    Route::get('/bookings', fn() => redirect()->route('bookings.index'))->name('bookings');
 });
 
 // Receptionist panel
 Route::middleware(['auth', 'role:receptionist'])->prefix('receptionist')->name('receptionist.')->group(function () {
     Route::get('/dashboard', [ReceptionistDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/bookings', fn () => redirect()->route('bookings.index'))->name('bookings');
+    Route::get('/bookings', fn() => redirect()->route('bookings.index'))->name('bookings');
 });
 
 // User panel
