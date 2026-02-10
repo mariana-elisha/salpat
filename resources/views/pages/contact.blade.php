@@ -32,33 +32,31 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
-                                <label for="name" class="block text-sm font-semibold text-slate-700 mb-2">Your Name</label>
+                                <label for="name" class="form-label">Your Name</label>
                                 <input type="text" name="name" id="name" value="{{ old('name') }}" required
-                                    class="w-full border-slate-300 rounded-lg shadow-sm focus:border-primary-500 focus:ring-primary-500 py-3">
+                                    class="form-input">
                             </div>
                             <div>
-                                <label for="email" class="block text-sm font-semibold text-slate-700 mb-2">Email
+                                <label for="email" class="form-label">Email
                                     Address</label>
                                 <input type="email" name="email" id="email" value="{{ old('email') }}" required
-                                    class="w-full border-slate-300 rounded-lg shadow-sm focus:border-primary-500 focus:ring-primary-500 py-3">
+                                    class="form-input">
                             </div>
                         </div>
 
                         <div>
-                            <label for="subject" class="block text-sm font-semibold text-slate-700 mb-2">Subject</label>
+                            <label for="subject" class="form-label">Subject</label>
                             <input type="text" name="subject" id="subject" value="{{ old('subject') }}" required
-                                class="w-full border-slate-300 rounded-lg shadow-sm focus:border-primary-500 focus:ring-primary-500 py-3">
+                                class="form-input">
                         </div>
 
                         <div>
-                            <label for="message" class="block text-sm font-semibold text-slate-700 mb-2">Message</label>
-                            <textarea name="message" id="message" rows="6" required
-                                class="w-full border-slate-300 rounded-lg shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                            <label for="message" class="form-label">Message</label>
+                            <textarea name="message" id="message" rows="6" required class="form-input"
                                 placeholder="How can we help you?">{{ old('message') }}</textarea>
                         </div>
 
-                        <button type="submit"
-                            class="w-full bg-primary-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-primary-700 transition shadow-lg transform active:scale-95">
+                        <button type="submit" class="btn btn-primary w-full py-4 text-lg shadow-lg">
                             Send Message
                         </button>
                     </form>

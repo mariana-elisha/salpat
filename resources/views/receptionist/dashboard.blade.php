@@ -10,9 +10,9 @@
                 <p class="text-slate-500 mt-1">Overview of today's activities and bookings</p>
             </div>
             <div class="flex gap-3">
-                <a href="{{ route('rooms.index') }}"
+                <a href="{{ route('receptionist.rooms.index') }}"
                     class="bg-white text-slate-700 border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-50 font-medium transition shadow-sm">
-                    View Rooms
+                    Manage Rooms
                 </a>
                 <a href="{{ route('receptionist.bookings') }}"
                     class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 font-bold transition shadow-md flex items-center gap-2">
@@ -125,23 +125,62 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2.5 py-0.5 text-xs font-bold rounded-full uppercase tracking-wide
-                                            @if($booking->status == 'confirmed') bg-green-100 text-green-700
-                                            @elseif($booking->status == 'pending') bg-amber-100 text-amber-700
-                                            @elseif($booking->status == 'cancelled') bg-red-100 text-red-700
-                                            @else bg-slate-100 text-slate-700
-                                            @endif">{{ ucfirst($booking->status) }}</span>
+                                                            @if($booking->status == 'confirmed') bg-green-100 text-green-700
+                                                            @elseif($booking->status == 'pending') bg-amber-100 text-amber-700
+                                                            @elseif($booking->status == 'cancelled') bg-red-100 text-red-700
+                                                            @else bg-slate-100 text-slate-700
+                                                            @endif">{{ ucfirst($booking->status) }}</span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('bookings.show', $booking) }}"
-                                        class="text-slate-400 hover:text-primary-600 transition-colors">
-                                        <span class="sr-only">View</span>
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                        </svg>
-                                    </a>
+                                    <div class="flex items-center justify-end gap-2">
+                                        <a href="{{ route('bookings.show', $booking) }}"
+                                            class="text-slate-400 hover:text-primary-600 transition-colors"
+                                            title="View Details">
+                                            <span class="sr-only">View</span>
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                        </a>
+
+                                        @if($booking->status === 'pending')
+                                            <form action="{{ route('bookings.update-status', $booking) }}" method="POST"
+                                                class="inline-block">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="confirmed">
+                                                <button type="submit"
+                                                    class="text-emerald-500 hover:text-emerald-700 transition-colors"
+                                                    title="Confirm Booking">
+                                                    <span class="sr-only">Confirm</span>
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        @endif
+
+                                        @if($booking->status !== 'cancelled')
+                                            <form action="{{ route('bookings.update-status', $booking) }}" method="POST"
+                                                onsubmit="return confirm('Are you sure you want to cancel this booking?');"
+                                                class="inline-block">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="cancelled">
+                                                <button type="submit" class="text-red-400 hover:text-red-600 transition-colors"
+                                                    title="Cancel Booking">
+                                                    <span class="sr-only">Cancel</span>
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 </td>
                             </tr>
                         @empty

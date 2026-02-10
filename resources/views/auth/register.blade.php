@@ -3,11 +3,6 @@
 @section('title', 'Register')
 
 @section('content')
-@extends('layouts.app')
-
-@section('title', 'Register')
-
-@section('content')
     <div class="min-h-[80vh] flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-slate-50 relative overflow-hidden">
         <!-- Background Decoration -->
         <div class="absolute inset-0 z-0">
@@ -19,7 +14,7 @@
         <div class="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
             <div class="flex justify-center">
                 <div
-                    class="h-12 w-12 rounded-xl bg-primary-600 flex items-center justify-center text-white shadow-lg shadow-primary-600/30">
+                    class="h-12 w-12 rounded-xl bg-[var(--color-primary)] flex items-center justify-center text-white shadow-lg shadow-sky-600/30">
                     <span class="text-2xl font-serif font-bold">S</span>
                 </div>
             </div>
@@ -32,7 +27,7 @@
 
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
             <div
-                class="bg-white py-8 px-4 shadow-xl shadow-slate-200/50 sm:rounded-2xl sm:px-10 border border-slate-100 ring-1 ring-slate-900/5">
+                class="bg-white py-8 px-4 shadow-xl shadow-slate-200/50 sm:rounded-2xl sm:px-10 border border-slate-100 ring-1 ring-slate-900/5 card">
                 @if($errors->any())
                     <div class="rounded-md bg-red-50 p-4 mb-6 border border-red-100">
                         <div class="flex">
@@ -60,44 +55,40 @@
                 <form class="space-y-6" action="{{ route('register') }}" method="POST">
                     @csrf
                     <div>
-                        <label for="name" class="block text-sm font-medium leading-6 text-slate-900">Full Name</label>
+                        <label for="name" class="form-label">Full Name</label>
                         <div class="mt-2">
                             <input id="name" name="name" type="text" autocomplete="name" required value="{{ old('name') }}"
-                                class="block w-full rounded-lg border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6">
+                                class="form-input">
                         </div>
                     </div>
 
                     <div>
-                        <label for="email" class="block text-sm font-medium leading-6 text-slate-900">Email address</label>
+                        <label for="email" class="form-label">Email address</label>
                         <div class="mt-2">
                             <input id="email" name="email" type="email" autocomplete="email" required
-                                value="{{ old('email') }}"
-                                class="block w-full rounded-lg border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6">
+                                value="{{ old('email') }}" class="form-input">
                         </div>
                     </div>
 
                     <div>
-                        <label for="password" class="block text-sm font-medium leading-6 text-slate-900">Password</label>
+                        <label for="password" class="form-label">Password</label>
                         <div class="mt-2">
                             <input id="password" name="password" type="password" autocomplete="new-password" required
-                                class="block w-full rounded-lg border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6">
+                                class="form-input">
                             <p class="mt-2 text-xs text-slate-500">Must be at least 8 characters.</p>
                         </div>
                     </div>
 
                     <div>
-                        <label for="password_confirmation"
-                            class="block text-sm font-medium leading-6 text-slate-900">Confirm Password</label>
+                        <label for="password_confirmation" class="form-label">Confirm Password</label>
                         <div class="mt-2">
                             <input id="password_confirmation" name="password_confirmation" type="password"
-                                autocomplete="new-password" required
-                                class="block w-full rounded-lg border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6">
+                                autocomplete="new-password" required class="form-input">
                         </div>
                     </div>
 
                     <div>
-                        <button type="submit"
-                            class="flex w-full justify-center rounded-lg bg-primary-600 px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-colors">Register</button>
+                        <button type="submit" class="btn btn-primary w-full">Register</button>
                     </div>
                 </form>
 

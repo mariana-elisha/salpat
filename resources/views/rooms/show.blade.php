@@ -16,9 +16,11 @@
         <div class="absolute bottom-0 left-0 right-0">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
                 <h1 class="text-4xl font-serif font-bold text-white sm:text-5xl lg:text-6xl tracking-tight shadow-sm">
-                    {{ $room->name }}</h1>
+                    {{ $room->name }}
+                </h1>
                 <p class="mt-4 text-xl text-slate-200 max-w-2xl font-light">{{ ucfirst($room->type) }} •
-                    {{ $room->capacity }} Guests • {{ $room->size ?? '35' }}m²</p>
+                    {{ $room->capacity }} Guests • {{ $room->size ?? '35' }}m²
+                </p>
             </div>
         </div>
     </div>
@@ -100,21 +102,18 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label for="check_in"
-                                        class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Check-in</label>
+                                        class="form-label text-xs uppercase tracking-wider mb-1">Check-in</label>
                                     <input type="date" name="check_in" id="check_in" value="{{ $checkIn ?? '' }}"
-                                        min="{{ date('Y-m-d') }}"
-                                        class="block w-full rounded-lg border-0 bg-slate-50 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 transition-all"
-                                        required>
+                                        min="{{ date('Y-m-d') }}" class="form-input transition-all" required>
                                     @error('check_in')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div>
                                     <label for="check_out"
-                                        class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Check-out</label>
+                                        class="form-label text-xs uppercase tracking-wider mb-1">Check-out</label>
                                     <input type="date" name="check_out" id="check_out" value="{{ $checkOut ?? '' }}"
-                                        min="{{ date('Y-m-d', strtotime('+1 day')) }}"
-                                        class="block w-full rounded-lg border-0 bg-slate-50 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 transition-all"
+                                        min="{{ date('Y-m-d', strtotime('+1 day')) }}" class="form-input transition-all"
                                         required>
                                     @error('check_out')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -124,9 +123,8 @@
 
                             <div>
                                 <label for="number_of_guests"
-                                    class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Guests</label>
-                                <select name="number_of_guests" id="number_of_guests"
-                                    class="block w-full rounded-lg border-0 bg-slate-50 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 transition-all"
+                                    class="form-label text-xs uppercase tracking-wider mb-1">Guests</label>
+                                <select name="number_of_guests" id="number_of_guests" class="form-input transition-all"
                                     required>
                                     @for($i = 1; $i <= $room->capacity; $i++)
                                         <option value="{{ $i }}" {{ ($guests ?? 1) == $i ? 'selected' : '' }}>{{ $i }}
@@ -141,13 +139,11 @@
                             <div class="border-t border-slate-100 pt-6"></div>
 
                             <div>
-                                <label for="guest_name"
-                                    class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Full
+                                <label for="guest_name" class="form-label text-xs uppercase tracking-wider mb-1">Full
                                     Name</label>
                                 <input type="text" name="guest_name" id="guest_name"
                                     value="{{ old('guest_name', auth()->user()->name ?? '') }}" placeholder="John Doe"
-                                    class="block w-full rounded-lg border-0 bg-slate-50 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 transition-all"
-                                    required>
+                                    class="form-input transition-all" required>
                                 @error('guest_name')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
@@ -155,12 +151,10 @@
 
                             <div>
                                 <label for="guest_email"
-                                    class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Email</label>
+                                    class="form-label text-xs uppercase tracking-wider mb-1">Email</label>
                                 <input type="email" name="guest_email" id="guest_email"
                                     value="{{ old('guest_email', auth()->user()->email ?? '') }}"
-                                    placeholder="john@example.com"
-                                    class="block w-full rounded-lg border-0 bg-slate-50 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 transition-all"
-                                    required>
+                                    placeholder="john@example.com" class="form-input transition-all" required>
                                 @error('guest_email')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
@@ -169,7 +163,7 @@
                             <!-- Accordion for Optional Fields -->
                             <div x-data="{ open: false }">
                                 <button type="button" @click="open = !open"
-                                    class="flex items-center justify-between w-full text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">
+                                    class="flex items-center justify-between w-full text-sm font-medium text-slate-600 hover:text-[var(--color-primary)] transition-colors">
                                     <span>Add Special Requests?</span>
                                     <svg class="h-4 w-4 transition-transform duration-200" :class="open ? 'rotate-180' : ''"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -180,22 +174,21 @@
                                 <div x-show="open" x-collapse class="mt-4 space-y-4">
                                     <div>
                                         <label for="guest_phone"
-                                            class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Phone</label>
+                                            class="form-label text-xs uppercase tracking-wider mb-1">Phone</label>
                                         <input type="tel" name="guest_phone" id="guest_phone"
-                                            value="{{ old('guest_phone') }}"
-                                            class="block w-full rounded-lg border-0 bg-slate-50 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 transition-all">
+                                            value="{{ old('guest_phone') }}" class="form-input transition-all">
                                     </div>
                                     <div>
                                         <label for="special_requests"
-                                            class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Requests</label>
+                                            class="form-label text-xs uppercase tracking-wider mb-1">Requests</label>
                                         <textarea name="special_requests" id="special_requests" rows="3"
-                                            class="block w-full rounded-lg border-0 bg-slate-50 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6 transition-all">{{ old('special_requests') }}</textarea>
+                                            class="form-input transition-all">{{ old('special_requests') }}</textarea>
                                     </div>
                                 </div>
                             </div>
 
                             <button type="submit"
-                                class="w-full rounded-xl bg-primary-600 px-3.5 py-4 text-base font-semibold text-white shadow-xl shadow-primary-600/20 hover:bg-primary-500 hover:shadow-primary-600/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all duration-200 transform hover:-translate-y-0.5">
+                                class="btn btn-primary w-full py-4 text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1">
                                 Confirm Reservation
                             </button>
                             <p class="text-center text-xs text-slate-400 mt-4">No payment required today. Pay upon arrival.

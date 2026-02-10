@@ -6,6 +6,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\RoomManagementController;
 use App\Http\Controllers\Receptionist\ReceptionistDashboardController;
 use App\Http\Controllers\User\UserDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -43,12 +44,22 @@ Route::patch('/bookings/{booking}/status', [BookingController::class, 'updateSta
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/bookings', fn() => redirect()->route('bookings.index'))->name('bookings');
+    Route::resource('rooms', RoomManagementController::class);
 });
 
 // Receptionist panel
 Route::middleware(['auth', 'role:receptionist'])->prefix('receptionist')->name('receptionist.')->group(function () {
     Route::get('/dashboard', [ReceptionistDashboardController::class, 'index'])->name('dashboard');
     Route::get('/bookings', fn() => redirect()->route('bookings.index'))->name('bookings');
+    // Receptionists can manage rooms too, reusing the same controller logic but ensuring route name access
+    Route::resource('rooms', RoomManagementController::class)->names([
+        'index' => 'rooms.index',
+        'create' => 'rooms.create',
+        'store' => 'rooms.store',
+        'edit' => 'rooms.edit',
+        'update' => 'rooms.update',
+        'destroy' => 'rooms.destroy',
+    ]);
 });
 
 // User panel

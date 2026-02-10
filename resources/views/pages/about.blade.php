@@ -99,7 +99,7 @@
                     <p class="text-primary-100 mb-8 max-w-2xl mx-auto text-lg">Browse our rooms and book your escape today.
                         Nature is waiting for you.</p>
                     <a href="{{ route('rooms.index') }}"
-                        class="inline-flex items-center justify-center bg-white text-primary-900 px-8 py-4 rounded-xl font-bold hover:bg-accent-50 transition-all transform hover:-translate-y-1 shadow-lg">
+                        class="btn bg-white text-primary-900 hover:bg-slate-50 shadow-lg px-8 py-4 font-bold">
                         View Our Rooms
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

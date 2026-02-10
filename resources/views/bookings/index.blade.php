@@ -91,7 +91,36 @@
                                 </td>
                                 <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">
                                     <a href="{{ route('bookings.show', $booking) }}"
-                                        class="text-primary-600 hover:text-primary-900">View Details</a>
+                                        class="text-primary-600 hover:text-primary-900 block mb-1">View Details</a>
+
+                                    @if(auth()->user()->isAdmin() || auth()->user()->isReceptionist())
+                                        <div class="flex flex-col gap-1 mt-2">
+                                            @if($booking->status === 'pending')
+                                                <form action="{{ route('bookings.update-status', $booking) }}" method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <input type="hidden" name="status" value="confirmed">
+                                                    <button type="submit"
+                                                        class="text-xs w-full text-center rounded bg-emerald-100 py-1 px-2 font-medium text-emerald-800 hover:bg-emerald-200">
+                                                        Confirm
+                                                    </button>
+                                                </form>
+                                            @endif
+
+                                            @if($booking->status !== 'cancelled' && $booking->status !== 'completed')
+                                                <form action="{{ route('bookings.update-status', $booking) }}" method="POST"
+                                                    onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <input type="hidden" name="status" value="cancelled">
+                                                    <button type="submit"
+                                                        class="text-xs w-full text-center rounded bg-red-100 py-1 px-2 font-medium text-red-800 hover:bg-red-200">
+                                                        Cancel
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    @endif
                                 </td>
                             </tr>
                         @empty

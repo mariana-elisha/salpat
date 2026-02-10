@@ -38,8 +38,7 @@
                         value="{{ request('check_out') }}">
                 </div>
                 <div class="w-full md:w-1/3">
-                    <button
-                        class="w-full bg-primary-600 text-white px-6 py-2.5 rounded-lg hover:bg-primary-700 font-bold transition-all shadow-md">
+                    <button class="btn btn-primary w-full shadow-md">
                         Update Search
                     </button>
                 </div>
@@ -50,8 +49,7 @@
         <div class="mx-auto max-w-7xl px-6 lg:px-8 pb-24" id="browse-rooms">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @forelse($rooms as $room)
-                    <div
-                        class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 overflow-hidden flex flex-col h-full">
+                    <div class="group card h-full flex flex-col hover:shadow-xl transition-all duration-300">
                         <div class="relative overflow-hidden h-64">
                             @if($room->image)
                                 <img src="{{ asset('storage/' . $room->image) }}" alt="{{ $room->name }}"
@@ -65,14 +63,14 @@
                                 </div>
                             @endif
                             <div
-                                class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-primary-700 uppercase tracking-widest shadow-sm">
+                                class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-[var(--color-primary)] uppercase tracking-widest shadow-sm">
                                 {{ $room->type }}
                             </div>
                         </div>
 
                         <div class="p-6 flex flex-col flex-grow">
                             <h3
-                                class="text-2xl font-serif font-bold text-slate-900 mb-2 group-hover:text-primary-700 transition-colors">
+                                class="text-2xl font-serif font-bold text-slate-900 mb-2 group-hover:text-[var(--color-primary)] transition-colors">
                                 {{ $room->name }}
                             </h3>
                             <p class="text-slate-600 mb-6 flex-grow line-clamp-3">{{ $room->description }}</p>
@@ -82,12 +80,12 @@
                                     <span class="text-sm text-slate-500 block mb-1">Starting from</span>
                                     <div class="flex items-baseline gap-1">
                                         <span
-                                            class="text-2xl font-bold text-primary-700">${{ number_format($room->price_per_night, 0) }}</span>
+                                            class="text-2xl font-bold text-[var(--color-primary)]">${{ number_format($room->price_per_night, 0) }}</span>
                                         <span class="text-slate-500">/night</span>
                                     </div>
                                 </div>
                                 <a href="{{ route('rooms.show', $room) }}"
-                                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary-50 text-primary-600 group-hover:bg-primary-600 group-hover:text-white transition-all">
+                                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-sky-50 text-[var(--color-primary)] group-hover:bg-[var(--color-primary)] group-hover:text-white transition-all">
                                     <svg class="w-5 h-5 transform group-hover:translate-x-0.5 transition-transform" fill="none"
                                         stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -115,7 +115,12 @@
                                 Status</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
                                 Total</th>
+                            <th scope="col"
+                                class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-slate-500">
+                                Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-200 bg-white">
@@ -151,10 +156,14 @@
                                 <td class="whitespace-nowrap px-6 py-4 text-sm font-semibold text-slate-900">
                                     ${{ number_format($booking->total_price ?? 0, 2) }}
                                 </td>
+                                <td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+                                    <a href="{{ route('bookings.show', $booking) }}"
+                                        class="text-primary-600 hover:text-primary-900">View</a>
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="px-6 py-10 text-center text-slate-500">
+                                <td colspan="7" class="px-6 py-10 text-center text-slate-500">
                                     <svg class="mx-auto h-12 w-12 text-slate-400" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor" aria-hidden="true">
                                         <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"
@@ -175,5 +184,28 @@
                         aria-hidden="true">&rarr;</span></a>
             </div>
         </div>
+    </div>
+
+    {{-- Quick Links --}}
+    <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <a href="{{ route('admin.rooms.index') }}"
+            class="relative block rounded-lg border border-slate-300 bg-white px-6 py-5 shadow-sm hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+            <div class="flex items-center space-x-3">
+                <div class="flex-shrink-0">
+                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50">
+                        <svg class="h-6 w-6 text-primary-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                        </svg>
+                    </span>
+                </div>
+                <div class="min-w-0 flex-1">
+                    <span class="absolute inset-0" aria-hidden="true"></span>
+                    <p class="text-sm font-medium text-slate-900">Manage Rooms</p>
+                    <p class="truncate text-sm text-slate-500">Add, edit, or remove rooms</p>
+                </div>
+            </div>
+        </a>
     </div>
 @endsection
