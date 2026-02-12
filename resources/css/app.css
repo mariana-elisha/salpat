@@ -9,19 +9,14 @@
     --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
     --font-serif: 'Playfair Display', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 
-    /* Premium Palette: Perfect Blue & Orange */
-    --color-primary: #3b82f6;
-    /* blue-500 */
-    --color-primary-hover: #2563eb;
-    /* blue-600 */
-    --color-accent: #f97316;
-    /* orange-500 */
-    --color-accent-hover: #ea580c;
-    /* orange-600 */
+    /* Salpat Camp Logo Colors */
+    --color-primary: #0B7BBF; /* Logo Blue */
+    --color-primary-hover: #095f99; /* Darker Blue */
+    --color-accent: #E89968; /* Logo Coral Orange */
+    --color-accent-hover: #d67f4f; /* Darker Coral */
 
     --color-surface: #ffffff;
-    --color-surface-hover: #eff6ff;
-    /* blue-50 */
+    --color-surface-hover: #e8f4fb; /* Light blue tint */
 }
 
 /* Custom Components */

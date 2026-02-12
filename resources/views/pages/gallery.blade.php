@@ -5,14 +5,15 @@
 @section('content')
     <div class="bg-white">
         <!-- Hero Section -->
-        <div class="relative isolate overflow-hidden bg-primary-900 py-24 sm:py-32">
+        <div class="relative isolate overflow-hidden bg-gradient-to-br from-primary-900 to-primary-700 py-24 sm:py-32">
             <div
                 class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1496545672447-f699b503d270?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80')] bg-cover bg-center opacity-20">
             </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-primary-900 via-primary-900/40 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-primary-900 via-primary-800/40 to-transparent"></div>
             <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 text-center">
                 <h1 class="text-4xl font-serif font-bold tracking-tight text-white sm:text-6xl mb-6">Our Gallery</h1>
-                <p class="text-lg leading-8 text-slate-300 max-w-2xl mx-auto">
+                <div class="w-24 h-1.5 bg-accent-500 mx-auto rounded-full mb-6"></div>
+                <p class="text-lg leading-8 text-white/90 max-w-2xl mx-auto">
                     Take a visual journey through Salpat Camp. Explore our accommodations, scenic views, and the vibrant
                     life within our sanctuary.
                 </p>
@@ -91,8 +92,7 @@
 
             <div class="mt-16 text-center">
                 <h3 class="text-2xl font-serif font-bold text-slate-800 mb-6">Experience it for yourself</h3>
-                <a href="{{ route('rooms.index') }}"
-                    class="inline-block bg-primary-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-primary-700 shadow-lg transition-all transform hover:-translate-y-1">
+                <a href="{{ route('rooms.index') }}" class="btn btn-primary shadow-lg">
                     Book Your Stay
                 </a>
             </div>

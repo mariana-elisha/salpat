@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContactMessage;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -35,14 +36,16 @@ class PageController extends Controller
      */
     public function submitContact(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email'],
             'subject' => ['required', 'string', 'max:255'],
             'message' => ['required', 'string', 'max:2000'],
         ]);
 
-        // For now, we just show success. You can add mail/notification later.
+        // Save the contact message to database
+        ContactMessage::create($validated);
+
         return redirect()->route('contact')->with('success', 'Thank you for your message! We will get back to you soon.');
     }
 }

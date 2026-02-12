@@ -27,30 +27,30 @@
                         },
                         colors: {
                             primary: {
-                                50: '#f0f9ff',
-                                100: '#e0f2fe',
-                                200: '#bae6fd',
-                                300: '#7dd3fc',
-                                400: '#38bdf8',
-                                500: '#0ea5e9',
-                                600: '#0284c7',
-                                700: '#0369a1',
-                                800: '#075985',
-                                900: '#0c4a6e',
-                                950: '#082f49',
+                                50: '#e8f4fb',
+                                100: '#d1e9f7',
+                                200: '#a3d3ef',
+                                300: '#75bde7',
+                                400: '#47a7df',
+                                500: '#0B7BBF',
+                                600: '#0a6ca9',
+                                700: '#095f99',
+                                800: '#075280',
+                                900: '#064566',
+                                950: '#04384d',
                             },
                             accent: {
-                                50: '#fefce8',
-                                100: '#fef9c3',
-                                200: '#fef08a',
-                                300: '#fde047',
-                                400: '#facc15',
-                                500: '#eab308',
-                                600: '#ca8a04',
-                                700: '#a16207',
-                                800: '#854d0e',
-                                900: '#713f12',
-                                950: '#422006',
+                                50: '#fdf5ee',
+                                100: '#fbebd8',
+                                200: '#f7d7b1',
+                                300: '#f3c38a',
+                                400: '#efaf63',
+                                500: '#E89968',
+                                600: '#d67f4f',
+                                700: '#c46536',
+                                800: '#a35329',
+                                900: '#82421c',
+                                950: '#61310f',
                             }
                         }
                     }
@@ -59,55 +59,55 @@
         </script>
         <style type="text/tailwindcss">
             :root {
-                    --color-primary: #3b82f6;
-                    --color-primary-hover: #2563eb;
-                    --color-accent: #f97316;
-                    --color-accent-hover: #ea580c;
-                    --color-surface: #ffffff;
-                    --color-surface-hover: #eff6ff;
-                }
-                        @layer components {
-                            .btn {
-                                @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl transition-all duration-300 transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2;
-                            }
-                            .btn-primary {
-                                @apply bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-sky-500;
-                            }
-                            .btn-secondary {
-                                @apply bg-white text-[var(--color-primary)] border-gray-200 hover:bg-sky-50 shadow-sm hover:shadow-md focus:ring-sky-500;
-                            }
-                            .btn-accent {
-                                @apply bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-yellow-500;
-                            }
-                            .card {
-                                @apply bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-xl;
-                            }
-                            .card-hover {
-                                @apply hover:-translate-y-1;
-                            }
-                            .form-input {
-                                @apply block w-full rounded-lg border-slate-300 shadow-sm focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)] sm:text-sm py-3 px-4;
-                            }
-                            .form-label {
-                                @apply block text-sm font-semibold text-slate-700 mb-2;
-                            }
-                            /* Animation Utilities */
-                            .fade-in {
-                                animation: fadeIn 0.5s ease-out forwards;
-                            }
-                            .slide-up {
-                                animation: slideUp 0.6s ease-out forwards;
-                            }
-                        }
-                        @keyframes fadeIn {
-                            from { opacity: 0; }
-                            to { opacity: 1; }
-                        }
-                        @keyframes slideUp {
-                            from { opacity: 0; transform: translateY(20px); }
-                            to { opacity: 1; transform: translateY(0); }
-                        }
-                    </style>
+                                    --color-primary: #0B7BBF;
+                                    --color-primary-hover: #095f99;
+                                    --color-accent: #E89968;
+                                    --color-accent-hover: #d67f4f;
+                                    --color-surface: #ffffff;
+                                    --color-surface-hover: #e8f4fb;
+                                }
+                                        @layer components {
+                                            .btn {
+                                                @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl transition-all duration-300 transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2;
+                                            }
+                                            .btn-primary {
+                                                @apply bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-sky-500;
+                                            }
+                                            .btn-secondary {
+                                                @apply bg-white text-[var(--color-primary)] border-gray-200 hover:bg-sky-50 shadow-sm hover:shadow-md focus:ring-sky-500;
+                                            }
+                                            .btn-accent {
+                                                @apply bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-yellow-500;
+                                            }
+                                            .card {
+                                                @apply bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-xl;
+                                            }
+                                            .card-hover {
+                                                @apply hover:-translate-y-1;
+                                            }
+                                            .form-input {
+                                                @apply block w-full rounded-lg border-slate-300 shadow-sm focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)] sm:text-sm py-3 px-4;
+                                            }
+                                            .form-label {
+                                                @apply block text-sm font-semibold text-slate-700 mb-2;
+                                            }
+                                            /* Animation Utilities */
+                                            .fade-in {
+                                                animation: fadeIn 0.5s ease-out forwards;
+                                            }
+                                            .slide-up {
+                                                animation: slideUp 0.6s ease-out forwards;
+                                            }
+                                        }
+                                        @keyframes fadeIn {
+                                            from { opacity: 0; }
+                                            to { opacity: 1; }
+                                        }
+                                        @keyframes slideUp {
+                                            from { opacity: 0; transform: translateY(20px); }
+                                            to { opacity: 1; transform: translateY(0); }
+                                        }
+                                    </style>
     @endif
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -143,8 +143,10 @@
         x-transition:leave="transition ease-in-out duration-300 transform" x-transition:leave-start="translate-x-0"
         x-transition:leave-end="-translate-x-full"
         class="fixed inset-y-0 left-0 z-50 w-72 bg-primary-900 px-6 pb-4 overflow-y-auto lg:hidden">
-        <div class="flex h-16 shrink-0 items-center">
-            <span class="text-2xl font-serif font-bold text-white">Salpat Camp</span>
+        <div class="flex h-16 shrink-0 items-center gap-4">
+            <img src="{{ asset('images/logo.png') }}" alt="Salpat Camp Logo"
+                class="h-14 w-14 rounded-full object-cover border-2 border-primary-700 shadow-lg">
+            <span class="text-xl font-serif font-bold text-white">Salpat Camp</span>
         </div>
         <nav class="flex flex-1 flex-col mt-4">
             <ul role="list" class="flex flex-1 flex-col gap-y-7">
@@ -161,11 +163,10 @@
     <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
         <div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-primary-800 bg-primary-900 px-6 pb-4">
             <div class="flex h-16 shrink-0 items-center mt-4">
-                <a href="{{ route('home') }}" class="text-2xl font-serif font-bold text-white flex items-center gap-2">
-                    <div class="h-8 w-8 rounded bg-white flex items-center justify-center text-primary-900">
-                        <span class="text-lg font-serif">S</span>
-                    </div>
-                    Salpat Camp
+                <a href="{{ route('home') }}" class="flex items-center gap-4">
+                    <img src="{{ asset('images/logo.png') }}" alt="Salpat Camp Logo"
+                        class="h-14 w-14 rounded-full object-cover border-2 border-primary-700 shadow-lg">
+                    <span class="text-xl font-serif font-bold text-white">Salpat Camp</span>
                 </a>
             </div>
             <nav class="flex flex-1 flex-col">
