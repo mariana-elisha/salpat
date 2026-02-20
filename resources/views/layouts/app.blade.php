@@ -62,55 +62,55 @@
         </script>
         <style type="text/tailwindcss">
             :root {
-                                                    --color-primary: #0B7BBF;
-                                                    --color-primary-hover: #095f99;
-                                                    --color-accent: #E89968;
-                                                    --color-accent-hover: #d67f4f;
-                                                    --color-surface: #ffffff;
-                                                    --color-surface-hover: #e8f4fb;
-                                                }
-                                                        @layer components {
-                                                            .btn {
-                                                                @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl transition-all duration-300 transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2;
+                                                        --color-primary: #0B7BBF;
+                                                        --color-primary-hover: #095f99;
+                                                        --color-accent: #E89968;
+                                                        --color-accent-hover: #d67f4f;
+                                                        --color-surface: #ffffff;
+                                                        --color-surface-hover: #e8f4fb;
+                                                    }
+                                                            @layer components {
+                                                                .btn {
+                                                                    @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl transition-all duration-300 transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2;
+                                                                }
+                                                                .btn-primary {
+                                                                    @apply bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-sky-500;
+                                                                }
+                                                                .btn-secondary {
+                                                                    @apply bg-white text-[var(--color-primary)] border-gray-200 hover:bg-sky-50 shadow-sm hover:shadow-md focus:ring-sky-500;
+                                                                }
+                                                                .btn-accent {
+                                                                    @apply bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-yellow-500;
+                                                                }
+                                                                .card {
+                                                                    @apply bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-xl;
+                                                                }
+                                                                .card-hover {
+                                                                    @apply hover:-translate-y-1;
+                                                                }
+                                                                .form-input {
+                                                                    @apply block w-full rounded-lg border-slate-300 shadow-sm focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)] sm:text-sm py-3 px-4;
+                                                                }
+                                                                .form-label {
+                                                                    @apply block text-sm font-semibold text-slate-700 mb-2;
+                                                                }
+                                                                /* Animation Utilities */
+                                                                .fade-in {
+                                                                    animation: fadeIn 0.5s ease-out forwards;
+                                                                }
+                                                                .slide-up {
+                                                                    animation: slideUp 0.6s ease-out forwards;
+                                                                }
                                                             }
-                                                            .btn-primary {
-                                                                @apply bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-sky-500;
+                                                            @keyframes fadeIn {
+                                                                from { opacity: 0; }
+                                                                to { opacity: 1; }
                                                             }
-                                                            .btn-secondary {
-                                                                @apply bg-white text-[var(--color-primary)] border-gray-200 hover:bg-sky-50 shadow-sm hover:shadow-md focus:ring-sky-500;
+                                                            @keyframes slideUp {
+                                                                from { opacity: 0; transform: translateY(20px); }
+                                                                to { opacity: 1; transform: translateY(0); }
                                                             }
-                                                            .btn-accent {
-                                                                @apply bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-yellow-500;
-                                                            }
-                                                            .card {
-                                                                @apply bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-xl;
-                                                            }
-                                                            .card-hover {
-                                                                @apply hover:-translate-y-1;
-                                                            }
-                                                            .form-input {
-                                                                @apply block w-full rounded-lg border-slate-300 shadow-sm focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)] sm:text-sm py-3 px-4;
-                                                            }
-                                                            .form-label {
-                                                                @apply block text-sm font-semibold text-slate-700 mb-2;
-                                                            }
-                                                            /* Animation Utilities */
-                                                            .fade-in {
-                                                                animation: fadeIn 0.5s ease-out forwards;
-                                                            }
-                                                            .slide-up {
-                                                                animation: slideUp 0.6s ease-out forwards;
-                                                            }
-                                                        }
-                                                        @keyframes fadeIn {
-                                                            from { opacity: 0; }
-                                                            to { opacity: 1; }
-                                                        }
-                                                        @keyframes slideUp {
-                                                            from { opacity: 0; transform: translateY(20px); }
-                                                            to { opacity: 1; transform: translateY(0); }
-                                                        }
-                                                    </style>
+                                                        </style>
     @endif
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -139,6 +139,8 @@
                         class="text-sm font-medium text-primary-100 hover:text-white hover:bg-primary-500 rounded-lg px-3 py-2 transition">Gallery</a>
                     <a href="{{ route('about') }}"
                         class="text-sm font-medium text-primary-100 hover:text-white hover:bg-primary-500 rounded-lg px-3 py-2 transition">About</a>
+                    <a href="{{ route('services') }}"
+                        class="text-sm font-medium text-primary-100 hover:text-white hover:bg-primary-500 rounded-lg px-3 py-2 transition">Services</a>
                     <a href="{{ route('contact') }}"
                         class="text-sm font-medium text-primary-100 hover:text-white hover:bg-primary-500 rounded-lg px-3 py-2 transition">Contact</a>
 
@@ -215,6 +217,8 @@
                     class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-primary-100 hover:border-accent-400 hover:bg-primary-800 hover:text-white">Gallery</a>
                 <a href="{{ route('about') }}"
                     class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-primary-100 hover:border-accent-400 hover:bg-primary-800 hover:text-white">About</a>
+                <a href="{{ route('services') }}"
+                    class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-primary-100 hover:border-accent-400 hover:bg-primary-800 hover:text-white">Services</a>
                 <a href="{{ route('contact') }}"
                     class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-primary-100 hover:border-accent-400 hover:bg-primary-800 hover:text-white">Contact
                     Us</a>

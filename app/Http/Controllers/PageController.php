@@ -16,6 +16,14 @@ class PageController extends Controller
     }
 
     /**
+     * Display the Services page.
+     */
+    public function services()
+    {
+        return view('pages.services');
+    }
+
+    /**
      * Display the Contact Us page.
      */
     public function contact()
