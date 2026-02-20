@@ -18,12 +18,14 @@ class Room extends Model
         'image',
         'amenities',
         'is_available',
+        'housekeeping_status',
     ];
 
     protected $casts = [
         'amenities' => 'array',
         'is_available' => 'boolean',
         'price_per_night' => 'decimal:2',
+        'housekeeping_status' => 'string',
     ];
 
     /**
@@ -32,6 +34,14 @@ class Room extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class);
+    }
+
+    /**
+     * Get all service orders for this room.
+     */
+    public function serviceOrders()
+    {
+        return $this->hasMany(ServiceOrder::class);
     }
 
     /**
@@ -50,7 +60,7 @@ class Room extends Model
                     ->orWhereBetween('check_out', [$checkIn, $checkOut])
                     ->orWhere(function ($q) use ($checkIn, $checkOut) {
                         $q->where('check_in', '<=', $checkIn)
-                          ->where('check_out', '>=', $checkOut);
+                            ->where('check_out', '>=', $checkOut);
                     });
             })
             ->exists();

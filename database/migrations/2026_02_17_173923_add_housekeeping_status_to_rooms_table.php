@@ -10,8 +10,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['admin', 'user', 'receptionist', 'chef', 'housekeeping', 'barkeeper', 'manager'])->default('user')->after('email');
+        Schema::table('rooms', function (Blueprint $table) {
+            $table->enum('housekeeping_status', ['clean', 'dirty', 'cleaning_in_progress'])->default('clean');
         });
     }
 
@@ -20,8 +20,10 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
+        Schema::table('rooms', function (Blueprint $table) {
+            if (Schema::hasColumn('rooms', 'housekeeping_status')) {
+                $table->dropColumn('housekeeping_status');
+            }
         });
     }
 };

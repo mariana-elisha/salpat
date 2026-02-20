@@ -62,6 +62,12 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Password::defaults()],
+            'id_number' => ['nullable', 'string', 'max:50'],
+            'nationality' => ['nullable', 'string', 'max:100'],
+            'age' => ['nullable', 'integer', 'min:1', 'max:120'],
+            'gender' => ['nullable', 'in:male,female,other'],
+            'phone' => ['nullable', 'string', 'max:30'],
+            'address' => ['nullable', 'string', 'max:500'],
         ]);
 
         $user = User::create([
@@ -69,6 +75,12 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => 'user',
+            'id_number' => $validated['id_number'] ?? null,
+            'nationality' => $validated['nationality'] ?? null,
+            'age' => $validated['age'] ?? null,
+            'gender' => $validated['gender'] ?? null,
+            'phone' => $validated['phone'] ?? null,
+            'address' => $validated['address'] ?? null,
         ]);
 
         Auth::login($user);
@@ -97,6 +109,10 @@ class AuthController extends Controller
         return match ($user->role) {
             'admin' => redirect()->route('admin.dashboard'),
             'receptionist' => redirect()->route('receptionist.dashboard'),
+            'manager' => redirect()->route('manager.dashboard'),
+            'chef' => redirect()->route('chef.dashboard'),
+            'barkeeper' => redirect()->route('barkeeper.dashboard'),
+            'housekeeping' => redirect()->route('housekeeping.dashboard'),
             default => redirect()->route('user.dashboard'),
         };
     }

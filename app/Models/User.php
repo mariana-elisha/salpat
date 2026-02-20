@@ -22,6 +22,12 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'id_number',
+        'nationality',
+        'age',
+        'gender',
+        'phone',
+        'address',
     ];
 
     /**
@@ -37,7 +43,7 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return $this->hasRole('admin');
+        return $this->role === 'admin';
     }
 
     /**
@@ -45,7 +51,39 @@ class User extends Authenticatable
      */
     public function isReceptionist(): bool
     {
-        return $this->hasRole('receptionist');
+        return $this->role === 'receptionist';
+    }
+
+    /**
+     * Check if user is manager.
+     */
+    public function isManager(): bool
+    {
+        return $this->role === 'manager';
+    }
+
+    /**
+     * Check if user is chef.
+     */
+    public function isChef(): bool
+    {
+        return $this->role === 'chef';
+    }
+
+    /**
+     * Check if user is housekeeping.
+     */
+    public function isHousekeeping(): bool
+    {
+        return $this->role === 'housekeeping';
+    }
+
+    /**
+     * Check if user is barkeeper.
+     */
+    public function isBarKeeper(): bool
+    {
+        return $this->role === 'barkeeper';
     }
 
     /**
@@ -53,7 +91,17 @@ class User extends Authenticatable
      */
     public function isUser(): bool
     {
-        return $this->hasRole('user');
+        return $this->role === 'user';
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(\App\Models\Booking::class);
+    }
+
+    public function serviceOrders()
+    {
+        return $this->hasMany(\App\Models\ServiceOrder::class);
     }
 
     /**
@@ -65,25 +113,4 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
-
-    /**
-     * Get the user's bookings.
-     */
-    public function bookings()
-    {
-        return $this->hasMany(\App\Models\Booking::class);
-    }
 }

@@ -27,6 +27,30 @@ class UserSeeder extends Seeder
                 'role' => 'receptionist',
             ],
             [
+                'name' => 'Chef User',
+                'email' => 'chef@salpatcamp.com',
+                'password' => Hash::make('password'),
+                'role' => 'chef',
+            ],
+            [
+                'name' => 'Housekeeping User',
+                'email' => 'housekeeping@salpatcamp.com',
+                'password' => Hash::make('password'),
+                'role' => 'housekeeping',
+            ],
+            [
+                'name' => 'Bar Keeper User',
+                'email' => 'barkeeper@salpatcamp.com',
+                'password' => Hash::make('password'),
+                'role' => 'barkeeper',
+            ],
+            [
+                'name' => 'Manager User',
+                'email' => 'manager@salpatcamp.com',
+                'password' => Hash::make('password'),
+                'role' => 'manager',
+            ],
+            [
                 'name' => 'Test User',
                 'email' => 'user@salpatcamp.com',
                 'password' => Hash::make('password'),

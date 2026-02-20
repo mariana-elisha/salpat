@@ -69,8 +69,27 @@
                     <div class="mb-4">
                         <label for="guest_phone" class="block text-sm font-medium text-slate-700 mb-2">Phone Number (Optional)</label>
                         <input type="tel" name="guest_phone" id="guest_phone" 
-                               value="{{ old('guest_phone') }}"
+                               value="{{ old('guest_phone', auth()->user()?->phone ?? '') }}"
                                class="w-full border-slate-300 rounded-xl shadow-sm focus:border-orange-500 focus:ring-orange-500">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-slate-700 mb-3">Preferred Contact Method</label>
+                        <div class="grid grid-cols-3 gap-3">
+                            @foreach(['email' => ['label' => 'Email', 'icon' => 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'], 'phone' => ['label' => 'Phone Call', 'icon' => 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'], 'whatsapp' => ['label' => 'WhatsApp', 'icon' => 'M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z']] as $value => $option)
+                                <label class="relative cursor-pointer">
+                                    <input type="radio" name="contact_preference" value="{{ $value }}"
+                                        {{ old('contact_preference', 'email') === $value ? 'checked' : '' }}
+                                        class="peer sr-only">
+                                    <div class="flex flex-col items-center gap-2 p-3 border-2 border-slate-200 rounded-xl text-center transition-all peer-checked:border-orange-500 peer-checked:bg-orange-50 hover:border-orange-300">
+                                        <svg class="w-6 h-6 text-slate-400 peer-checked:text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $option['icon'] }}"/>
+                                        </svg>
+                                        <span class="text-xs font-medium text-slate-600">{{ $option['label'] }}</span>
+                                    </div>
+                                </label>
+                            @endforeach
+                        </div>
                     </div>
 
                     <div class="mb-6">

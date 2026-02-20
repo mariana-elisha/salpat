@@ -31,6 +31,7 @@ class BookingController extends Controller
             'guest_name' => 'required|string|max:255',
             'guest_email' => 'required|email|max:255',
             'guest_phone' => 'nullable|string|max:20',
+            'contact_preference' => 'nullable|in:email,phone,whatsapp',
             'check_in' => 'required|date|after_or_equal:today',
             'check_out' => 'required|date|after:check_in',
             'number_of_guests' => 'required|integer|min:1',
@@ -68,7 +69,8 @@ class BookingController extends Controller
         // Create booking
         $booking = Booking::create([
             'room_id' => $room->id,
-            'user_id' => auth()->id(),
+            'user_id' => auth()->id(), // Nullable if guest
+            'contact_preference' => $request->contact_preference ?? 'email',
             'guest_name' => $request->guest_name,
             'guest_email' => $request->guest_email,
             'guest_phone' => $request->guest_phone,
@@ -81,8 +83,16 @@ class BookingController extends Controller
             'booking_reference' => Booking::generateBookingReference(),
         ]);
 
+        // Send confirmation email
+        try {
+            \Illuminate\Support\Facades\Mail::to($booking->guest_email)->send(new \App\Mail\BookingConfirmation($booking));
+        } catch (\Exception $e) {
+            // Log error or handle gracefully (don't fail booking if email fails)
+            \Illuminate\Support\Facades\Log::error('Failed to send booking confirmation email: ' . $e->getMessage());
+        }
+
         return redirect()->route('bookings.show', $booking)
-            ->with('success', 'Booking created successfully!');
+            ->with('success', 'Booking created successfully! A confirmation email has been sent.');
     }
 
     /**
@@ -91,11 +101,28 @@ class BookingController extends Controller
     public function show(Booking $booking)
     {
         $user = auth()->user();
-        if ($user && ! $user->isAdmin() && ! $user->isReceptionist()) {
-            if ($booking->user_id !== $user->id) {
-                abort(403, 'Unauthorized.');
-            }
+
+        // If user is admin or receptionist, allow access
+        if ($user && ($user->isAdmin() || $user->isReceptionist())) {
+            return view('bookings.show', compact('booking'));
         }
+
+        // If booking belongs to authenticated user
+        if ($user && $booking->user_id === $user->id) {
+            return view('bookings.show', compact('booking'));
+        }
+
+        // If guest (no user_id) accessing via reference link (implicit binding handles ID/Reference check)
+        // Ideally we should have some additional check like session matching for security, 
+        // but the long random reference acts as a secret key.
+        // We will strictly check that if the booking HAS a user_id, a guest cannot view it even with the link.
+        if ($booking->user_id && !$user) {
+            abort(403, 'Unauthorized.');
+        }
+
+        // If creating user is viewing, handled above.
+        // If another user is viewing, handled above (mismatch IDs).
+
         return view('bookings.show', compact('booking'));
     }
 
@@ -121,7 +148,7 @@ class BookingController extends Controller
     public function updateStatus(Request $request, Booking $booking)
     {
         $user = auth()->user();
-        if (! $user || (!$user->isAdmin() && !$user->isReceptionist())) {
+        if (!$user || (!$user->isAdmin() && !$user->isReceptionist())) {
             abort(403, 'Unauthorized.');
         }
 

@@ -79,21 +79,8 @@
                     </div>
                 </form>
 
-                <div class="mt-6">
-                    <div class="relative">
-                        <div class="absolute inset-0 flex items-center">
-                            <div class="w-full border-t border-slate-200"></div>
-                        </div>
-                        <div class="relative flex justify-center text-sm">
-                            <span class="bg-white px-2 text-slate-500">New to Salpat Camp?</span>
-                        </div>
-                    </div>
-
-                    <div class="mt-6">
-                        <a href="{{ route('register') }}"
-                            class="flex w-full justify-center rounded-lg bg-white px-3 py-2.5 text-sm font-semibold leading-6 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50 transition-colors">Create
-                            an account</a>
-                    </div>
+                <div class="mt-6 text-center text-sm text-slate-500">
+                    Contact your administrator if you need an account.
                 </div>
             </div>
         </div>

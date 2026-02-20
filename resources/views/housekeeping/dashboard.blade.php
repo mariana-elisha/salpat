@@ -1,0 +1,132 @@
+@extends('layouts.panel')
+
+@section('title', 'Housekeeping Dashboard')
+
+@section('breadcrumbs', 'Housekeeping / Dashboard')
+
+@section('content')
+    <div class="space-y-8">
+        <!-- Room Status Section -->
+        <div class="space-y-4">
+            <h2 class="text-2xl font-serif font-bold text-slate-900">Rooms Needing Attention</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @forelse($dirtyRooms as $room)
+                    <div
+                        class="card p-6 bg-white border-l-4 @if($room->housekeeping_status == 'dirty') border-red-500 @else border-yellow-500 @endif">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-900">{{ $room->name }}</h3>
+                                <p class="text-sm text-slate-500 lowercase">{{ $room->type }}</p>
+                            </div>
+                            <span
+                                class="px-2 py-1 text-xs font-semibold rounded-full @if($room->housekeeping_status == 'dirty') bg-red-100 text-red-800 @else bg-yellow-100 text-yellow-800 @endif">
+                                {{ str_replace('_', ' ', $room->housekeeping_status) }}
+                            </span>
+                        </div>
+
+                        <form action="{{ route('housekeeping.rooms.update', $room) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <div class="flex gap-2">
+                                <select name="status"
+                                    class="flex-1 rounded-lg border-slate-300 text-sm focus:border-primary-500 focus:ring-primary-500">
+                                    <option value="clean">Clean (Mark as Handled)</option>
+                                    <option value="dirty" {{ $room->housekeeping_status == 'dirty' ? 'selected' : '' }}>Dirty
+                                    </option>
+                                    <option value="cleaning_in_progress" {{ $room->housekeeping_status == 'cleaning_in_progress' ? 'selected' : '' }}>Cleaning...</option>
+                                </select>
+                                <button type="submit" class="btn-primary text-xs px-3 py-1">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                @empty
+                    <div class="col-span-full p-12 card text-center text-emerald-600 bg-emerald-50 italic">
+                        All rooms are clean!
+                    </div>
+                @endforelse
+            </div>
+        </div>
+
+        <!-- Housekeeping Orders Section -->
+        <div class="space-y-4">
+            <h2 class="text-2xl font-serif font-bold text-slate-900">Service Requests</h2>
+            <div class="card overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                    Request ID</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                    Guest & Room</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                    Service</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                    Status</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                    Time</th>
+                                <th
+                                    class="px-6 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                    Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-slate-200">
+                            @forelse($orders as $order)
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">#{{ $order->id }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                                        <div>{{ $order->user->name }}</div>
+                                        <div class="text-xs text-slate-400">Room:
+                                            {{ $order->room ? $order->room->name : 'N/A' }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 font-semibold">
+                                        {{ $order->service->name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                @if($order->status == 'pending') bg-yellow-100 text-yellow-800 
+                                                @elseif($order->status == 'confirmed') bg-blue-100 text-blue-800 
+                                                @elseif($order->status == 'completed') bg-emerald-100 text-emerald-800 
+                                                @else bg-red-100 text-red-800 @endif">
+                                            {{ ucfirst($order->status) }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                                        {{ $order->requested_at->diffForHumans() }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <form action="{{ route('housekeeping.orders.update', $order) }}" method="POST"
+                                            class="inline-block">
+                                            @csrf
+                                            @method('PATCH')
+                                            <select name="status" onchange="this.form.submit()"
+                                                class="rounded-lg border-slate-300 text-sm focus:border-primary-500 focus:ring-primary-500 py-1">
+                                                <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>
+                                                    Pending</option>
+                                                <option value="confirmed" {{ $order->status == 'confirmed' ? 'selected' : '' }}>
+                                                    Confirm</option>
+                                                <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>
+                                                    Done</option>
+                                                <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>
+                                                    Cancel</option>
+                                            </select>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="px-6 py-8 text-center text-slate-400 italic">No service requests
+                                        found.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

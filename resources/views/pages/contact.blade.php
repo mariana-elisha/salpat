@@ -82,8 +82,8 @@
                             </div>
                             <div>
                                 <p class="text-sm font-medium text-primary-200 mb-1">Email</p>
-                                <a href="mailto:info@salpatcamp.com"
-                                    class="text-lg font-semibold hover:text-accent-400 transition-colors">info@salpatcamp.com</a>
+                                <a href="mailto:salpatcamp@yahoo.com"
+                                    class="text-lg font-semibold hover:text-accent-400 transition-colors">salpatcamp@yahoo.com</a>
                             </div>
                         </div>
 
@@ -96,9 +96,9 @@
                             </div>
                             <div>
                                 <p class="text-sm font-medium text-primary-200 mb-1">Phone</p>
-                                <a href="tel:+1234567890"
-                                    class="text-lg font-semibold hover:text-accent-400 transition-colors">+1 (234)
-                                    567-890</a>
+                                <a href="tel:+255770307759"
+                                    class="text-lg font-semibold hover:text-accent-400 transition-colors">+255 0770 307
+                                    759</a>
                             </div>
                         </div>
 
@@ -113,7 +113,7 @@
                             </div>
                             <div>
                                 <p class="text-sm font-medium text-primary-200 mb-1">Address</p>
-                                <p class="text-lg font-semibold">123 Lodge Lane<br>Nature Valley, NV 12345</p>
+                                <p class="text-lg font-semibold">Falcon Street 1, Soweto Moshi<br>Kilimanjaro, Tanzania</p>
                             </div>
                         </div>
                     </div>

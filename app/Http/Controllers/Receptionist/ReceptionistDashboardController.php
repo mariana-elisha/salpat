@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Receptionist;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Room;
+use App\Models\ServiceOrder;
 
 class ReceptionistDashboardController extends Controller
 {
@@ -28,5 +29,27 @@ class ReceptionistDashboardController extends Controller
             ->get();
 
         return view('receptionist.dashboard', compact('stats', 'upcomingBookings'));
+    }
+
+    /**
+     * Show the bill for a specific booking.
+     */
+    public function checkoutBill(Booking $booking)
+    {
+        $booking->load(['room', 'user']);
+
+        // Use user_id and approximate date range for service orders if not strictly linked to a booking_id
+        // In our current schema, service_orders has room_id and user_id. 
+        // We'll filter by user and optionally room during the stay.
+        $serviceOrders = ServiceOrder::with('service')
+            ->where('user_id', $booking->user_id)
+            ->where('status', '!=', 'cancelled')
+            ->whereBetween('requested_at', [$booking->check_in, $booking->check_out->endOfDay()])
+            ->get();
+
+        $servicesTotal = $serviceOrders->sum('total_price');
+        $grandTotal = $booking->total_price + $servicesTotal;
+
+        return view('receptionist.billing.show', compact('booking', 'serviceOrders', 'servicesTotal', 'grandTotal'));
     }
 }

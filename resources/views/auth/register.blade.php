@@ -4,14 +4,14 @@
 
 @section('content')
     <div class="min-h-[80vh] flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-slate-50 relative overflow-hidden">
-        <!-- Background Decoration -->
+        {{-- Background Decoration --}}
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
                 alt="Background" class="h-full w-full object-cover opacity-10 blur-sm">
             <div class="absolute inset-0 bg-gradient-to-t from-slate-50 via-slate-50/80 to-transparent"></div>
         </div>
 
-        <div class="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+        <div class="sm:mx-auto sm:w-full sm:max-w-2xl relative z-10">
             <div class="flex justify-center">
                 <div
                     class="h-12 w-12 rounded-xl bg-[var(--color-primary)] flex items-center justify-center text-white shadow-lg shadow-sky-600/30">
@@ -25,7 +25,7 @@
             </p>
         </div>
 
-        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-2xl relative z-10">
             <div
                 class="bg-white py-8 px-4 shadow-xl shadow-slate-200/50 sm:rounded-2xl sm:px-10 border border-slate-100 ring-1 ring-slate-900/5 card">
                 @if($errors->any())
@@ -54,41 +54,119 @@
 
                 <form class="space-y-6" action="{{ route('register') }}" method="POST">
                     @csrf
+
+                    {{-- Section: Personal Information --}}
                     <div>
-                        <label for="name" class="form-label">Full Name</label>
-                        <div class="mt-2">
-                            <input id="name" name="name" type="text" autocomplete="name" required value="{{ old('name') }}"
-                                class="form-input">
+                        <h3 class="text-base font-semibold text-slate-700 border-b border-slate-200 pb-2 mb-4">Personal
+                            Information</h3>
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div class="sm:col-span-2">
+                                <label for="name" class="form-label">Full Name <span class="text-red-500">*</span></label>
+                                <div class="mt-2">
+                                    <input id="name" name="name" type="text" autocomplete="name" required
+                                        value="{{ old('name') }}" class="form-input" placeholder="John Doe">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="id_number" class="form-label">ID / Passport Number</label>
+                                <div class="mt-2">
+                                    <input id="id_number" name="id_number" type="text" value="{{ old('id_number') }}"
+                                        class="form-input" placeholder="A1234567">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="nationality" class="form-label">Nationality</label>
+                                <div class="mt-2">
+                                    <input id="nationality" name="nationality" type="text" value="{{ old('nationality') }}"
+                                        class="form-input" placeholder="Tanzanian">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="age" class="form-label">Age</label>
+                                <div class="mt-2">
+                                    <input id="age" name="age" type="number" min="1" max="120" value="{{ old('age') }}"
+                                        class="form-input" placeholder="25">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="gender" class="form-label">Gender</label>
+                                <div class="mt-2">
+                                    <select id="gender" name="gender" class="form-input">
+                                        <option value="">Select gender</option>
+                                        <option value="male" {{ old('gender') === 'male' ? 'selected' : '' }}>Male</option>
+                                        <option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>Female
+                                        </option>
+                                        <option value="other" {{ old('gender') === 'other' ? 'selected' : '' }}>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Section: Contact Information --}}
+                    <div>
+                        <h3 class="text-base font-semibold text-slate-700 border-b border-slate-200 pb-2 mb-4">Contact
+                            Information</h3>
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div>
+                                <label for="email" class="form-label">Email Address <span
+                                        class="text-red-500">*</span></label>
+                                <div class="mt-2">
+                                    <input id="email" name="email" type="email" autocomplete="email" required
+                                        value="{{ old('email') }}" class="form-input" placeholder="you@example.com">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <div class="mt-2">
+                                    <input id="phone" name="phone" type="tel" value="{{ old('phone') }}" class="form-input"
+                                        placeholder="+255 770 307 759">
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label for="address" class="form-label">Home Address</label>
+                                <div class="mt-2">
+                                    <textarea id="address" name="address" rows="2" class="form-input"
+                                        placeholder="Wailes Street, Soweto Moshi, Kilimanjaro">{{ old('address') }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Section: Account Security --}}
+                    <div>
+                        <h3 class="text-base font-semibold text-slate-700 border-b border-slate-200 pb-2 mb-4">Account
+                            Security</h3>
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div>
+                                <label for="password" class="form-label">Password <span
+                                        class="text-red-500">*</span></label>
+                                <div class="mt-2">
+                                    <input id="password" name="password" type="password" autocomplete="new-password"
+                                        required class="form-input">
+                                    <p class="mt-2 text-xs text-slate-500">Must be at least 8 characters.</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="password_confirmation" class="form-label">Confirm Password <span
+                                        class="text-red-500">*</span></label>
+                                <div class="mt-2">
+                                    <input id="password_confirmation" name="password_confirmation" type="password"
+                                        autocomplete="new-password" required class="form-input">
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div>
-                        <label for="email" class="form-label">Email address</label>
-                        <div class="mt-2">
-                            <input id="email" name="email" type="email" autocomplete="email" required
-                                value="{{ old('email') }}" class="form-input">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="password" class="form-label">Password</label>
-                        <div class="mt-2">
-                            <input id="password" name="password" type="password" autocomplete="new-password" required
-                                class="form-input">
-                            <p class="mt-2 text-xs text-slate-500">Must be at least 8 characters.</p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="password_confirmation" class="form-label">Confirm Password</label>
-                        <div class="mt-2">
-                            <input id="password_confirmation" name="password_confirmation" type="password"
-                                autocomplete="new-password" required class="form-input">
-                        </div>
-                    </div>
-
-                    <div>
-                        <button type="submit" class="btn btn-primary w-full">Register</button>
+                        <button type="submit" class="btn btn-primary w-full">Create Account</button>
                     </div>
                 </form>
 
@@ -101,7 +179,6 @@
                             <span class="bg-white px-2 text-slate-500">Already have an account?</span>
                         </div>
                     </div>
-
                     <div class="mt-6">
                         <a href="{{ route('login') }}"
                             class="flex w-full justify-center rounded-lg bg-white px-3 py-2.5 text-sm font-semibold leading-6 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50 transition-colors">Sign

@@ -15,6 +15,7 @@ class Booking extends Model
         'guest_name',
         'guest_email',
         'guest_phone',
+        'contact_preference',
         'check_in',
         'check_out',
         'number_of_guests',
