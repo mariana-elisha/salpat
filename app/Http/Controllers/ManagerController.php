@@ -14,7 +14,10 @@ class ManagerController extends Controller
     {
         $stats = [
             'total_bookings' => Booking::count(),
-            'active_guests' => User::where('role', 'user')->count(),
+            'active_guests' => Booking::where('status', 'confirmed')
+                ->where('check_in', '<=', today())
+                ->where('check_out', '>=', today())
+                ->count(),
             'pending_orders' => ServiceOrder::where('status', 'pending')->count(),
             'dirty_rooms' => Room::where('housekeeping_status', '!=', 'clean')->count(),
         ];

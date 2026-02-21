@@ -17,7 +17,7 @@ class HousekeepingController extends Controller
                 $query->where('type', 'housekeeping');
             })
             ->where('status', '!=', 'completed')
-            ->orderBy('requested_at', 'desc')
+            ->orderBy('requested_at', 'asc')
             ->get();
 
         return view('housekeeping.dashboard', compact('dirtyRooms', 'orders'));

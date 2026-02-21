@@ -125,7 +125,66 @@
                 </div>
             </div>
 
-            {{-- Section: Account Security --}}
+            {{-- Section: Stay Preferences --}}
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <h2 class="text-base font-semibold text-slate-700 border-b border-slate-200 pb-3 mb-5">Stay Preferences</h2>
+                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <div>
+                        <label for="preferred_room_type" class="form-label">Preferred Room Type</label>
+                        <div class="mt-2">
+                            <select id="preferred_room_type" name="preferred_room_type" class="form-input">
+                                <option value="">No preference</option>
+                                <option value="single" {{ old('preferred_room_type') === 'single' ? 'selected' : '' }}>Single
+                                </option>
+                                <option value="double" {{ old('preferred_room_type') === 'double' ? 'selected' : '' }}>Double
+                                </option>
+                                <option value="twin" {{ old('preferred_room_type') === 'twin' ? 'selected' : '' }}>Twin
+                                </option>
+                                <option value="suite" {{ old('preferred_room_type') === 'suite' ? 'selected' : '' }}>Suite
+                                </option>
+                                <option value="family" {{ old('preferred_room_type') === 'family' ? 'selected' : '' }}>Family
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="dietary_requirements" class="form-label">Dietary Requirements</label>
+                        <div class="mt-2">
+                            <select id="dietary_requirements" name="dietary_requirements" class="form-input">
+                                <option value="">None</option>
+                                <option value="vegetarian" {{ old('dietary_requirements') === 'vegetarian' ? 'selected' : '' }}>Vegetarian</option>
+                                <option value="vegan" {{ old('dietary_requirements') === 'vegan' ? 'selected' : '' }}>Vegan
+                                </option>
+                                <option value="halal" {{ old('dietary_requirements') === 'halal' ? 'selected' : '' }}>Halal
+                                </option>
+                                <option value="gluten_free" {{ old('dietary_requirements') === 'gluten_free' ? 'selected' : '' }}>Gluten Free</option>
+                                <option value="other" {{ old('dietary_requirements') === 'other' ? 'selected' : '' }}>Other
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="emergency_contact_name" class="form-label">Emergency Contact Name</label>
+                        <div class="mt-2">
+                            <input id="emergency_contact_name" name="emergency_contact_name" type="text"
+                                value="{{ old('emergency_contact_name') }}" class="form-input" placeholder="Jane Doe">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="emergency_contact_phone" class="form-label">Emergency Contact Phone</label>
+                        <div class="mt-2">
+                            <input id="emergency_contact_phone" name="emergency_contact_phone" type="tel"
+                                value="{{ old('emergency_contact_phone') }}" class="form-input"
+                                placeholder="+255 700 000 000">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
                 <h2 class="text-base font-semibold text-slate-700 border-b border-slate-200 pb-3 mb-5">Account Security</h2>
                 <div>

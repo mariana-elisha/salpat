@@ -28,7 +28,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-sm font-medium text-slate-500">Active Guests</p>
+                    <p class="text-sm font-medium text-slate-500">Checked-In Guests</p>
                     <p class="text-2xl font-bold text-slate-900">{{ $stats['active_guests'] }}</p>
                 </div>
             </div>

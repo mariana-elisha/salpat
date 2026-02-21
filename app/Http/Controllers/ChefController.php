@@ -14,7 +14,7 @@ class ChefController extends Controller
                 $query->where('type', 'food');
             })
             ->where('status', '!=', 'completed')
-            ->orderBy('requested_at', 'desc')
+            ->orderBy('requested_at', 'asc')
             ->get();
 
         return view('chef.dashboard', compact('orders'));

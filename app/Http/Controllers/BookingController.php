@@ -137,7 +137,7 @@ class BookingController extends Controller
         } elseif ($user) {
             $bookings = $user->bookings()->with('room')->latest()->paginate(15);
         } else {
-            $bookings = Booking::with('room')->latest()->paginate(15);
+            $bookings = collect(); // Guests should not see the full list of bookings
         }
         return view('bookings.index', compact('bookings'));
     }

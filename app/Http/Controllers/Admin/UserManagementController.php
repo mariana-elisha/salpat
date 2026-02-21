@@ -52,6 +52,10 @@ class UserManagementController extends Controller
             'gender' => ['nullable', 'in:male,female,other'],
             'phone' => ['nullable', 'string', 'max:30'],
             'address' => ['nullable', 'string', 'max:500'],
+            'preferred_room_type' => ['nullable', 'in:single,double,twin,suite,family'],
+            'dietary_requirements' => ['nullable', 'in:vegetarian,vegan,halal,gluten_free,other'],
+            'emergency_contact_name' => ['nullable', 'string', 'max:255'],
+            'emergency_contact_phone' => ['nullable', 'string', 'max:30'],
         ]);
 
         User::create([
@@ -65,6 +69,10 @@ class UserManagementController extends Controller
             'gender' => $validated['gender'] ?? null,
             'phone' => $validated['phone'] ?? null,
             'address' => $validated['address'] ?? null,
+            'preferred_room_type' => $validated['preferred_room_type'] ?? null,
+            'dietary_requirements' => $validated['dietary_requirements'] ?? null,
+            'emergency_contact_name' => $validated['emergency_contact_name'] ?? null,
+            'emergency_contact_phone' => $validated['emergency_contact_phone'] ?? null,
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'User created successfully.');

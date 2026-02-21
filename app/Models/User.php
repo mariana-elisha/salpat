@@ -28,6 +28,10 @@ class User extends Authenticatable
         'gender',
         'phone',
         'address',
+        'preferred_room_type',
+        'dietary_requirements',
+        'emergency_contact_name',
+        'emergency_contact_phone',
     ];
 
     /**

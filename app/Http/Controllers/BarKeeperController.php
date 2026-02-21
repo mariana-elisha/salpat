@@ -14,7 +14,7 @@ class BarKeeperController extends Controller
                 $query->where('type', 'drink');
             })
             ->where('status', '!=', 'completed')
-            ->orderBy('requested_at', 'desc')
+            ->orderBy('requested_at', 'asc')
             ->get();
 
         return view('barkeeper.dashboard', compact('orders'));
