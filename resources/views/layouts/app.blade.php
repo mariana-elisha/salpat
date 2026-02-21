@@ -16,107 +16,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/theme.css') }}?v=4" rel="stylesheet">
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @else
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        fontFamily: {
-                            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                            serif: ['"Playfair Display"', 'serif'],
-                        },
-                        colors: {
-                            primary: {
-                                50: '#e8f4fb',
-                                100: '#d1e9f7',
-                                200: '#a3d3ef',
-                                300: '#75bde7',
-                                400: '#47a7df',
-                                500: '#0B7BBF',
-                                600: '#0a6ca9',
-                                700: '#095f99',
-                                800: '#075280',
-                                900: '#064566',
-                                950: '#04384d',
-                            },
-                            accent: {
-                                50: '#fdf5ee',
-                                100: '#fbebd8',
-                                200: '#f7d7b1',
-                                300: '#f3c38a',
-                                400: '#efaf63',
-                                500: '#E89968',
-                                600: '#d67f4f',
-                                700: '#c46536',
-                                800: '#a35329',
-                                900: '#82421c',
-                                950: '#61310f',
-                            }
-                        }
-                    }
-                }
-            }
-        </script>
-        <style type="text/tailwindcss">
-            :root {
-                                                        --color-primary: #0B7BBF;
-                                                        --color-primary-hover: #095f99;
-                                                        --color-accent: #E89968;
-                                                        --color-accent-hover: #d67f4f;
-                                                        --color-surface: #ffffff;
-                                                        --color-surface-hover: #e8f4fb;
-                                                    }
-                                                            @layer components {
-                                                                .btn {
-                                                                    @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl transition-all duration-300 transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2;
-                                                                }
-                                                                .btn-primary {
-                                                                    @apply bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-sky-500;
-                                                                }
-                                                                .btn-secondary {
-                                                                    @apply bg-white text-[var(--color-primary)] border-gray-200 hover:bg-sky-50 shadow-sm hover:shadow-md focus:ring-sky-500;
-                                                                }
-                                                                .btn-accent {
-                                                                    @apply bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-yellow-500;
-                                                                }
-                                                                .card {
-                                                                    @apply bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-xl;
-                                                                }
-                                                                .card-hover {
-                                                                    @apply hover:-translate-y-1;
-                                                                }
-                                                                .form-input {
-                                                                    @apply block w-full rounded-lg border-slate-300 shadow-sm focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)] sm:text-sm py-3 px-4;
-                                                                }
-                                                                .form-label {
-                                                                    @apply block text-sm font-semibold text-slate-700 mb-2;
-                                                                }
-                                                                /* Animation Utilities */
-                                                                .fade-in {
-                                                                    animation: fadeIn 0.5s ease-out forwards;
-                                                                }
-                                                                .slide-up {
-                                                                    animation: slideUp 0.6s ease-out forwards;
-                                                                }
-                                                            }
-                                                            @keyframes fadeIn {
-                                                                from { opacity: 0; }
-                                                                to { opacity: 1; }
-                                                            }
-                                                            @keyframes slideUp {
-                                                                from { opacity: 0; transform: translateY(20px); }
-                                                                to { opacity: 1; transform: translateY(0); }
-                                                            }
-                                                        </style>
-    @endif
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body class="flex flex-col min-h-full font-sans text-slate-900 antialiased bg-slate-50">
+
     <!-- Navigation -->
     <nav class="bg-primary-600 sticky top-0 z-50 shadow-lg" x-data="{ mobileMenuOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -165,9 +71,24 @@
                                 @if(Auth::user()->isAdmin())
                                     <a href="{{ route('admin.dashboard') }}"
                                         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Admin Dashboard</a>
+                                    <a href="{{ route('admin.reports.index') }}"
+                                        class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Reports</a>
+                                    <a href="{{ route('admin.contact_messages.index') }}"
+                                        class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Contact Messages</a>
                                 @elseif(Auth::user()->isReceptionist())
                                     <a href="{{ route('receptionist.dashboard') }}"
                                         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Reception Dashboard</a>
+                                    <a href="{{ route('receptionist.reports.index') }}"
+                                        class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Reports</a>
+                                    <a href="{{ route('receptionist.contact_messages.index') }}"
+                                        class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Contact Messages</a>
+                                @elseif(Auth::user()->isManager())
+                                    <a href="{{ route('manager.dashboard') }}"
+                                        class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Manager Dashboard</a>
+                                    <a href="{{ route('manager.reports.index') }}"
+                                        class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Reports</a>
+                                    <a href="{{ route('manager.contact_messages.index') }}"
+                                        class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Contact Messages</a>
                                 @else
                                     <a href="{{ route('user.dashboard') }}"
                                         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">My Dashboard</a>
@@ -236,10 +157,29 @@
                             <a href="{{ route('admin.dashboard') }}"
                                 class="block px-4 py-2 text-base font-medium text-primary-100 hover:bg-primary-800 hover:text-white">Admin
                                 Dashboard</a>
+                            <a href="{{ route('admin.reports.index') }}"
+                                class="block px-4 py-2 text-base font-medium text-primary-100 hover:bg-primary-800 hover:text-white">Reports</a>
+                            <a href="{{ route('admin.contact_messages.index') }}"
+                                class="block px-4 py-2 text-base font-medium text-primary-100 hover:bg-primary-800 hover:text-white">Contact
+                                Messages</a>
                         @elseif(Auth::user()->isReceptionist())
                             <a href="{{ route('receptionist.dashboard') }}"
                                 class="block px-4 py-2 text-base font-medium text-primary-100 hover:bg-primary-800 hover:text-white">Reception
                                 Dashboard</a>
+                            <a href="{{ route('receptionist.reports.index') }}"
+                                class="block px-4 py-2 text-base font-medium text-primary-100 hover:bg-primary-800 hover:text-white">Reports</a>
+                            <a href="{{ route('receptionist.contact_messages.index') }}"
+                                class="block px-4 py-2 text-base font-medium text-primary-100 hover:bg-primary-800 hover:text-white">Contact
+                                Messages</a>
+                        @elseif(Auth::user()->isManager())
+                            <a href="{{ route('manager.dashboard') }}"
+                                class="block px-4 py-2 text-base font-medium text-primary-100 hover:bg-primary-800 hover:text-white">Manager
+                                Dashboard</a>
+                            <a href="{{ route('manager.reports.index') }}"
+                                class="block px-4 py-2 text-base font-medium text-primary-100 hover:bg-primary-800 hover:text-white">Reports</a>
+                            <a href="{{ route('manager.contact_messages.index') }}"
+                                class="block px-4 py-2 text-base font-medium text-primary-100 hover:bg-primary-800 hover:text-white">Contact
+                                Messages</a>
                         @else
                             <a href="{{ route('user.dashboard') }}"
                                 class="block px-4 py-2 text-base font-medium text-primary-100 hover:bg-primary-800 hover:text-white">My

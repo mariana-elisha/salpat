@@ -55,6 +55,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('rooms', RoomManagementController::class);
     Route::resource('users', UserManagementController::class);
     Route::resource('galleries', \App\Http\Controllers\Admin\GalleryController::class);
+    Route::get('/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
+    Route::get('/contact-messages', [\App\Http\Controllers\ContactMessageController::class, 'index'])->name('contact_messages.index');
 });
 
 // Receptionist panel
@@ -71,6 +73,8 @@ Route::middleware(['auth', 'role:receptionist'])->prefix('receptionist')->name('
         'destroy' => 'rooms.destroy',
     ]);
     Route::get('/bookings/{booking}/bill', [ReceptionistDashboardController::class, 'checkoutBill'])->name('bookings.bill');
+    Route::get('/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
+    Route::get('/contact-messages', [\App\Http\Controllers\ContactMessageController::class, 'index'])->name('contact_messages.index');
 });
 
 // Chef panel
@@ -96,6 +100,8 @@ Route::middleware(['auth', 'role:housekeeping'])->prefix('housekeeping')->name('
 Route::middleware(['auth', 'role:manager'])->prefix('manager')->name('manager.')->group(function () {
     Route::get('/dashboard', [ManagerController::class, 'index'])->name('dashboard');
     Route::resource('galleries', \App\Http\Controllers\Admin\GalleryController::class);
+    Route::get('/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
+    Route::get('/contact-messages', [\App\Http\Controllers\ContactMessageController::class, 'index'])->name('contact_messages.index');
 });
 
 // User panel (Guest)

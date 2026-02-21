@@ -9,14 +9,47 @@
     --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
     --font-serif: 'Playfair Display', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 
+    /* Primary Scale - Blue Bahari centered around 600 */
+    --color-primary-50: #f4fafe;
+    --color-primary-100: #e7f4fc;
+    --color-primary-200: #d0eaf9;
+    --color-primary-300: #adddf3;
+    --color-primary-400: #87CEEB;
+    /* EXACT BLUE BAHARI */
+    --color-primary-500: #6abbea;
+    --color-primary-600: #4ba2d8;
+    --color-primary-700: #3b82b8;
+    --color-primary-800: #336e99;
+    --color-primary-900: #2d5a7d;
+    --color-primary-950: #1b3952;
+
+    /* Accent Scale - Carrot Orange centered around 500 */
+    --color-accent-50: #fef8f1;
+    --color-accent-100: #fdf0df;
+    --color-accent-200: #fadec0;
+    --color-accent-300: #f6c498;
+    --color-accent-400: #f2a66e;
+    --color-accent-500: #ED9121;
+    /* EXACT CARROT ORANGE */
+    --color-accent-600: #df7515;
+    --color-accent-700: #bb5a13;
+    --color-accent-800: #944817;
+    --color-accent-900: #783d15;
+    --color-accent-950: #401d09;
+
     /* Salpat Camp Logo Colors */
-    --color-primary: #0B7BBF; /* Logo Blue */
-    --color-primary-hover: #095f99; /* Darker Blue */
-    --color-accent: #E89968; /* Logo Coral Orange */
-    --color-accent-hover: #d67f4f; /* Darker Coral */
+    --color-primary: #0B1E36;
+    /* Dark Navy Blue */
+    --color-primary-hover: #081628;
+    /* Darker Navy */
+    --color-accent: #F5A623;
+    /* Mustard Yellow / Gold */
+    --color-accent-hover: #e0951b;
+    /* Darker Gold */
 
     --color-surface: #ffffff;
-    --color-surface-hover: #e8f4fb; /* Light blue tint */
+    --color-surface-hover: #f9fbfd;
+    /* Very subtle navy tint */
 }
 
 /* Custom Components */

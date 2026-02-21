@@ -156,7 +156,18 @@ class BookingController extends Controller
             'status' => 'required|in:pending,confirmed,cancelled,completed',
         ]);
 
+        $oldStatus = $booking->status;
         $booking->update(['status' => $request->status]);
+
+        // Send confirmation email if status changed to confirmed
+        if ($oldStatus !== 'confirmed' && $request->status === 'confirmed') {
+            try {
+                \Illuminate\Support\Facades\Mail::to($booking->guest_email)->send(new \App\Mail\BookingConfirmation($booking));
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('Failed to send booking confirmation email on status update: ' . $e->getMessage());
+                return redirect()->back()->with('success', 'Booking status updated successfully, but email failed to send.');
+            }
+        }
 
         return redirect()->back()->with('success', 'Booking status updated successfully.');
     }
