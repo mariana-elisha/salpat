@@ -137,7 +137,7 @@
                                         @if($booking->contact_preference === 'whatsapp')
                                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800">WhatsApp</span>
                                         @elseif($booking->contact_preference === 'phone')
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">Phone Call</span>
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-primary-100 text-primary-800">Phone Call</span>
                                         @else
                                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-orange-100 text-orange-800">Email</span>
                                         @endif

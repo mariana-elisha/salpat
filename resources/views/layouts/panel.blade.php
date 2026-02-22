@@ -59,55 +59,55 @@
         </script>
         <style type="text/tailwindcss">
             :root {
-                                    --color-primary: #0B7BBF;
-                                    --color-primary-hover: #095f99;
-                                    --color-accent: #E89968;
-                                    --color-accent-hover: #d67f4f;
-                                    --color-surface: #ffffff;
-                                    --color-surface-hover: #e8f4fb;
-                                }
-                                        @layer components {
-                                            .btn {
-                                                @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl transition-all duration-300 transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2;
+                                        --color-primary: #0B7BBF;
+                                        --color-primary-hover: #095f99;
+                                        --color-accent: #E89968;
+                                        --color-accent-hover: #d67f4f;
+                                        --color-surface: #ffffff;
+                                        --color-surface-hover: #e8f4fb;
+                                    }
+                                            @layer components {
+                                                .btn {
+                                                    @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl transition-all duration-300 transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2;
+                                                }
+                                                .btn-primary {
+                                                    @apply bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-sky-500;
+                                                }
+                                                .btn-secondary {
+                                                    @apply bg-white text-[var(--color-primary)] border-gray-200 hover:bg-sky-50 shadow-sm hover:shadow-md focus:ring-sky-500;
+                                                }
+                                                .btn-accent {
+                                                    @apply bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-yellow-500;
+                                                }
+                                                .card {
+                                                    @apply bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-xl;
+                                                }
+                                                .card-hover {
+                                                    @apply hover:-translate-y-1;
+                                                }
+                                                .form-input {
+                                                    @apply block w-full rounded-lg border-slate-300 shadow-sm focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)] sm:text-sm py-3 px-4;
+                                                }
+                                                .form-label {
+                                                    @apply block text-sm font-semibold text-slate-700 mb-2;
+                                                }
+                                                /* Animation Utilities */
+                                                .fade-in {
+                                                    animation: fadeIn 0.5s ease-out forwards;
+                                                }
+                                                .slide-up {
+                                                    animation: slideUp 0.6s ease-out forwards;
+                                                }
                                             }
-                                            .btn-primary {
-                                                @apply bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-sky-500;
+                                            @keyframes fadeIn {
+                                                from { opacity: 0; }
+                                                to { opacity: 1; }
                                             }
-                                            .btn-secondary {
-                                                @apply bg-white text-[var(--color-primary)] border-gray-200 hover:bg-sky-50 shadow-sm hover:shadow-md focus:ring-sky-500;
+                                            @keyframes slideUp {
+                                                from { opacity: 0; transform: translateY(20px); }
+                                                to { opacity: 1; transform: translateY(0); }
                                             }
-                                            .btn-accent {
-                                                @apply bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-yellow-500;
-                                            }
-                                            .card {
-                                                @apply bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-xl;
-                                            }
-                                            .card-hover {
-                                                @apply hover:-translate-y-1;
-                                            }
-                                            .form-input {
-                                                @apply block w-full rounded-lg border-slate-300 shadow-sm focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)] sm:text-sm py-3 px-4;
-                                            }
-                                            .form-label {
-                                                @apply block text-sm font-semibold text-slate-700 mb-2;
-                                            }
-                                            /* Animation Utilities */
-                                            .fade-in {
-                                                animation: fadeIn 0.5s ease-out forwards;
-                                            }
-                                            .slide-up {
-                                                animation: slideUp 0.6s ease-out forwards;
-                                            }
-                                        }
-                                        @keyframes fadeIn {
-                                            from { opacity: 0; }
-                                            to { opacity: 1; }
-                                        }
-                                        @keyframes slideUp {
-                                            from { opacity: 0; transform: translateY(20px); }
-                                            to { opacity: 1; transform: translateY(0); }
-                                        }
-                                    </style>
+                                        </style>
     @endif
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -215,6 +215,67 @@
                 </div>
 
                 <div class="flex items-center gap-x-4 lg:gap-x-6">
+                    <!-- Notifications Dropdown -->
+                    <div class="relative" x-data="{ open: false }">
+                        <button type="button" @click="open = !open" @click.away="open = false"
+                            class="-m-2.5 p-2.5 text-primary-200 hover:text-white relative transition-colors">
+                            <span class="sr-only">View notifications</span>
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7c0-2.015-1.121-3.791-2.784-4.608L15 4.141c-.244-.127-.514-.232-.8-.313m0 0A5.985 5.985 0 0115 9.75v.7c0 1.258.42 2.418 1.121 3.418m-1.121-3.418c0-1.258-.42-2.418-1.121-3.418m1.121 3.418H10.5m0 0A5.985 5.985 0 009 9.75v.7c0 1.258-.42 2.418-1.121 3.418m1.121-3.418c0-1.258.42-2.418-1.121-3.418m1.121 3.418H10.5M8.25 19.75a2.25 2.25 0 004.5 0" />
+                            </svg>
+                            @if(auth()->user()->unreadNotifications->count() > 0)
+                                <span class="absolute top-2 right-2 flex h-4 w-4">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-4 w-4 bg-accent-500 text-[10px] items-center justify-center text-white font-bold">{{ auth()->user()->unreadNotifications->count() }}</span>
+                                </span>
+                            @endif
+                        </button>
+
+                        <div x-show="open" x-transition:enter="transition ease-out duration-100"
+                            x-transition:enter-start="transform opacity-0 scale-95"
+                            x-transition:enter-end="transform opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-75"
+                            x-transition:leave-start="transform opacity-100 scale-100"
+                            x-transition:leave-end="transform opacity-0 scale-95"
+                            class="absolute right-0 z-10 mt-2.5 w-80 origin-top-right rounded-xl bg-white py-2 shadow-2xl ring-1 ring-slate-900/5 focus:outline-none"
+                            style="display: none;">
+                            <div class="px-4 py-3 border-b border-slate-100 flex justify-between items-center">
+                                <h3 class="text-sm font-bold text-slate-900">Notifications</h3>
+                                @if(auth()->user()->unreadNotifications->count() > 0)
+                                    <form action="{{ route('notifications.mark-all-read') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="text-[10px] font-bold text-primary-600 hover:text-primary-700 uppercase tracking-wider">Mark all read</button>
+                                    </form>
+                                @endif
+                            </div>
+                            <div class="max-h-96 overflow-y-auto">
+                                @forelse(auth()->user()->notifications->take(10) as $notification)
+                                    <div class="px-4 py-3 hover:bg-slate-50 transition-colors {{ $notification->unread() ? 'bg-primary-50/30' : '' }}">
+                                        <div class="flex items-start gap-3">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-sm text-slate-900 {{ $notification->unread() ? 'font-bold' : '' }}">
+                                                    {{ $notification->data['message'] ?? 'New notification' }}
+                                                </p>
+                                                <p class="text-xs text-slate-500 mt-1">{{ $notification->created_at->diffForHumans() }}</p>
+                                            </div>
+                                            @if($notification->unread())
+                                                <form action="{{ route('notifications.read', $notification->id) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="w-2 h-2 rounded-full bg-primary-500 mt-1.5" title="Mark as read"></button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="px-4 py-8 text-center">
+                                        <p class="text-sm text-slate-400 italic">No notifications yet.</p>
+                                    </div>
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="relative" x-data="{ open: false }">
                         <button type="button" class="-m-1.5 flex items-center p-1.5" id="user-menu-button"
                             @click="open = !open" @click.away="open = false">
@@ -246,6 +307,9 @@
                                 <p class="text-xs text-slate-500 font-medium uppercase tracking-wider">Signed in as</p>
                                 <p class="text-sm font-semibold truncate text-slate-900">{{ auth()->user()->email }}</p>
                             </div>
+                            <a href="{{ route('profile.show') }}"
+                                class="block px-3 py-1.5 text-sm leading-6 text-slate-700 hover:bg-slate-50 hover:text-primary-700 text-left transition-colors"
+                                role="menuitem" tabindex="-1">My Profile</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit"

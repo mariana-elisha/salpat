@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ServiceOrder;
+use App\Notifications\SystemNotification;
 use Illuminate\Http\Request;
 
 class BarKeeperController extends Controller
@@ -17,7 +18,9 @@ class BarKeeperController extends Controller
             ->orderBy('requested_at', 'asc')
             ->get();
 
-        return view('barkeeper.dashboard', compact('orders'));
+        $recentReports = \App\Models\StaffReport::where('user_id', auth()->id())->latest()->take(5)->get();
+
+        return view('barkeeper.dashboard', compact('orders', 'recentReports'));
     }
 
     public function updateStatus(ServiceOrder $order, Request $request)
@@ -27,6 +30,15 @@ class BarKeeperController extends Controller
         ]);
 
         $order->update(['status' => $request->status]);
+
+        // Notify the Guest
+        if ($order->user) {
+            $order->user->notify(new SystemNotification(
+                "Your drink order (#{$order->id}) status has been updated to " . ucfirst($request->status),
+                route('user.dashboard'),
+                'order'
+            ));
+        }
 
         return back()->with('success', 'Order status updated successfully.');
     }

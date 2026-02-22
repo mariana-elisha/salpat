@@ -15,10 +15,10 @@ class ReceptionistDashboardController extends Controller
     public function index()
     {
         $stats = [
-            'rooms' => Room::count(),
-            'today_checkins' => Booking::whereDate('check_in', today())->whereIn('status', ['pending', 'confirmed'])->count(),
-            'today_checkouts' => Booking::whereDate('check_out', today())->where('status', 'confirmed')->count(),
-            'pending_bookings' => Booking::where('status', 'pending')->count(),
+            'rooms' => Room::count('*'),
+            'today_checkins' => Booking::whereDate('check_in', '=', today())->whereIn('status', ['pending', 'confirmed'])->count('*'),
+            'today_checkouts' => Booking::whereDate('check_out', '=', today())->where('status', '=', 'confirmed')->count('*'),
+            'pending_bookings' => Booking::where('status', '=', 'pending')->count('*'),
         ];
 
         $upcomingBookings = Booking::with('room')
@@ -28,7 +28,10 @@ class ReceptionistDashboardController extends Controller
             ->take(10)
             ->get();
 
-        return view('receptionist.dashboard', compact('stats', 'upcomingBookings'));
+        $recentActivity = \App\Models\ActivityLog::with('user')->whereIn('action', ['Booking Created', 'Booking Updated', 'Login'])->latest()->take(5)->get();
+        $recentReports = \App\Models\StaffReport::with('user')->where('section', 'Reception')->latest()->take(5)->get();
+
+        return view('receptionist.dashboard', compact('stats', 'upcomingBookings', 'recentActivity', 'recentReports'));
     }
 
     /**

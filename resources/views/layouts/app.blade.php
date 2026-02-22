@@ -51,6 +51,46 @@
                         class="text-sm font-medium text-primary-100 hover:text-white hover:bg-primary-500 rounded-lg px-3 py-2 transition">Contact</a>
 
                     @auth
+                        <!-- Notifications Indicator -->
+                        <div class="relative mr-4" x-data="{ open: false }">
+                            <button @click="open = !open" @click.away="open = false"
+                                class="text-primary-100 hover:text-white transition relative">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7c0-2.015-1.121-3.791-2.784-4.608L15 4.141c-.244-.127-.514-.232-.8-.313m0 0A5.985 5.985 0 0115 9.75v.7c0 1.258.42 2.418 1.121 3.418m-1.121-3.418c0-1.258-.42-2.418-1.121-3.418m1.121 3.418H10.5m0 0A5.985 5.985 0 009 9.75v.7c0 1.258-.42 2.418-1.121 3.418m1.121-3.418c0-1.258.42-2.418-1.121-3.418m1.121 3.418H10.5M8.25 19.75a2.25 2.25 0 004.5 0" />
+                                </svg>
+                                @if(auth()->user()->unreadNotifications->count() > 0)
+                                    <span class="absolute -top-1 -right-1 flex h-3 w-3">
+                                        <span class="relative inline-flex rounded-full h-3 w-3 bg-accent-500"></span>
+                                    </span>
+                                @endif
+                            </button>
+                            <!-- Minimalist dropdown for public view -->
+                            <div x-show="open" x-cloak
+                                class="absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <div
+                                    class="px-4 py-2 border-b border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                    Recent Activity</div>
+                                <div class="max-h-60 overflow-y-auto">
+                                    @forelse(auth()->user()->unreadNotifications->take(5) as $notification)
+                                        <div
+                                            class="px-4 py-3 text-sm hover:bg-slate-50 {{ $loop->last ? '' : 'border-b border-slate-50' }}">
+                                            <p class="text-slate-900 font-medium">
+                                                {{ $notification->data['message'] ?? 'New notification' }}</p>
+                                            <p class="text-[10px] text-slate-400 mt-1">
+                                                {{ $notification->created_at->diffForHumans() }}</p>
+                                        </div>
+                                    @empty
+                                        <div class="px-4 py-6 text-center text-xs text-slate-400 italic">All caught up!</div>
+                                    @endforelse
+                                </div>
+                                <a href="{{ route('profile.show') }}"
+                                    class="block px-4 py-2 text-center text-xs font-bold text-primary-600 hover:bg-slate-50 border-t border-slate-100">View
+                                    All Notifications</a>
+                            </div>
+                        </div>
+
                         <div class="relative ml-4" x-data="{ open: false }">
                             <button @click="open = !open" @click.away="open = false"
                                 class="flex items-center gap-2 text-sm font-bold text-white hover:text-accent-200 transition focus:outline-none">
@@ -75,6 +115,8 @@
                                         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Reports</a>
                                     <a href="{{ route('admin.contact_messages.index') }}"
                                         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Contact Messages</a>
+                                    <a href="{{ route('staff_reports.index') }}"
+                                        class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Section Reports</a>
                                 @elseif(Auth::user()->isReceptionist())
                                     <a href="{{ route('receptionist.dashboard') }}"
                                         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Reception Dashboard</a>
@@ -82,6 +124,8 @@
                                         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Reports</a>
                                     <a href="{{ route('receptionist.contact_messages.index') }}"
                                         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Contact Messages</a>
+                                    <a href="{{ route('staff_reports.index') }}"
+                                        class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Section Reports</a>
                                 @elseif(Auth::user()->isManager())
                                     <a href="{{ route('manager.dashboard') }}"
                                         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Manager Dashboard</a>
@@ -89,12 +133,18 @@
                                         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Reports</a>
                                     <a href="{{ route('manager.contact_messages.index') }}"
                                         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Contact Messages</a>
+                                    <a href="{{ route('manager.activity_log.index') }}"
+                                        class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">System Activity</a>
+                                    <a href="{{ route('staff_reports.index') }}"
+                                        class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Section Reports</a>
                                 @else
                                     <a href="{{ route('user.dashboard') }}"
                                         class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">My Dashboard</a>
                                 @endif
                                 <a href="{{ route('bookings.index') }}"
                                     class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">My Bookings</a>
+                                <a href="{{ route('profile.show') }}"
+                                    class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">My Profile</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit"

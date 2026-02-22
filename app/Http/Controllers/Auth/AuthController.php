@@ -34,6 +34,13 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
+
+            \App\Models\ActivityLog::create([
+                'user_id' => Auth::id(),
+                'action' => 'User Login',
+                'description' => 'User logged into the system.',
+            ]);
+
             return $this->redirectBasedOnRole(Auth::user());
         }
 
@@ -95,6 +102,12 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
+        \App\Models\ActivityLog::create([
+            'user_id' => $user->id,
+            'action' => 'User Registered',
+            'description' => "New user profile created for {$user->name}.",
+        ]);
+
         return redirect()->route('user.dashboard')->with('success', 'Welcome! Your account has been created.');
     }
 
@@ -103,7 +116,18 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
+        $userId = Auth::id();
+
         Auth::logout();
+
+        if ($userId) {
+            \App\Models\ActivityLog::create([
+                'user_id' => $userId,
+                'action' => 'User Logout',
+                'description' => 'User logged out of the system.',
+            ]);
+        }
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('home');

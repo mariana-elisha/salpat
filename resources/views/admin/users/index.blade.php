@@ -48,7 +48,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                                             @if($user->role == 'admin') bg-purple-100 text-purple-800 
-                                            @elseif($user->role == 'user') bg-blue-100 text-blue-800 
+                                            @elseif($user->role == 'user') bg-primary-100 text-primary-800 
                                             @elseif(in_array($user->role, ['manager', 'receptionist'])) bg-emerald-100 text-emerald-800 
                                             @else bg-yellow-100 text-yellow-800 @endif">
                                         {{ ucfirst($user->role == 'user' ? 'Guest' : $user->role) }}

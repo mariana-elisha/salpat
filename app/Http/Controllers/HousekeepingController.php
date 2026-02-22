@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use App\Models\ServiceOrder;
+use App\Notifications\SystemNotification;
 use Illuminate\Http\Request;
 
 class HousekeepingController extends Controller
@@ -20,7 +21,9 @@ class HousekeepingController extends Controller
             ->orderBy('requested_at', 'asc')
             ->get();
 
-        return view('housekeeping.dashboard', compact('dirtyRooms', 'orders'));
+        $recentReports = \App\Models\StaffReport::where('user_id', auth()->id())->latest()->take(5)->get();
+
+        return view('housekeeping.dashboard', compact('orders', 'dirtyRooms', 'recentReports'));
     }
 
     public function updateRoomStatus(Room $room, Request $request)
@@ -41,6 +44,15 @@ class HousekeepingController extends Controller
         ]);
 
         $order->update(['status' => $request->status]);
+
+        // Notify the Guest
+        if ($order->user) {
+            $order->user->notify(new SystemNotification(
+                "Your housekeeping request status has been updated to " . ucfirst($request->status),
+                route('user.dashboard'),
+                'order'
+            ));
+        }
 
         return back()->with('success', 'Order status updated successfully.');
     }

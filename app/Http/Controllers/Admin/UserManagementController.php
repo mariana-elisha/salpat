@@ -58,7 +58,7 @@ class UserManagementController extends Controller
             'emergency_contact_phone' => ['nullable', 'string', 'max:30'],
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
@@ -75,6 +75,12 @@ class UserManagementController extends Controller
             'emergency_contact_phone' => $validated['emergency_contact_phone'] ?? null,
         ]);
 
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'User Created',
+            'description' => "Admin created a new user profile: {$user->name} ({$user->role}).",
+        ]);
+
         return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
 
@@ -87,7 +93,14 @@ class UserManagementController extends Controller
             return back()->with('error', 'You cannot delete yourself.');
         }
 
+        $userName = $user->name;
         $user->delete();
+
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'User Deleted',
+            'description' => "Admin deleted user profile: {$userName}.",
+        ]);
 
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
     }

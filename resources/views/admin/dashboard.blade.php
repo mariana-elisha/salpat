@@ -21,7 +21,7 @@
                         <div class="ml-5 w-0 flex-1">
                             <dl>
                                 <dt class="truncate text-sm font-medium text-slate-500">Total Rooms</dt>
-                                <dd class="text-3xl font-bold text-slate-900">{{ $totalRooms ?? 0 }}</dd>
+                                <dd class="text-3xl font-bold text-slate-900">{{ $stats['rooms'] ?? 0 }}</dd>
                             </dl>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                         <div class="ml-5 w-0 flex-1">
                             <dl>
                                 <dt class="truncate text-sm font-medium text-slate-500">Total Bookings</dt>
-                                <dd class="text-3xl font-bold text-slate-900">{{ $totalBookings ?? 0 }}</dd>
+                                <dd class="text-3xl font-bold text-slate-900">{{ $stats['bookings'] ?? 0 }}</dd>
                             </dl>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                         <div class="ml-5 w-0 flex-1">
                             <dl>
                                 <dt class="truncate text-sm font-medium text-slate-500">Pending</dt>
-                                <dd class="text-3xl font-bold text-slate-900">{{ $pendingBookings ?? 0 }}</dd>
+                                <dd class="text-3xl font-bold text-slate-900">{{ $stats['pending_bookings'] ?? 0 }}</dd>
                             </dl>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                         <div class="ml-5 w-0 flex-1">
                             <dl>
                                 <dt class="truncate text-sm font-medium text-slate-500">Total Users</dt>
-                                <dd class="text-3xl font-bold text-slate-900">{{ $totalUsers ?? 0 }}</dd>
+                                <dd class="text-3xl font-bold text-slate-900">{{ $stats['users'] ?? 0 }}</dd>
                             </dl>
                         </div>
                     </div>
@@ -109,12 +109,15 @@
                                 Room</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
                                 Check-in</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
-                                Status</th>
+                                Initial</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
+                                Status</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
                                 Total</th>
@@ -130,13 +133,16 @@
                                     #{{ $booking->id }}
                                 </td>
                                 <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">
-                                    {{ $booking->user->name ?? 'N/A' }}
+                                    {{ $booking->user?->name ?? 'Guest' }}
                                 </td>
                                 <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">
-                                    {{ $booking->room->name ?? 'N/A' }}
+                                    {{ $booking->room?->name ?? 'N/A' }}
                                 </td>
                                 <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">
                                     {{ $booking->check_in ? \Carbon\Carbon::parse($booking->check_in)->format('M d, Y') : 'N/A' }}
+                                </td>
+                                <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">
+                                    {{ substr($booking->user?->name ?? $booking->guest_name ?? 'G', 0, 1) }}
                                 </td>
                                 <td class="whitespace-nowrap px-6 py-4 text-sm">
                                     @if ($booking->status === 'confirmed')
@@ -182,6 +188,83 @@
                 <a href="{{ route('admin.bookings') }}"
                     class="text-sm font-semibold leading-6 text-primary-600 hover:text-primary-500">View all bookings <span
                         aria-hidden="true">&rarr;</span></a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+            <!-- System Activity Log (Wider) -->
+            <div class="lg:col-span-2 card bg-white overflow-hidden shadow">
+                <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                    <h3 class="text-lg font-bold text-slate-900 font-serif flex items-center gap-2">
+                        <svg class="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        System Activity
+                    </h3>
+                    <a href="{{ route('manager.activity_log.index') }}"
+                        class="text-xs font-semibold text-primary-600 hover:text-primary-700 uppercase tracking-wider underline">View
+                        All Log</a>
+                </div>
+                <div class="divide-y divide-slate-100 overflow-y-auto max-h-[400px]">
+                    @forelse($recentActivity ?? [] as $log)
+                        <div class="p-4 hover:bg-slate-50 transition-colors flex items-start gap-3">
+                            <div
+                                class="w-8 h-8 rounded-full bg-primary-50 flex items-center justify-center text-primary-600 shrink-0 text-xs font-bold">
+                                {{ substr($log->user?->name ?? '?', 0, 1) }}
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <p class="text-sm text-slate-900">
+                                    <span class="font-bold text-primary-700">{{ $log->user?->name ?? 'System' }}</span>
+                                    {{ strtolower($log->action) }}
+                                </p>
+                                <p class="text-xs text-slate-500 truncate mt-0.5">{{ $log->description }}</p>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <p class="text-[10px] font-medium text-slate-400 uppercase tracking-tighter">
+                                    {{ $log->created_at->diffForHumans() }}
+                                </p>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="p-10 text-center text-slate-400 text-sm italic">No recent activity recorded.</div>
+                    @endforelse
+                </div>
+            </div>
+
+            <!-- Recent Staff Reports -->
+            <div class="card bg-white overflow-hidden shadow">
+                <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                    <h3 class="text-lg font-bold text-slate-900 font-serif flex items-center gap-2">
+                        <svg class="w-5 h-5 text-accent-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Staff Reports
+                    </h3>
+                    <a href="{{ route('staff_reports.index') }}"
+                        class="text-xs font-semibold text-accent-600 hover:text-accent-700 uppercase tracking-wider underline">Reports</a>
+                </div>
+                <div class="divide-y divide-slate-100">
+                    @forelse($recentReports ?? [] as $report)
+                        <a href="{{ route('staff_reports.show', $report) }}"
+                            class="block p-4 hover:bg-slate-50 transition-colors">
+                            <div class="flex justify-between items-start mb-1">
+                                <span
+                                    class="text-xs font-bold px-2 py-0.5 rounded-full bg-accent-50 text-accent-700">{{ $report->section }}</span>
+                                <span
+                                    class="text-[10px] text-slate-400">{{ \Carbon\Carbon::parse($report->report_date)->format('M d') }}</span>
+                            </div>
+                            <p class="text-sm font-semibold text-slate-900 truncate">{{ $report->title }}</p>
+                            <p class="text-xs text-slate-500 mt-1 flex justify-between">
+                                <span>By {{ $report->user?->name }}</span>
+                                <span class="capitalize">{{ $report->report_type }}</span>
+                            </p>
+                        </a>
+                    @empty
+                        <div class="p-10 text-center text-slate-400 text-sm italic">No reports submitted yet.</div>
+                    @endforelse
+                </div>
             </div>
         </div>
     </div>

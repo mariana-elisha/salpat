@@ -44,7 +44,13 @@ class GalleryController extends Controller
             $data['image_path'] = $path;
         }
 
-        Gallery::create($data);
+        $gallery = Gallery::create($data);
+
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'Gallery Item Added',
+            'description' => "Admin uploaded a new gallery image: {$gallery->title}.",
+        ]);
 
         return redirect()->route('admin.galleries.index')
             ->with('success', 'Image uploaded successfully.');
@@ -83,6 +89,12 @@ class GalleryController extends Controller
 
         $gallery->update($data);
 
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'Gallery Item Updated',
+            'description' => "Admin updated gallery image: {$gallery->title}.",
+        ]);
+
         return redirect()->route('admin.galleries.index')
             ->with('success', 'Image updated successfully.');
     }
@@ -96,7 +108,14 @@ class GalleryController extends Controller
             Storage::disk('public')->delete($gallery->image_path);
         }
 
+        $galleryTitle = $gallery->title;
         $gallery->delete();
+
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'Gallery Item Deleted',
+            'description' => "Admin deleted gallery image: {$galleryTitle}.",
+        ]);
 
         return redirect()->route('admin.galleries.index')
             ->with('success', 'Image deleted successfully.');

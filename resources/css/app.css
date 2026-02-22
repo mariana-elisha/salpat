@@ -37,15 +37,13 @@
     --color-accent-900: #783d15;
     --color-accent-950: #401d09;
 
-    /* Salpat Camp Logo Colors */
-    --color-primary: #0B1E36;
-    /* Dark Navy Blue */
-    --color-primary-hover: #081628;
-    /* Darker Navy */
-    --color-accent: #F5A623;
-    /* Mustard Yellow / Gold */
-    --color-accent-hover: #e0951b;
-    /* Darker Gold */
+    /* Core CSS Variables for Custom Components */
+    --color-primary: #87CEEB;
+    /* Blue Bahari */
+    --color-primary-hover: #6abbea;
+    --color-accent: #ED9121;
+    /* Carrot Orange */
+    --color-accent-hover: #df7515;
 
     --color-surface: #ffffff;
     --color-surface-hover: #f9fbfd;

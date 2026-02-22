@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Room;
+use App\Models\User;
+use App\Notifications\SystemNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
@@ -91,6 +94,13 @@ class BookingController extends Controller
             \Illuminate\Support\Facades\Log::error('Failed to send booking confirmation email: ' . $e->getMessage());
         }
 
+        // Log Activity
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'Booking Created',
+            'description' => "Booking reference {$booking->booking_reference} created for room {$room->name}.",
+        ]);
+
         return redirect()->route('bookings.show', $booking)
             ->with('success', 'Booking created successfully! A confirmation email has been sent.');
     }
@@ -159,6 +169,16 @@ class BookingController extends Controller
         $oldStatus = $booking->status;
         $booking->update(['status' => $request->status]);
 
+        // Notify Admin, Manager, and Receptionist about status change
+        if ($oldStatus !== $request->status) {
+            $staffToNotify = User::whereIn('role', ['admin', 'manager', 'receptionist'])->get();
+            Notification::send($staffToNotify, new SystemNotification(
+                "Booking #{$booking->booking_reference} status changed from '{$oldStatus}' to '{$request->status}'",
+                route('bookings.show', $booking),
+                'booking_status'
+            ));
+        }
+
         // Send confirmation email if status changed to confirmed
         if ($oldStatus !== 'confirmed' && $request->status === 'confirmed') {
             try {
@@ -168,6 +188,13 @@ class BookingController extends Controller
                 return redirect()->back()->with('success', 'Booking status updated successfully, but email failed to send.');
             }
         }
+
+        // Log Activity
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'Booking Status Updated',
+            'description' => "Booking reference {$booking->booking_reference} status updated from {$oldStatus} to {$request->status}.",
+        ]);
 
         return redirect()->back()->with('success', 'Booking status updated successfully.');
     }

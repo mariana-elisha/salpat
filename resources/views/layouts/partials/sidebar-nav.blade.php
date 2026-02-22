@@ -56,6 +56,38 @@
                 Gallery
             </a>
         </li>
+        <li>
+            <a href="{{ route('admin.reports.index') }}"
+                class="{{ request()->routeIs('admin.reports.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                </svg>
+                Booking Reports
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('staff_reports.index') }}"
+                class="{{ request()->routeIs('staff_reports.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                </svg>
+                Section Reports
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('manager.activity_log.index') }}"
+                class="{{ request()->routeIs('manager.activity_log.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                System Activity
+            </a>
+        </li>
     @elseif(auth()->user()->isReceptionist())
         <li>
             <a href="{{ route('receptionist.dashboard') }}"
@@ -90,6 +122,28 @@
                 Manage Rooms
             </a>
         </li>
+        <li>
+            <a href="{{ route('receptionist.reports.index') }}"
+                class="{{ request()->routeIs('receptionist.reports.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                </svg>
+                Booking Reports
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('staff_reports.index') }}"
+                class="{{ request()->routeIs('staff_reports.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                </svg>
+                Section Reports
+            </a>
+        </li>
     @elseif(auth()->user()->isChef())
         <li>
             <a href="{{ route('chef.dashboard') }}"
@@ -100,6 +154,17 @@
                         d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                 </svg>
                 Food Orders
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('staff_reports.index') }}"
+                class="{{ request()->routeIs('staff_reports.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                </svg>
+                My Reports
             </a>
         </li>
     @elseif(auth()->user()->isBarKeeper())
@@ -114,6 +179,17 @@
                 Drink Orders
             </a>
         </li>
+        <li>
+            <a href="{{ route('staff_reports.index') }}"
+                class="{{ request()->routeIs('staff_reports.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                </svg>
+                My Reports
+            </a>
+        </li>
     @elseif(auth()->user()->isHousekeeping())
         <li>
             <a href="{{ route('housekeeping.dashboard') }}"
@@ -126,6 +202,17 @@
                 Housekeeping
             </a>
         </li>
+        <li>
+            <a href="{{ route('staff_reports.index') }}"
+                class="{{ request()->routeIs('staff_reports.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                </svg>
+                My Reports
+            </a>
+        </li>
     @elseif(auth()->user()->isManager())
         <li>
             <a href="{{ route('manager.dashboard') }}"
@@ -133,9 +220,41 @@
                 <svg class="w-6 h-6 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                        d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
                 </svg>
-                All Activity
+                Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('manager.reports.index') }}"
+                class="{{ request()->routeIs('manager.reports.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                </svg>
+                Booking Reports
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('staff_reports.index') }}"
+                class="{{ request()->routeIs('staff_reports.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                </svg>
+                Section Reports
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('manager.activity_log.index') }}"
+                class="{{ request()->routeIs('manager.activity_log.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                System Activity
             </a>
         </li>
         <li>
@@ -147,6 +266,28 @@
                         d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                 </svg>
                 Gallery
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('manager.contact_messages.index') }}"
+                class="{{ request()->routeIs('*.contact_messages.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L4.32 8.909A2.25 2.25 0 013.25 6.993V6.75" />
+                </svg>
+                Contact Messages
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('notifications.index') }}"
+                class="{{ request()->routeIs('notifications.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7c0-2.015-1.121-3.791-2.784-4.608L15 4.141c-.244-.127-.514-.232-.8-.313m0 0A5.985 5.985 0 0115 9.75v.7c0 1.258.42 2.418 1.121 3.418m-1.121-3.418c0-1.258-.42-2.418-1.121-3.418m1.121 3.418H10.5m0 0A5.985 5.985 0 009 9.75v.7c0 1.258-.42 2.418-1.121 3.418m1.121-3.418c0-1.258.42-2.418-1.121-3.418m1.121 3.418H10.5M8.25 19.75a2.25 2.25 0 004.5 0" />
+                </svg>
+                All Notifications
             </a>
         </li>
     @elseif(auth()->user()->role === 'user')
@@ -183,4 +324,16 @@
             </a>
         </li>
     @endif
+
+    <li class="mt-4 border-t border-primary-800 pt-4">
+        <a href="{{ route('profile.show') }}"
+            class="{{ request()->routeIs('profile.show') ? 'bg-primary-800 text-white' : 'text-primary-200 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+            <svg class="{{ request()->routeIs('profile.show') ? 'text-white' : 'text-primary-400 group-hover:text-white' }} h-6 w-6 shrink-0 transition-colors"
+                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.963-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            My Profile
+        </a>
+    </li>
 @endauth

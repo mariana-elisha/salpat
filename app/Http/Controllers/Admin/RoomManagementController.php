@@ -56,7 +56,13 @@ class RoomManagementController extends Controller
 
         $data['is_available'] = $request->has('is_available');
 
-        Room::create($data);
+        $room = Room::create($data);
+
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'Room Created',
+            'description' => "Admin created a new room: {$room->name}.",
+        ]);
 
         return redirect()->route('admin.rooms.index')
             ->with('success', 'Room created successfully.');
@@ -101,6 +107,12 @@ class RoomManagementController extends Controller
 
         $room->update($data);
 
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'Room Updated',
+            'description' => "Admin updated room details: {$room->name}.",
+        ]);
+
         return redirect()->route('admin.rooms.index')
             ->with('success', 'Room updated successfully.');
     }
@@ -114,7 +126,14 @@ class RoomManagementController extends Controller
             Storage::disk('public')->delete($room->image);
         }
 
+        $roomName = $room->name;
         $room->delete();
+
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'Room Deleted',
+            'description' => "Admin deleted room: {$roomName}.",
+        ]);
 
         return redirect()->route('admin.rooms.index')
             ->with('success', 'Room deleted successfully.');

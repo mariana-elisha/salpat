@@ -48,6 +48,20 @@
                     </div>
                 @endif
 
+                @if (session('status'))
+                    <div
+                        class="mb-4 font-medium text-sm text-emerald-600 bg-emerald-50 p-3 rounded-lg border border-emerald-100 italic">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                @if (session('success'))
+                    <div
+                        class="mb-4 font-medium text-sm text-emerald-600 bg-emerald-50 p-3 rounded-lg border border-emerald-100 italic">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 <form class="space-y-6" action="{{ route('login') }}" method="POST">
                     @csrf
                     <div>
@@ -69,13 +83,25 @@
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
                             <input id="remember" name="remember" type="checkbox"
-                                class="h-4 w-4 rounded border-slate-300 text-[var(--color-primary)] focus:ring-[var(--color-primary)]">
-                            <label for="remember" class="ml-2 block text-sm text-slate-900">Remember me</label>
+                                class="h-4 w-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500">
+                            <label for="remember" class="ml-2 block text-sm text-slate-700">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <div class="text-sm">
+                            <a href="{{ route('password.request') }}"
+                                class="font-bold text-primary-600 hover:text-primary-500">
+                                Forgot your password?
+                            </a>
                         </div>
                     </div>
 
                     <div>
-                        <button type="submit" class="btn btn-primary w-full">Sign in</button>
+                        <button type="submit"
+                            class="flex w-full justify-center rounded-xl bg-primary-600 py-3 px-4 text-sm font-bold text-white shadow-lg hover:bg-primary-700 transition transform active:scale-95">
+                            Sign in
+                        </button>
                     </div>
                 </form>
 

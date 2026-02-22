@@ -21,6 +21,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
+
+    // Password Reset Routes
+    Route::get('/forgot-password', [\App\Http\Controllers\Auth\PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('/forgot-password', [\App\Http\Controllers\Auth\PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/reset-password/{token}', [\App\Http\Controllers\Auth\PasswordResetController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [\App\Http\Controllers\Auth\PasswordResetController::class, 'reset'])->name('password.update');
+
     // Registration disabled — accounts are created by admin only
     // Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     // Route::post('/register', [AuthController::class, 'register']);
@@ -102,6 +109,7 @@ Route::middleware(['auth', 'role:manager'])->prefix('manager')->name('manager.')
     Route::resource('galleries', \App\Http\Controllers\Admin\GalleryController::class);
     Route::get('/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
     Route::get('/contact-messages', [\App\Http\Controllers\ContactMessageController::class, 'index'])->name('contact_messages.index');
+    Route::get('/activity-log', [\App\Http\Controllers\Manager\ActivityLogController::class, 'index'])->name('activity_log.index');
 });
 
 // User panel (Guest)
@@ -109,4 +117,18 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
     Route::get('/dashboard', [GuestController::class, 'dashboard'])->name('dashboard');
     Route::get('/services/book', [GuestController::class, 'showBookingForm'])->name('services.book');
     Route::post('/services/book', [GuestController::class, 'bookService'])->name('services.store');
+});
+
+// Staff Reports (All staff)
+Route::middleware(['auth'])->group(function () {
+    Route::resource('staff-reports', \App\Http\Controllers\StaffReportController::class)->names('staff_reports');
+
+    // Profile Management
+    Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
+    Route::patch('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile/password', [\App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password');
+    // Notifications
+    Route::get('/notifications', [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [\App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::post('/notifications/mark-all-read', [\App\Http\Controllers\NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
 });

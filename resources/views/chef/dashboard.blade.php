@@ -37,7 +37,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                                     @if($order->status == 'pending') bg-yellow-100 text-yellow-800 
-                                    @elseif($order->status == 'confirmed') bg-blue-100 text-blue-800 
+                                    @elseif($order->status == 'confirmed') bg-primary-100 text-primary-800 
                                     @elseif($order->status == 'completed') bg-emerald-100 text-emerald-800 
                                     @else bg-red-100 text-red-800 @endif">
                                     {{ ucfirst($order->status) }}
@@ -64,6 +64,32 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <!-- Recent Reports -->
+    <div class="mt-10 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+            <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                <svg class="w-5 h-5 text-accent-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                My Recent Reports
+            </h2>
+            <a href="{{ route('staff_reports.index') }}" class="text-xs font-bold text-accent-600 hover:text-accent-700 uppercase underline">View All</a>
+        </div>
+        <div class="divide-y divide-slate-100">
+            @forelse($recentReports ?? [] as $report)
+                <div class="px-6 py-4 flex justify-between items-center hover:bg-slate-50 transition-colors">
+                    <div>
+                        <p class="text-sm font-bold text-slate-900">{{ $report->title }}</p>
+                        <p class="text-xs text-slate-500">{{ \Carbon\Carbon::parse($report->report_date)->format('M d, Y') }} • <span class="capitalize">{{ $report->report_type }}</span></p>
+                    </div>
+                    <a href="{{ route('staff_reports.show', $report) }}" class="text-primary-600 hover:text-primary-700 font-semibold text-sm">View Details</a>
+                </div>
+            @empty
+                <div class="px-6 py-10 text-center text-slate-400 text-sm italic">You haven't submitted any reports yet.</div>
+            @endforelse
         </div>
     </div>
 </div>

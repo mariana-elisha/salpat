@@ -125,11 +125,11 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2.5 py-0.5 text-xs font-bold rounded-full uppercase tracking-wide
-                                                            @if($booking->status == 'confirmed') bg-green-100 text-green-700
-                                                            @elseif($booking->status == 'pending') bg-amber-100 text-amber-700
-                                                            @elseif($booking->status == 'cancelled') bg-red-100 text-red-700
-                                                            @else bg-slate-100 text-slate-700
-                                                            @endif">{{ ucfirst($booking->status) }}</span>
+                                                                    @if($booking->status == 'confirmed') bg-green-100 text-green-700
+                                                                    @elseif($booking->status == 'pending') bg-amber-100 text-amber-700
+                                                                    @elseif($booking->status == 'cancelled') bg-red-100 text-red-700
+                                                                    @else bg-slate-100 text-slate-700
+                                                                    @endif">{{ ucfirst($booking->status) }}</span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex items-center justify-end gap-2">
@@ -194,5 +194,78 @@
                 </table>
             </div>
         </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
+        <!-- Recent Activity (Filtered for Reception) -->
+        <div class="card bg-white overflow-hidden shadow-sm border border-slate-200">
+            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Recent Activity
+                </h2>
+            </div>
+            <div class="divide-y divide-slate-100 max-h-[300px] overflow-y-auto">
+                @forelse($recentActivity ?? [] as $log)
+                    <div class="px-6 py-4 hover:bg-slate-50 transition-colors flex items-start gap-4">
+                        <div
+                            class="w-8 h-8 rounded-full bg-primary-50 flex items-center justify-center text-primary-600 shrink-0 text-xs font-bold">
+                            {{ substr($log->user?->name ?? '?', 0, 1) }}
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-sm text-slate-900 leading-tight">
+                                <span class="font-bold text-slate-700">{{ $log->user?->name ?? 'System' }}</span>
+                                <span class="text-slate-500">{{ strtolower($log->action) }}</span>
+                            </p>
+                            <p class="text-[11px] text-slate-400 mt-0.5 truncate">{{ $log->description }}</p>
+                        </div>
+                        <div class="shrink-0 text-right">
+                            <span
+                                class="text-[10px] font-medium text-slate-400 uppercase">{{ $log->created_at->diffForHumans() }}</span>
+                        </div>
+                    </div>
+                @empty
+                    <div class="px-6 py-10 text-center text-slate-400 text-sm italic">No recent booking activity.</div>
+                @endforelse
+            </div>
+        </div>
+
+        <!-- Reception Section Reports -->
+        <div class="card bg-white overflow-hidden shadow-sm border border-slate-200">
+            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-accent-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Reception Reports
+                </h2>
+                <a href="{{ route('staff_reports.index') }}"
+                    class="text-xs font-bold text-accent-600 hover:text-accent-700 uppercase underline">View All</a>
+            </div>
+            <div class="divide-y divide-slate-100">
+                @forelse($recentReports ?? [] as $report)
+                    <a href="{{ route('staff_reports.show', $report) }}"
+                        class="block px-6 py-4 hover:bg-slate-50 transition-colors">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-sm font-bold text-slate-900 truncate">{{ $report->title }}</span>
+                            <span
+                                class="text-[10px] text-slate-400 whitespace-nowrap">{{ \Carbon\Carbon::parse($report->report_date)->format('M d, Y') }}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs text-slate-500">By {{ $report->user->name }}</span>
+                            <span
+                                class="text-[10px] px-2 py-0.5 rounded-full bg-accent-50 text-accent-700 font-bold uppercase">{{ $report->report_type }}</span>
+                        </div>
+                    </a>
+                @empty
+                    <div class="px-6 py-10 text-center text-slate-400 text-sm italic">No reports submitted yet.</div>
+                @endforelse
+            </div>
+        </div>
+    </div>
     </div>
 @endsection

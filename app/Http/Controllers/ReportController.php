@@ -53,6 +53,10 @@ class ReportController extends Controller
                 $title = 'Daily Report - ' . Carbon::today()->format('M d, Y');
         }
 
+        if ($request->has('export')) {
+            return $this->exportCsv($query->get(), $title);
+        }
+
         $bookings = $query->paginate(20)->appends(['type' => $type, 'date' => $date]);
 
         // Calculate summaries
@@ -66,5 +70,44 @@ class ReportController extends Controller
         ];
 
         return view('reports.index', compact('bookings', 'type', 'date', 'title', 'summary'));
+    }
+
+    /**
+     * Export reports to CSV.
+     */
+    protected function exportCsv($data, $filename)
+    {
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=" . str_replace(' ', '_', $filename) . ".csv",
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        ];
+
+        $columns = ['Reference', 'Guest Name', 'Guest Email', 'Room', 'Check In', 'Check Out', 'Total Price', 'Status', 'Created At'];
+
+        $callback = function () use ($data, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($data as $booking) {
+                fputcsv($file, [
+                    $booking->booking_reference,
+                    $booking->guest_name,
+                    $booking->guest_email,
+                    $booking->room->name,
+                    $booking->check_in,
+                    $booking->check_out,
+                    $booking->total_price,
+                    $booking->status,
+                    $booking->created_at,
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }
