@@ -15,6 +15,8 @@ class Booking extends Model
         'guest_name',
         'guest_email',
         'guest_phone',
+        'guest_address',
+        'guest_passport_id',
         'contact_preference',
         'check_in',
         'check_out',
@@ -23,6 +25,8 @@ class Booking extends Model
         'status',
         'special_requests',
         'booking_reference',
+        'payment_method',
+        'payment_status',
     ];
 
     protected $casts = [

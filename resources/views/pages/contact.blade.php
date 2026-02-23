@@ -6,16 +6,17 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <!-- Header -->
         <div class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-serif font-bold text-primary-900 mb-6">Contact Us</h1>
+            <h1 class="text-4xl md:text-5xl font-serif font-bold text-black mb-6">Contact Us</h1>
             <div class="w-24 h-1.5 bg-accent-500 mx-auto rounded-full mb-6"></div>
-            <p class="text-xl text-slate-600 max-w-2xl mx-auto">We'd love to hear from you. Get in touch with our team.</p>
+            <p class="text-xl text-black font-medium max-w-2xl mx-auto">We'd love to hear from you. Get in touch with our
+                team.</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <!-- Contact Form -->
             <div class="lg:col-span-2">
                 <div class="bg-white rounded-2xl shadow-xl p-8 border border-slate-100">
-                    <h2 class="text-2xl font-serif font-bold text-primary-900 mb-8">Send us a Message</h2>
+                    <h2 class="text-2xl font-serif font-bold text-black mb-8">Send us a Message</h2>
 
                     @if($errors->any())
                         <div class="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-xl mb-8">
@@ -65,46 +66,46 @@
 
             <!-- Contact Info -->
             <div class="space-y-8">
-                <div class="bg-primary-900 rounded-2xl shadow-xl p-8 text-white relative overflow-hidden">
-                    <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-primary-800 rounded-full opacity-50"></div>
-                    <div class="absolute bottom-0 left-0 -mb-8 -ml-8 w-32 h-32 bg-primary-800 rounded-full opacity-50">
+                <div class="bg-primary-600 rounded-2xl shadow-xl p-8 text-white relative overflow-hidden">
+                    <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-primary-700 rounded-full opacity-50"></div>
+                    <div class="absolute bottom-0 left-0 -mb-8 -ml-8 w-32 h-32 bg-primary-700 rounded-full opacity-50">
                     </div>
 
                     <h3 class="text-2xl font-serif font-bold mb-8 relative z-10">Get in Touch</h3>
 
                     <div class="space-y-8 relative z-10">
                         <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-primary-800 rounded-xl flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-12 h-12 bg-primary-700 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-sm font-medium text-primary-200 mb-1">Email</p>
+                                <p class="text-sm font-medium text-white mb-1">Email</p>
                                 <a href="mailto:salpatcamp@yahoo.com"
-                                    class="text-lg font-semibold hover:text-accent-400 transition-colors">salpatcamp@yahoo.com</a>
+                                    class="text-lg font-semibold hover:text-accent-500 transition-colors">salpatcamp@yahoo.com</a>
                             </div>
                         </div>
 
                         <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-primary-800 rounded-xl flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-12 h-12 bg-primary-700 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-sm font-medium text-primary-200 mb-1">Phone</p>
+                                <p class="text-sm font-medium text-white mb-1">Phone</p>
                                 <a href="tel:+255770307759"
-                                    class="text-lg font-semibold hover:text-accent-400 transition-colors">+255 0770 307
+                                    class="text-lg font-semibold hover:text-accent-500 transition-colors">+255 0770 307
                                     759</a>
                             </div>
                         </div>
 
                         <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 bg-primary-800 rounded-xl flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-12 h-12 bg-primary-700 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -112,7 +113,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-sm font-medium text-primary-200 mb-1">Address</p>
+                                <p class="text-sm font-medium text-white mb-1">Address</p>
                                 <p class="text-lg font-semibold">Falcon Street 1, Soweto Moshi<br>Kilimanjaro, Tanzania</p>
                             </div>
                         </div>

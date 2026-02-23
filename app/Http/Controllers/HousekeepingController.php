@@ -11,7 +11,7 @@ class HousekeepingController extends Controller
 {
     public function index()
     {
-        $dirtyRooms = Room::where('housekeeping_status', '!=', 'clean')->get();
+        $allRooms = Room::all();
 
         $orders = ServiceOrder::with(['service', 'user', 'room'])
             ->whereHas('service', function ($query) {
@@ -23,7 +23,7 @@ class HousekeepingController extends Controller
 
         $recentReports = \App\Models\StaffReport::where('user_id', auth()->id())->latest()->take(5)->get();
 
-        return view('housekeeping.dashboard', compact('orders', 'dirtyRooms', 'recentReports'));
+        return view('housekeeping.dashboard', compact('orders', 'allRooms', 'recentReports'));
     }
 
     public function updateRoomStatus(Room $room, Request $request)
@@ -32,7 +32,11 @@ class HousekeepingController extends Controller
             'status' => 'required|in:clean,dirty,cleaning_in_progress'
         ]);
 
-        $room->update(['housekeeping_status' => $request->status]);
+        $isAvailable = $request->status === 'clean';
+        $room->update([
+            'housekeeping_status' => $request->status,
+            'is_available' => $isAvailable
+        ]);
 
         return back()->with('success', 'Room status updated successfully.');
     }

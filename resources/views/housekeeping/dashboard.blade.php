@@ -7,20 +7,28 @@
 @section('content')
     <div class="space-y-8">
         <!-- Room Status Section -->
+        <!-- Room Status Section -->
         <div class="space-y-4">
-            <h2 class="text-2xl font-serif font-bold text-slate-900">Rooms Needing Attention</h2>
+            <h2 class="text-2xl font-serif font-bold text-slate-900">Room Availability Status</h2>
+            <p class="text-sm text-slate-600 mb-4">Mark rooms as ready for guests or report them as occupied/needing attention.</p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @forelse($dirtyRooms as $room)
+                @forelse($allRooms as $room)
                     <div
-                        class="card p-6 bg-white border-l-4 @if($room->housekeeping_status == 'dirty') border-red-500 @else border-yellow-500 @endif">
+                        class="card p-6 bg-white border-l-4 @if($room->housekeeping_status == 'clean' && $room->is_available) border-emerald-500 @elseif($room->housekeeping_status == 'dirty') border-red-500 @else border-yellow-500 @endif">
                         <div class="flex justify-between items-start mb-4">
                             <div>
                                 <h3 class="text-lg font-bold text-slate-900">{{ $room->name }}</h3>
                                 <p class="text-sm text-slate-500 lowercase">{{ $room->type }}</p>
                             </div>
                             <span
-                                class="px-2 py-1 text-xs font-semibold rounded-full @if($room->housekeeping_status == 'dirty') bg-red-100 text-red-800 @else bg-yellow-100 text-yellow-800 @endif">
-                                {{ str_replace('_', ' ', $room->housekeeping_status) }}
+                                class="px-2 py-1 text-xs font-semibold rounded-full @if($room->housekeeping_status == 'clean' && $room->is_available) bg-emerald-100 text-emerald-800 @elseif($room->housekeeping_status == 'dirty') bg-red-100 text-red-800 @else bg-yellow-100 text-yellow-800 @endif">
+                                @if($room->housekeeping_status == 'clean' && $room->is_available)
+                                    Available
+                                @elseif($room->housekeeping_status == 'clean' && !$room->is_available)
+                                    Booked (Clean)
+                                @else
+                                    {{ str_replace('_', ' ', $room->housekeeping_status) }}
+                                @endif
                             </span>
                         </div>
 
@@ -29,19 +37,18 @@
                             @method('PATCH')
                             <div class="flex gap-2">
                                 <select name="status"
-                                    class="flex-1 rounded-lg border-slate-300 text-sm focus:border-primary-500 focus:ring-primary-500">
-                                    <option value="clean">Clean (Mark as Handled)</option>
-                                    <option value="dirty" {{ $room->housekeeping_status == 'dirty' ? 'selected' : '' }}>Dirty
-                                    </option>
-                                    <option value="cleaning_in_progress" {{ $room->housekeeping_status == 'cleaning_in_progress' ? 'selected' : '' }}>Cleaning...</option>
+                                    class="flex-1 rounded-lg border-slate-300 text-sm focus:border-primary-500 focus:ring-primary-500 py-1.5">
+                                    <option value="clean" {{ $room->housekeeping_status == 'clean' ? 'selected' : '' }}>Available for booking</option>
+                                    <option value="dirty" {{ $room->housekeeping_status == 'dirty' ? 'selected' : '' }}>Occupied / Dirty (Unavailable)</option>
+                                    <option value="cleaning_in_progress" {{ $room->housekeeping_status == 'cleaning_in_progress' ? 'selected' : '' }}>Cleaning in Progress</option>
                                 </select>
-                                <button type="submit" class="btn-primary text-xs px-3 py-1">Update</button>
+                                <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg text-xs px-4 py-1.5 transition-colors">Apply</button>
                             </div>
                         </form>
                     </div>
                 @empty
-                    <div class="col-span-full p-12 card text-center text-emerald-600 bg-emerald-50 italic">
-                        All rooms are clean!
+                    <div class="col-span-full p-12 card text-center text-slate-500 bg-slate-50 italic border border-dashed border-slate-200">
+                        No rooms found in the system.
                     </div>
                 @endforelse
             </div>

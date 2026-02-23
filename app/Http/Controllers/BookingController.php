@@ -34,11 +34,15 @@ class BookingController extends Controller
             'guest_name' => 'required|string|max:255',
             'guest_email' => 'required|email|max:255',
             'guest_phone' => 'nullable|string|max:20',
+            'guest_address' => 'required|string|max:500',
+            'guest_passport_id' => 'required|string|max:100',
             'contact_preference' => 'nullable|in:email,phone,whatsapp',
             'check_in' => 'required|date|after_or_equal:today',
             'check_out' => 'required|date|after:check_in',
             'number_of_guests' => 'required|integer|min:1',
             'special_requests' => 'nullable|string|max:1000',
+            'password' => 'nullable|string|min:8|confirmed',
+            'payment_method' => 'required|in:mpesa,card,arrival',
         ]);
 
         if ($validator->fails()) {
@@ -69,19 +73,45 @@ class BookingController extends Controller
         $nights = $checkIn->diffInDays($checkOut);
         $totalPrice = $room->price_per_night * $nights;
 
+        // Handle optional user creation
+        $userId = auth()->id();
+        if (!$userId && $request->filled('password')) {
+            // Only create if email doesn't exist already
+            $existingUser = User::where('email', $request->guest_email)->first();
+            if (!$existingUser) {
+                $newUser = User::create([
+                    'name' => $request->guest_name,
+                    'email' => $request->guest_email,
+                    'phone' => $request->guest_phone,
+                    'password' => \Illuminate\Support\Facades\Hash::make($request->password),
+                    'role' => 'user',
+                ]);
+                auth()->login($newUser);
+                $userId = $newUser->id;
+            } else {
+                return redirect()->back()
+                    ->with('error', 'An account with this email already exists. Please log in first.')
+                    ->withInput();
+            }
+        }
+
         // Create booking
         $booking = Booking::create([
             'room_id' => $room->id,
-            'user_id' => auth()->id(), // Nullable if guest
+            'user_id' => $userId,
             'contact_preference' => $request->contact_preference ?? 'email',
             'guest_name' => $request->guest_name,
             'guest_email' => $request->guest_email,
             'guest_phone' => $request->guest_phone,
+            'guest_address' => $request->guest_address,
+            'guest_passport_id' => $request->guest_passport_id,
             'check_in' => $request->check_in,
             'check_out' => $request->check_out,
             'number_of_guests' => $request->number_of_guests,
             'total_price' => $totalPrice,
             'status' => 'pending',
+            'payment_method' => $request->payment_method,
+            'payment_status' => 'pending',
             'special_requests' => $request->special_requests,
             'booking_reference' => Booking::generateBookingReference(),
         ]);
@@ -96,13 +126,51 @@ class BookingController extends Controller
 
         // Log Activity
         \App\Models\ActivityLog::create([
-            'user_id' => auth()->id(),
+            'user_id' => $userId,
             'action' => 'Booking Created',
             'description' => "Booking reference {$booking->booking_reference} created for room {$room->name}.",
         ]);
 
+        if (in_array($request->payment_method, ['mpesa', 'card'])) {
+            return redirect()->route('bookings.payment', $booking)
+                ->with('info', 'Please complete your payment to confirm the booking.');
+        }
+
         return redirect()->route('bookings.show', $booking)
-            ->with('success', 'Booking created successfully! A confirmation email has been sent.');
+            ->with('success', 'Booking created successfully! A confirmation email has been sent. You can pay on arrival.');
+    }
+
+    /**
+     * Show Payment Page
+     */
+    public function payment(Booking $booking)
+    {
+        // Only allow if pending
+        if ($booking->payment_status === 'paid') {
+            return redirect()->route('bookings.show', $booking)->with('info', 'This booking is already paid.');
+        }
+        return view('bookings.payment', compact('booking'));
+    }
+
+    /**
+     * Process Simulated Payment
+     */
+    public function processPayment(Request $request, Booking $booking)
+    {
+        // Simulate a payment delay or just process immediately
+        $booking->update([
+            'payment_status' => 'paid',
+            'status' => 'confirmed',
+        ]);
+
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'Payment Processed',
+            'description' => "Payment of {$booking->total_price} received via {$booking->payment_method} for {$booking->booking_reference}.",
+        ]);
+
+        return redirect()->route('bookings.show', $booking)
+            ->with('success', 'Payment successful! Your booking is now confirmed.');
     }
 
     /**

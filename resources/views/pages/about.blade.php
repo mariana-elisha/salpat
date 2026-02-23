@@ -6,9 +6,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <!-- Header -->
         <div class="text-center mb-16">
-            <h1 class="text-4xl md:text-5xl font-serif font-bold text-primary-900 mb-6">About Salpat Camp</h1>
+            <h1 class="text-4xl md:text-5xl font-serif font-bold text-black mb-6">About Salpat Camp</h1>
             <div class="w-24 h-1.5 bg-accent-500 mx-auto rounded-full mb-6"></div>
-            <p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">Your sanctuary in the wild, where luxury
+            <p class="text-xl text-black font-medium max-w-2xl mx-auto leading-relaxed">Your sanctuary in the wild, where
+                luxury
                 meets nature.</p>
         </div>
 
@@ -22,8 +23,8 @@
                         alt="Campfire" class="relative rounded-2xl shadow-xl w-full object-cover h-96">
                 </div>
                 <div class="space-y-6">
-                    <h2 class="text-3xl font-serif font-bold text-primary-800">Our Story</h2>
-                    <div class="space-y-4 text-slate-600 leading-relaxed text-lg">
+                    <h2 class="text-3xl font-serif font-bold text-black">Our Story</h2>
+                    <div class="space-y-4 text-black font-medium leading-relaxed text-lg">
                         <p>
                             Welcome to Salpat Camp, where comfort meets nature. We've been welcoming guests for years,
                             offering a peaceful retreat
@@ -43,7 +44,7 @@
             <!-- Values Grid -->
             <section>
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-serif font-bold text-primary-800">What Sets Us Apart</h2>
+                    <h2 class="text-3xl font-serif font-bold text-black">What Sets Us Apart</h2>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div
@@ -91,15 +92,16 @@
             </section>
 
             <!-- CTA -->
-            <section class="bg-primary-900 rounded-3xl p-12 text-center relative overflow-hidden">
+            <section class="bg-primary-600 rounded-3xl p-12 text-center relative overflow-hidden">
                 <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10">
                 </div>
                 <div class="relative z-10">
                     <h2 class="text-3xl font-serif font-bold text-white mb-6">Ready to Experience Salpat Camp?</h2>
-                    <p class="text-primary-100 mb-8 max-w-2xl mx-auto text-lg">Browse our rooms and book your escape today.
+                    <p class="text-white font-medium mb-8 max-w-2xl mx-auto text-lg">Browse our rooms and book your escape
+                        today.
                         Nature is waiting for you.</p>
                     <a href="{{ route('rooms.index') }}"
-                        class="btn bg-white text-primary-900 hover:bg-slate-50 shadow-lg px-8 py-4 font-bold">
+                        class="btn bg-accent-500 text-white hover:bg-accent-600 shadow-lg px-8 py-4 font-bold">
                         View Our Rooms
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

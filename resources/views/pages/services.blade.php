@@ -5,11 +5,11 @@
 @section('content')
 
     {{-- Page Header --}}
-    <div class="relative bg-primary-900 py-24 overflow-hidden">
+    <div class="relative bg-primary-600 py-24 overflow-hidden">
         <div class="absolute inset-0">
             <img src="{{ asset('images/carousel-1.jpg') }}" alt="Services"
                 class="w-full h-full object-cover opacity-30">
-            <div class="absolute inset-0 bg-gradient-to-t from-primary-900 via-primary-900/70 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-primary-600 via-primary-700/70 to-transparent"></div>
         </div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-4xl md:text-5xl font-serif font-bold text-white mb-4 animate-[slideInDown_0.6s_ease-out]">Our Services</h1>
@@ -55,7 +55,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
         <div class="text-center mb-14">
             <p class="text-sm font-semibold text-accent-500 uppercase tracking-widest mb-2">What We Offer</p>
-            <h2 class="text-4xl font-serif font-bold text-primary-900">Explore Our <span class="text-primary-500">Services</span></h2>
+            <h2 class="text-4xl font-serif font-bold text-black">Explore Our <span class="text-accent-500">Services</span></h2>
             <div class="w-20 h-1.5 bg-accent-500 mx-auto rounded-full mt-4"></div>
         </div>
 
@@ -167,10 +167,10 @@
     </div>
 
     {{-- Testimonials --}}
-    <div class="bg-primary-900 py-20">
+    <div class="bg-primary-600 py-20">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <p class="text-sm font-semibold text-accent-400 uppercase tracking-widest mb-2">Guest Reviews</p>
+                <p class="text-sm font-semibold text-accent-500 uppercase tracking-widest mb-2">Guest Reviews</p>
                 <h2 class="text-3xl font-serif font-bold text-white">What Our Guests Say</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">

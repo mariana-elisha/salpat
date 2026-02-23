@@ -55,16 +55,50 @@
                     <div class="mb-4">
                         <label for="guest_name" class="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
                         <input type="text" name="guest_name" id="guest_name" 
-                               value="{{ old('guest_name', auth()->user()->name ?? '') }}"
-                               class="w-full border-slate-300 rounded-xl shadow-sm focus:border-orange-500 focus:ring-orange-500" required>
+                               value="{{ old('guest_name', auth()->user()?->name ?? '') }}"
+                               class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500" required>
                     </div>
 
                     <div class="mb-4">
                         <label for="guest_email" class="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
                         <input type="email" name="guest_email" id="guest_email" 
-                               value="{{ old('guest_email', auth()->user()->email ?? '') }}"
-                               class="w-full border-slate-300 rounded-xl shadow-sm focus:border-orange-500 focus:ring-orange-500" required>
+                               value="{{ old('guest_email', auth()->user()?->email ?? '') }}"
+                               class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500" required>
                     </div>
+
+                    @guest
+                    <div class="mb-4">
+                        <label for="guest_address" class="block text-sm font-medium text-slate-700 mb-2">Full Address</label>
+                        <textarea name="guest_address" id="guest_address" rows="2"
+                               class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500" required>{{ old('guest_address') }}</textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="guest_passport_id" class="block text-sm font-medium text-slate-700 mb-2">Passport ID / National ID Number</label>
+                        <input type="text" name="guest_passport_id" id="guest_passport_id" 
+                               value="{{ old('guest_passport_id') }}"
+                               class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500" required>
+                    </div>
+                    
+                    <div class="bg-primary-50 rounded-xl p-4 mb-4 border border-primary-200">
+                        <h3 class="text-sm font-semibold text-primary-900 mb-3">Create an Account (Optional)</h3>
+                        <p class="text-xs text-primary-700 mb-3">Set a password to manage this booking later and make future bookings easier.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="password" class="block text-xs font-medium text-slate-700 mb-1">Password</label>
+                                <input type="password" name="password" id="password" 
+                                       class="w-full border-slate-300 rounded-lg shadow-sm focus:border-accent-500 focus:ring-accent-500 py-2">
+                            </div>
+                            <div>
+                                <label for="password_confirmation" class="block text-xs font-medium text-slate-700 mb-1">Confirm Password</label>
+                                <input type="password" name="password_confirmation" id="password_confirmation" 
+                                       class="w-full border-slate-300 rounded-lg shadow-sm focus:border-accent-500 focus:ring-accent-500 py-2">
+                            </div>
+                        </div>
+                    </div>
+                    @endguest
+
+
 
                     <div class="mb-4">
                         <label for="guest_phone" class="block text-sm font-medium text-slate-700 mb-2">Phone Number (Optional)</label>
@@ -99,8 +133,46 @@
                                   placeholder="Any special requests or notes...">{{ old('special_requests') }}</textarea>
                     </div>
 
-                    <button type="submit" class="w-full bg-orange-600 text-white px-6 py-3 rounded-xl hover:bg-orange-700 transition font-semibold">
-                        Confirm Booking
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-slate-700 mb-3">Payment Method</label>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- M-Pesa Option -->
+                            <label for="payment_mpesa" class="relative flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 hover:border-accent-300 transition-all has-[:checked]:border-accent-500 has-[:checked]:bg-accent-50">
+                                <input type="radio" name="payment_method" id="payment_mpesa" value="mpesa"
+                                    {{ old('payment_method', 'mpesa') === 'mpesa' ? 'checked' : '' }}
+                                    class="w-5 h-5 text-accent-500 border-slate-300 focus:ring-accent-500 shrink-0">
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-slate-800">M-Pesa</span>
+                                    <span class="text-xs text-slate-500">Pay securely via Mobile</span>
+                                </div>
+                            </label>
+
+                            <!-- Card Option -->
+                            <label for="payment_card" class="relative flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 hover:border-accent-300 transition-all has-[:checked]:border-accent-500 has-[:checked]:bg-accent-50">
+                                <input type="radio" name="payment_method" id="payment_card" value="card"
+                                    {{ old('payment_method', 'mpesa') === 'card' ? 'checked' : '' }}
+                                    class="w-5 h-5 text-accent-500 border-slate-300 focus:ring-accent-500 shrink-0">
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-slate-800">Card</span>
+                                    <span class="text-xs text-slate-500">Credit / Debit Card</span>
+                                </div>
+                            </label>
+
+                            <!-- Arrival Option -->
+                            <label for="payment_arrival" class="relative flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 hover:border-accent-300 transition-all has-[:checked]:border-accent-500 has-[:checked]:bg-accent-50">
+                                <input type="radio" name="payment_method" id="payment_arrival" value="arrival"
+                                    {{ old('payment_method', 'mpesa') === 'arrival' ? 'checked' : '' }}
+                                    class="w-5 h-5 text-accent-500 border-slate-300 focus:ring-accent-500 shrink-0">
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-slate-800">Arrival</span>
+                                    <span class="text-xs text-slate-500">Pay at the desk</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-accent-500 text-white px-6 py-3 rounded-xl hover:bg-accent-600 transition font-semibold shadow-lg">
+                        Proceed to Booking
                     </button>
                 </form>
             </div>

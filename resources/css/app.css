@@ -9,21 +9,22 @@
     --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
     --font-serif: 'Playfair Display', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 
-    /* Primary Scale - Blue Bahari centered around 600 */
-    --color-primary-50: #f4fafe;
-    --color-primary-100: #e7f4fc;
-    --color-primary-200: #d0eaf9;
-    --color-primary-300: #adddf3;
-    --color-primary-400: #87CEEB;
-    /* EXACT BLUE BAHARI */
-    --color-primary-500: #6abbea;
-    --color-primary-600: #4ba2d8;
-    --color-primary-700: #3b82b8;
-    --color-primary-800: #336e99;
-    --color-primary-900: #2d5a7d;
-    --color-primary-950: #1b3952;
+    /* Primary Scale - Sky Blue (#87CEEB) as base */
+    --color-primary-50: #f0f8fd;
+    --color-primary-100: #e0f2fa;
+    --color-primary-200: #bae3f5;
+    --color-primary-300: #7dd0ef;
+    --color-primary-400: #38bbe8;
+    --color-primary-500: #1ca3d4;
+    /* Base */
+    --color-primary-600: #87CEEB;
+    /* Sky Blue */
+    --color-primary-700: #146e96;
+    --color-primary-800: #145b7a;
+    --color-primary-900: #154c66;
+    --color-primary-950: #0e3044;
 
-    /* Accent Scale - Carrot Orange centered around 500 */
+    /* Accent Scale - Carrot Orange (#ED9121) centered around 500 */
     --color-accent-50: #fef8f1;
     --color-accent-100: #fdf0df;
     --color-accent-200: #fadec0;
@@ -39,15 +40,30 @@
 
     /* Core CSS Variables for Custom Components */
     --color-primary: #87CEEB;
-    /* Blue Bahari */
-    --color-primary-hover: #6abbea;
+    /* Sky Blue */
+    --color-primary-hover: #1ca3d4;
     --color-accent: #ED9121;
     /* Carrot Orange */
     --color-accent-hover: #df7515;
 
     --color-surface: #ffffff;
     --color-surface-hover: #f9fbfd;
-    /* Very subtle navy tint */
+}
+
+/* Base element styles for text */
+@layer base {
+    body {
+        @apply text-black;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply text-black;
+    }
 }
 
 /* Custom Components */

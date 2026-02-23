@@ -130,6 +130,18 @@
                                     <p class="font-medium">{{ $booking->guest_phone }}</p>
                                 </div>
                             @endif
+                            @if($booking->guest_address)
+                                <div>
+                                    <span class="text-sm text-slate-500">Address:</span>
+                                    <p class="font-medium">{{ $booking->guest_address }}</p>
+                                </div>
+                            @endif
+                            @if($booking->guest_passport_id)
+                                <div>
+                                    <span class="text-sm text-slate-500">Passport / ID Number:</span>
+                                    <p class="font-medium">{{ $booking->guest_passport_id }}</p>
+                                </div>
+                            @endif
                             @if($booking->contact_preference)
                                 <div>
                                     <span class="text-sm text-slate-500">Preferred Contact:</span>

@@ -84,13 +84,9 @@
                                         <span class="text-slate-500">/night</span>
                                     </div>
                                 </div>
-                                <a href="{{ route('rooms.show', $room) }}"
-                                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-sky-50 text-[var(--color-primary)] group-hover:bg-[var(--color-primary)] group-hover:text-white transition-all">
-                                    <svg class="w-5 h-5 transform group-hover:translate-x-0.5 transition-transform" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5l7 7-7 7" />
-                                    </svg>
+                                <a href="{{ route('bookings.create', $room) }}"
+                                    class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-accent-50 text-accent-600 group-hover:bg-accent-500 group-hover:text-white font-bold transition-all shadow-sm">
+                                    Book Now
                                 </a>
                             </div>
                         </div>
