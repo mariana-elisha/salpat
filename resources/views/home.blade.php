@@ -17,7 +17,7 @@
                     <span class="text-accent-500">Salpat Camp</span>
                 </h1>
                 <p class="text-xl mb-10 text-white font-light leading-relaxed">Experience comfort and luxury in the
-                    heart of nature. Your perfect getaway awaits.</p>
+                    heart of the surroundings. Your perfect getaway awaits.</p>
                 <a href="{{ route('rooms.index') }}"
                     class="inline-block bg-accent-500 text-white px-8 py-4 rounded-lg font-bold hover:bg-accent-600 shadow-lg transition-all transform hover:-translate-y-1">
                     Book Your Stay
@@ -77,8 +77,7 @@
                 <h2 class="text-3xl md:text-4xl font-serif font-bold text-black mb-4">Featured Accommodations</h2>
                 <div class="w-24 h-1 bg-accent-500 mx-auto rounded-full"></div>
                 <p class="mt-4 text-black max-w-2xl mx-auto font-medium">Discover our handpicked selection of premium rooms
-                    and
-                    tents designed for your ultimate comfort.</p>
+                    designed for your ultimate comfort.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">

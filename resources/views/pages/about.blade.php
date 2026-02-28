@@ -8,9 +8,9 @@
         <div class="text-center mb-16">
             <h1 class="text-4xl md:text-5xl font-serif font-bold text-black mb-6">About Salpat Camp</h1>
             <div class="w-24 h-1.5 bg-accent-500 mx-auto rounded-full mb-6"></div>
-            <p class="text-xl text-black font-medium max-w-2xl mx-auto leading-relaxed">Your sanctuary in the wild, where
-                luxury
-                meets nature.</p>
+            <p class="text-xl text-black font-medium max-w-2xl mx-auto leading-relaxed">Your sanctuary in Moshi, where
+                comfort
+                meets convenience.</p>
         </div>
 
         <!-- Main Content -->
@@ -26,16 +26,26 @@
                     <h2 class="text-3xl font-serif font-bold text-black">Our Story</h2>
                     <div class="space-y-4 text-black font-medium leading-relaxed text-lg">
                         <p>
-                            Welcome to Salpat Camp, where comfort meets nature. We've been welcoming guests for years,
-                            offering a peaceful retreat
-                            surrounded by stunning landscapes. Our mission is to provide exceptional hospitality and create
-                            memorable experiences
-                            for every visitor.
+                            Salpat Camp is a comfortable mid-range lodge in Moshi, located in Soweto Town Center near Mount
+                            Kilimanjaro. We provide quality accommodation in Moshi for tourists, business travelers, and
+                            families looking for a convenient and secure place to stay.
                         </p>
                         <p>
-                            Whether you're traveling for business, a family getaway, or a romantic escape, Salpat Camp
-                            offers the perfect blend
-                            of modern amenities and natural beauty.
+                            Our lodge offers well-maintained Standard (Single) Rooms, Deluxe (Double) Rooms, and spacious
+                            Family Apartments with an open kitchen, ideal for long stays and family visits. Whether you are
+                            visiting Moshi for a Kilimanjaro climbing adventure, safari tours in Tanzania, or business
+                            meetings in town, Salpat Camp provides a peaceful and accessible location close to key
+                            attractions and services.
+                        </p>
+                        <p>
+                            Guests at Salpat Camp enjoy free WiFi, daily breakfast, and reliable airport pickup from
+                            Kilimanjaro International Airport, ensuring a smooth and stress-free travel experience. Our
+                            friendly staff is dedicated to offering warm Tanzanian hospitality, comfort, and personalized
+                            service throughout your stay.
+                        </p>
+                        <p>
+                            If you are searching for a lodge in Moshi near Mount Kilimanjaro that combines comfort,
+                            convenience, and affordability, Salpat Camp is your ideal choice.
                         </p>
                     </div>
                 </div>
@@ -99,7 +109,7 @@
                     <h2 class="text-3xl font-serif font-bold text-white mb-6">Ready to Experience Salpat Camp?</h2>
                     <p class="text-white font-medium mb-8 max-w-2xl mx-auto text-lg">Browse our rooms and book your escape
                         today.
-                        Nature is waiting for you.</p>
+                        Adventure is waiting for you.</p>
                     <a href="{{ route('rooms.index') }}"
                         class="btn bg-accent-500 text-white hover:bg-accent-600 shadow-lg px-8 py-4 font-bold">
                         View Our Rooms

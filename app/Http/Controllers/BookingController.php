@@ -153,24 +153,54 @@ class BookingController extends Controller
     }
 
     /**
+     * Show Payment Processing Page
+     */
+    public function paymentProcessing(Booking $booking)
+    {
+        return view('bookings.processing', compact('booking'));
+    }
+
+    /**
      * Process Simulated Payment
      */
     public function processPayment(Request $request, Booking $booking)
     {
-        // Simulate a payment delay or just process immediately
+        if ($booking->payment_method === 'mpesa') {
+            $request->validate([
+                'phone' => ['required', 'string', 'regex:/^[67][0-9]{8}$/'],
+            ], [
+                'phone.regex' => 'The phone number must be exactly 9 digits and start with 6 or 7 (e.g., 770307759).',
+            ]);
+        } else {
+            $request->validate([
+                'card_name' => 'required|string|max:255',
+                'card_number' => ['required', 'string', 'regex:/^[0-9]{16}$/'],
+                'expiry' => ['required', 'string', 'regex:/^(0[1-9]|1[0-2])\/[0-9]{2}$/'],
+                'cvv' => ['required', 'string', 'regex:/^[0-9]{3}$/'],
+            ], [
+                'card_number.regex' => 'Card number must be 16 digits.',
+                'expiry.regex' => 'Expiry must be in MM/YY format.',
+                'cvv.regex' => 'CVV must be 3 digits.',
+            ]);
+        }
+
+        // In a real app, you'd trigger the API here. 
+        // For this demo, we'll mark as paid and show the processing animation.
         $booking->update([
             'payment_status' => 'paid',
-            'status' => 'confirmed',
+            // 'status' => 'confirmed', // Removed auto-confirmation to allow staff review
         ]);
 
         \App\Models\ActivityLog::create([
-            'user_id' => auth()->id(),
-            'action' => 'Payment Processed',
-            'description' => "Payment of {$booking->total_price} received via {$booking->payment_method} for {$booking->booking_reference}.",
+            'user_id' => auth()->id() ?? User::where('email', $booking->guest_email)->first()?->id ?? 1, // Fallback if guest payment
+            'action' => 'Payment Initiated',
+            'description' => "Payment of {$booking->total_price} initiated via {$booking->payment_method} for {$booking->booking_reference}.",
         ]);
 
-        return redirect()->route('bookings.show', $booking)
-            ->with('success', 'Payment successful! Your booking is now confirmed.');
+        return redirect()->route('bookings.payment.processing', [
+            'booking' => $booking,
+            'phone' => $request->phone, // Pass phone to processing page for display
+        ]);
     }
 
     /**

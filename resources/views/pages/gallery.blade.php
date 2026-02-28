@@ -26,11 +26,11 @@
                 <!-- Item 1 (Large) -->
                 <div class="group relative overflow-hidden rounded-2xl md:col-span-2 row-span-2 bg-slate-100">
                     <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
-                        alt="Camping Tents"
+                        alt="Luxury Rooms"
                         class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div
                         class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
-                        <h3 class="text-white text-xl font-bold font-serif">Luxury Tents</h3>
+                        <h3 class="text-white text-xl font-bold font-serif">Luxury Rooms</h3>
                     </div>
                 </div>
 
@@ -63,7 +63,7 @@
                         class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div
                         class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                        <h3 class="text-white text-lg font-bold font-serif">Nature Trails</h3>
+                        <h3 class="text-white text-lg font-bold font-serif">Scenic Surroundings</h3>
                     </div>
                 </div>
 

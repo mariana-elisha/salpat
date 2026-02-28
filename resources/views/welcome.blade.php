@@ -17,7 +17,7 @@
             <div class="hidden sm:mb-8 sm:flex sm:justify-center">
                 <div
                     class="relative rounded-full px-3 py-1 text-sm leading-6 text-slate-600 ring-1 ring-slate-900/10 hover:ring-slate-900/20 bg-white/50 backdrop-blur-sm">
-                    New luxury tents available for summer. <a href="{{ route('rooms.index') }}"
+                    New luxury rooms available for summer. <a href="{{ route('rooms.index') }}"
                         class="font-semibold text-primary-600"><span class="absolute inset-0" aria-hidden="true"></span>Read
                         more <span aria-hidden="true">&rarr;</span></a>
                 </div>
@@ -71,7 +71,7 @@
                         </dt>
                         <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-slate-600">
                             <p class="flex-auto">Our campsites are located in the most breathtaking spots, offering
-                                panoramic views of nature's beauty right from your doorstep.</p>
+                                panoramic views of the beautiful surroundings right from your doorstep.</p>
                         </dd>
                     </div>
                     <div class="flex flex-col">
@@ -87,7 +87,7 @@
                         </dt>
                         <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-slate-600">
                             <p class="flex-auto">Experience camping like never before with plush beds, private bathrooms,
-                                and premium toiletries in our luxury tents.</p>
+                                and premium toiletries in our luxury rooms.</p>
                         </dd>
                     </div>
                     <div class="flex flex-col">
@@ -102,7 +102,7 @@
                             Unforgettable Experiences
                         </dt>
                         <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-slate-600">
-                            <p class="flex-auto">From guided nature walks to starry night campfires, we offer activities
+                            <p class="flex-auto">From guided scenic walks to starry night campfires, we offer activities
                                 that create lasting memories for you and your loved ones.</p>
                         </dd>
                     </div>
@@ -118,7 +118,7 @@
                 <h2 class="text-3xl font-serif font-bold tracking-tight text-white sm:text-4xl">Ready to escape the noise?
                 </h2>
                 <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-primary-200">Book your stay today and reconnect with
-                    nature in style. Limited availability for the upcoming season.</p>
+                    tranquility in style. Limited availability for the upcoming season.</p>
                 <div class="mt-10 flex items-center justify-center gap-x-6">
                     <a href="{{ route('rooms.index') }}" class="btn bg-white text-primary-600 hover:bg-primary-50">Find Your
                         Room</a>

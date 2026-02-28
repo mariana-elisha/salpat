@@ -35,7 +35,7 @@
                         Description
                     </h2>
                     <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed text-lg">
-                        {{ $room->description ?? 'Experience the perfect blend of comfort and nature. This room is designed to provide a serene retreat, featuring premium amenities and stunning views.' }}
+                        {{ $room->description ?? 'Experience the perfect blend of comfort and serenity. This room is designed to provide a peaceful retreat, featuring premium amenities and stunning views.' }}
                     </div>
                 </div>
 

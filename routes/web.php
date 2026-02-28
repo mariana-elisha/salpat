@@ -54,6 +54,7 @@ Route::get('/rooms/{room}/book', [BookingController::class, 'create'])->name('bo
 Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
 Route::get('/bookings/{booking:booking_reference}', [BookingController::class, 'show'])->name('bookings.show');
 Route::get('/bookings/{booking}/payment', [BookingController::class, 'payment'])->name('bookings.payment');
+Route::get('/bookings/{booking}/payment/processing', [BookingController::class, 'paymentProcessing'])->name('bookings.payment.processing');
 Route::post('/bookings/{booking}/payment', [BookingController::class, 'processPayment'])->name('bookings.payment.process');
 Route::patch('/bookings/{booking}/status', [BookingController::class, 'updateStatus'])->name('bookings.update-status');
 

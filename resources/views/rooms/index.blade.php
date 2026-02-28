@@ -15,7 +15,7 @@
                 <h1 class="text-4xl font-serif font-bold tracking-tight text-white sm:text-6xl mb-6">Find Your Perfect
                     Sanctuary</h1>
                 <p class="mt-6 text-lg leading-8 text-slate-300 max-w-2xl mx-auto">
-                    Immerse yourself in nature without compromising on luxury. Browse our diverse selection of
+                    Immerse yourself in serenity without compromising on luxury. Browse our diverse selection of
                     accommodations tailored for your comfort.
                 </p>
             </div>

@@ -46,8 +46,12 @@
                             <span
                                 class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500 font-medium">+255</span>
                             <input type="text" id="phone" name="phone" placeholder="7XXXXXXXX" required
-                                class="w-full pl-16 border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3">
+                                value="{{ old('phone') }}"
+                                class="w-full pl-16 border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('phone') border-red-500 @enderror">
                         </div>
+                        @error('phone')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
                         <p class="text-sm text-slate-500 mt-2">Enter your M-Pesa number to receive a payment prompt on your
                             phone.</p>
                     </div>
@@ -55,24 +59,37 @@
                     <div class="space-y-4 mb-6">
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Cardholder Name</label>
-                            <input type="text" required
-                                class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3">
+                            <input type="text" name="card_name" required value="{{ old('card_name') }}"
+                                class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('card_name') border-red-500 @enderror">
+                            @error('card_name')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Card Number</label>
-                            <input type="text" placeholder="XXXX XXXX XXXX XXXX" required
-                                class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3">
+                            <input type="text" name="card_number" placeholder="XXXX XXXX XXXX XXXX" required
+                                value="{{ old('card_number') }}"
+                                class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('card_number') border-red-500 @enderror">
+                            @error('card_number')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">Expiry Date</label>
-                                <input type="text" placeholder="MM/YY" required
-                                    class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3">
+                                <input type="text" name="expiry" placeholder="MM/YY" required value="{{ old('expiry') }}"
+                                    class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('expiry') border-red-500 @enderror">
+                                @error('expiry')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">CVV</label>
-                                <input type="text" placeholder="XXX" required
-                                    class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3">
+                                <input type="text" name="cvv" placeholder="XXX" required value="{{ old('cvv') }}"
+                                    class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('cvv') border-red-500 @enderror">
+                                @error('cvv')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
