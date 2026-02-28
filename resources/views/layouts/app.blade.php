@@ -30,8 +30,8 @@
                 <div class="flex">
                     <div class="flex-shrink-0 flex items-center">
                         <a href="{{ route('home') }}" class="flex items-center gap-4">
-                            <img src="{{ asset('images/logo.png') }}" alt="Salpat Camp Logo"
-                                class="h-16 w-16 rounded-full object-cover border-2 border-white shadow-lg">
+                            <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Salpat Camp Logo"
+                                class="h-20 w-20 bg-white rounded-full p-1 object-contain shadow-lg border-2 border-primary-500">
                             <span class="text-2xl font-serif font-bold text-white tracking-tight">Salpat Camp</span>
                         </a>
                     </div>
@@ -308,8 +308,8 @@
                 <div class="space-y-6">
                     <a href="{{ route('home') }}" class="inline-block">
                         <div class="flex items-center gap-3">
-                            <img src="{{ asset('images/logo.png') }}" alt="Salpat Camp Logo"
-                                class="h-12 w-12 rounded-full border-2 border-white/20">
+                            <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Salpat Camp Logo"
+                                class="h-16 w-16 bg-white rounded-full p-1 object-contain border-2 border-white/20">
                             <h1 class="text-2xl font-serif font-bold text-white uppercase tracking-widest mb-0">Salpat
                                 Camp</h1>
                         </div>

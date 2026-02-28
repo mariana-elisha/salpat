@@ -145,8 +145,8 @@
         x-transition:leave-end="-translate-x-full"
         class="fixed inset-y-0 left-0 z-50 w-72 bg-primary-900 px-6 pb-4 overflow-y-auto lg:hidden">
         <div class="flex h-16 shrink-0 items-center gap-4">
-            <img src="{{ asset('images/logo.png') }}" alt="Salpat Camp Logo"
-                class="h-14 w-14 rounded-full object-cover border-2 border-primary-700 shadow-lg">
+            <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Salpat Camp Logo"
+                class="h-16 w-16 bg-white rounded-full p-1 object-contain border-2 border-primary-700 shadow-lg">
             <span class="text-xl font-serif font-bold text-white">Salpat Camp</span>
         </div>
         <nav class="flex flex-1 flex-col mt-4">
@@ -165,8 +165,8 @@
         <div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-primary-800 bg-primary-900 px-6 pb-4">
             <div class="flex h-16 shrink-0 items-center mt-4">
                 <a href="{{ route('home') }}" class="flex items-center gap-4">
-                    <img src="{{ asset('images/logo.png') }}" alt="Salpat Camp Logo"
-                        class="h-14 w-14 rounded-full object-cover border-2 border-primary-700 shadow-lg">
+                    <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Salpat Camp Logo"
+                        class="h-16 w-16 bg-white rounded-full p-1 object-contain border-2 border-primary-700 shadow-lg">
                     <span class="text-xl font-serif font-bold text-white">Salpat Camp</span>
                 </a>
             </div>
