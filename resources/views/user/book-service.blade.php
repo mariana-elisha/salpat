@@ -69,22 +69,31 @@
 
             <!-- Quantity and Finalize -->
             <div x-show="selectedService" class="card p-6 bg-slate-900 text-white shadow-xl fade-in">
-                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div class="flex items-center gap-4">
-                        <label class="text-sm font-medium opacity-80 uppercase tracking-widest">Quantity</label>
-                        <div class="flex items-center gap-2">
-                            <button type="button" @click="if(quantity > 1) quantity--"
-                                class="w-10 h-10 rounded-full border border-white/20 hover:bg-white/10 flex items-center justify-center font-bold">-</button>
-                            <input type="number" name="quantity" x-model="quantity"
-                                class="w-16 bg-transparent border-0 text-center font-bold text-xl focus:ring-0" readonly>
-                            <button type="button" @click="quantity++"
-                                class="w-10 h-10 rounded-full border border-white/20 hover:bg-white/10 flex items-center justify-center font-bold">+</button>
+                <div class="flex flex-col gap-6">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="flex items-center gap-4">
+                            <label class="text-sm font-medium opacity-80 uppercase tracking-widest">Quantity</label>
+                            <div class="flex items-center gap-2">
+                                <button type="button" @click="if(quantity > 1) quantity--"
+                                    class="w-10 h-10 rounded-full border border-white/20 hover:bg-white/10 flex items-center justify-center font-bold">-</button>
+                                <input type="number" name="quantity" x-model="quantity"
+                                    class="w-16 bg-transparent border-0 text-center font-bold text-xl focus:ring-0" readonly>
+                                <button type="button" @click="quantity++"
+                                    class="w-10 h-10 rounded-full border border-white/20 hover:bg-white/10 flex items-center justify-center font-bold">+</button>
+                            </div>
+                        </div>
+
+                        <div class="text-center md:text-right">
+                            <p class="text-xs opacity-60 uppercase tracking-widest">Total Price</p>
+                            <p class="text-3xl font-bold text-accent-400" x-text="'$' + (price * quantity).toFixed(2)"></p>
                         </div>
                     </div>
 
-                    <div class="text-center md:text-right">
-                        <p class="text-xs opacity-60 uppercase tracking-widest">Total Price</p>
-                        <p class="text-3xl font-bold text-accent-400" x-text="'$' + (price * quantity).toFixed(2)"></p>
+                    <div class="border-t border-white/10 pt-4">
+                        <label for="comment" class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Special Instructions / Comments</label>
+                        <textarea name="comment" id="comment" rows="2" 
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-accent-500 focus:border-accent-500 placeholder-white/20 text-white"
+                            placeholder="e.g. No mayo, extra spicy, or deliver at 8:00 PM..."></textarea>
                     </div>
 
                     <button type="submit" class="btn-accent px-8 py-4 rounded-xl text-lg font-bold w-full md:w-auto">
@@ -92,6 +101,7 @@
                     </button>
                 </div>
             </div>
-        </form>
+    </div>
+    </form>
     </div>
 @endsection

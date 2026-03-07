@@ -3,23 +3,18 @@
 @section('title', 'Our Services')
 
 @section('content')
-
-    {{-- Page Header --}}
-    <div class="relative bg-primary-600 py-24 overflow-hidden">
-        <div class="absolute inset-0">
-            <img src="{{ asset('images/carousel-1.jpg') }}" alt="Services"
-                class="w-full h-full object-cover opacity-30">
-            <div class="absolute inset-0 bg-gradient-to-t from-primary-600 via-primary-700/70 to-transparent"></div>
+    <div class="bg-slate-50 min-h-screen pb-24">
+        {{-- Hero Section --}}
+        <div class="relative bg-slate-900 py-24 sm:py-32 overflow-hidden border-b-4 border-accent-500">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1541971875076-8f970d573be6?ixlib=rb-4.0.3')] bg-cover bg-center opacity-20 filter grayscale mix-blend-overlay"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent"></div>
+            <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-accent-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/20 border border-accent-500/30 text-accent-300 text-xs font-bold uppercase tracking-widest mb-6">What We Offer</div>
+                <h1 class="text-4xl md:text-6xl font-serif font-bold text-white mb-6 drop-shadow-lg">Experiential Luxury</h1>
+                <p class="mt-4 text-lg text-slate-300 max-w-2xl mx-auto font-light">Elevating your stay with exceptional amenities and personalized hospitality.</p>
+            </div>
         </div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl md:text-5xl font-serif font-bold text-white mb-4 animate-[slideInDown_0.6s_ease-out]">Our Services</h1>
-            <nav class="flex justify-center gap-2 text-sm text-primary-200 uppercase tracking-wider">
-                <a href="{{ route('home') }}" class="hover:text-white transition">Home</a>
-                <span class="text-primary-400">/</span>
-                <span class="text-white">Services</span>
-            </nav>
-        </div>
-    </div>
 
     {{-- Quick Booking Bar --}}
     <div class="bg-white shadow-xl -mt-6 relative z-10 max-w-5xl mx-auto rounded-2xl px-6 py-5 mb-16 border border-slate-100">
@@ -167,30 +162,32 @@
     </div>
 
     {{-- Testimonials --}}
-    <div class="bg-primary-600 py-20">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <p class="text-sm font-semibold text-accent-500 uppercase tracking-widest mb-2">Guest Reviews</p>
-                <h2 class="text-3xl font-serif font-bold text-white">What Our Guests Say</h2>
+    <div class="bg-slate-900 py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-overlay"></div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-accent-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/20 border border-accent-500/30 text-accent-300 text-xs font-bold uppercase tracking-widest mb-6">Guest Reviews</div>
+                <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-4">What Our Guests Say</h2>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 @foreach([
-                    ['name' => 'Sarah Johnson', 'role' => 'Tourist', 'quote' => 'I had an amazing stay! The rooms were clean, comfortable, and the staff was very friendly. I will definitely come back again.'],
-                    ['name' => 'Michael Smith', 'role' => 'Business Traveller', 'quote' => 'Great hospitality and excellent service. The food was delicious and the environment was very peaceful.'],
-                    ['name' => 'Emily Davis', 'role' => 'Vacationer', 'quote' => 'I loved the place! It is perfect for a relaxing holiday. The staff made sure everything was perfect for us.'],
+                    ['name' => 'Sarah Johnson', 'role' => 'Tourist', 'quote' => 'I had an amazing stay! The rooms were pristine, comfortable, and the staff was exceptionally friendly. I will definitely return.'],
+                    ['name' => 'Michael Smith', 'role' => 'Business Traveller', 'quote' => 'Superb hospitality and excellent service. The dinner was exquisite and the environment was incredibly peaceful for working.'],
+                    ['name' => 'Emily Davis', 'role' => 'Vacationer', 'quote' => 'We adored the place! It is absolutely perfect for a relaxing holiday getaway. The team made sure every detail was perfect.'],
                 ] as $review)
-                <div class="bg-white/10 backdrop-blur rounded-2xl p-6 relative">
-                    <svg class="absolute top-4 right-4 w-8 h-8 text-accent-400 opacity-60" fill="currentColor" viewBox="0 0 24 24">
+                <div class="bg-slate-800/50 backdrop-blur-md rounded-3xl p-8 border border-slate-700 relative hover:-translate-y-2 transition-transform duration-300">
+                    <svg class="absolute top-6 right-6 w-10 h-10 text-accent-500/30" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
                     </svg>
-                    <p class="text-primary-100 text-sm leading-relaxed mb-5">{{ $review['quote'] }}</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-accent-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                    <p class="text-slate-300 text-lg leading-relaxed mb-8 italic font-serif">"{{ $review['quote'] }}"</p>
+                    <div class="flex items-center gap-4 mt-auto">
+                        <div class="w-12 h-12 bg-gradient-to-br from-accent-400 to-accent-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-inner">
                             {{ strtoupper(substr($review['name'], 0, 1)) }}
                         </div>
                         <div>
-                            <p class="font-semibold text-white text-sm">{{ $review['name'] }}</p>
-                            <p class="text-primary-300 text-xs">{{ $review['role'] }}</p>
+                            <p class="font-bold text-white">{{ $review['name'] }}</p>
+                            <p class="text-accent-400 text-sm font-medium">{{ $review['role'] }}</p>
                         </div>
                     </div>
                 </div>

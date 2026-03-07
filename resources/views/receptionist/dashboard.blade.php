@@ -10,6 +10,18 @@
                 <p class="text-slate-500 mt-1">Overview of today's activities and bookings</p>
             </div>
             <div class="flex gap-3">
+                <form action="{{ route('receptionist.daily-transaction') }}" method="POST"
+                    onsubmit="return confirm('Are you sure you want to close the daily transaction and submit the report to the manager?');">
+                    @csrf
+                    <button type="submit"
+                        class="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600 font-medium transition shadow-sm flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Close Daily Transaction
+                    </button>
+                </form>
                 <a href="{{ route('receptionist.rooms.index') }}"
                     class="bg-white text-slate-700 border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-50 font-medium transition shadow-sm">
                     Manage Rooms
@@ -125,11 +137,11 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2.5 py-0.5 text-xs font-bold rounded-full uppercase tracking-wide
-                                                                    @if($booking->status == 'confirmed') bg-green-100 text-green-700
-                                                                    @elseif($booking->status == 'pending') bg-amber-100 text-amber-700
-                                                                    @elseif($booking->status == 'cancelled') bg-red-100 text-red-700
-                                                                    @else bg-slate-100 text-slate-700
-                                                                    @endif">{{ ucfirst($booking->status) }}</span>
+                                                                            @if($booking->status == 'confirmed') bg-green-100 text-green-700
+                                                                            @elseif($booking->status == 'pending') bg-amber-100 text-amber-700
+                                                                            @elseif($booking->status == 'cancelled') bg-red-100 text-red-700
+                                                                            @else bg-slate-100 text-slate-700
+                                                                            @endif">{{ ucfirst($booking->status) }}</span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex items-center justify-end gap-2">
@@ -265,6 +277,43 @@
                     <div class="px-6 py-10 text-center text-slate-400 text-sm italic">No reports submitted yet.</div>
                 @endforelse
             </div>
+        </div>
+    </div>
+
+    <!-- Staff Activity Log (Housekeeping & Barkeeper) -->
+    <div class="card bg-white mt-8 overflow-hidden shadow-sm border border-slate-200">
+        <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+            <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                <svg class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                Housekeeping & Bar Activity
+            </h2>
+        </div>
+        <div class="divide-y divide-slate-100 max-h-[300px] overflow-y-auto">
+            @forelse($staffActivity ?? [] as $log)
+                <div class="px-6 py-4 hover:bg-slate-50 transition-colors flex items-start gap-4">
+                    <div
+                        class="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0 text-xs font-bold uppercase">
+                        {{ substr($log->user?->role ?? 'S', 0, 1) }}
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-sm text-slate-900 leading-tight">
+                            <span class="font-bold text-slate-700">{{ $log->user?->name ?? 'Staff' }}</span>
+                            <span class="text-slate-500 text-xs">({{ ucfirst($log->user?->role) }})</span>
+                            <span class="text-slate-500">{{ strtolower($log->action) }}</span>
+                        </p>
+                        <p class="text-[11px] text-slate-400 mt-0.5 truncate">{{ $log->description }}</p>
+                    </div>
+                    <div class="shrink-0 text-right">
+                        <span
+                            class="text-[10px] font-medium text-slate-400 uppercase">{{ $log->created_at->diffForHumans() }}</span>
+                    </div>
+                </div>
+            @empty
+                <div class="px-6 py-10 text-center text-slate-400 text-sm italic">No recent housekeeping or bar activity.</div>
+            @endforelse
         </div>
     </div>
     </div>

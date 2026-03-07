@@ -65,4 +65,41 @@ class Room extends Model
             })
             ->exists();
     }
+    /**
+     * Check if the room is currently occupied by a confirmed guest.
+     */
+    public function getIsOccupiedAttribute()
+    {
+        return $this->bookings()
+            ->where('status', 'confirmed')
+            ->where('check_in', '<=', today())
+            ->where('check_out', '>=', today())
+            ->exists();
+    }
+
+    /**
+     * Get time remaining until checkout if occupied.
+     */
+    public function getTimeRemainingAttribute()
+    {
+        $currentBooking = $this->bookings()
+            ->where('status', 'confirmed')
+            ->where('check_in', '<=', today())
+            ->where('check_out', '>=', today())
+            ->first();
+
+        if (!$currentBooking) {
+            return null;
+        }
+
+        // Standard checkout time is 11:00 AM on the check_out date
+        $checkoutTime = \Carbon\Carbon::parse($currentBooking->check_out)->setTime(11, 0, 0);
+        $now = now();
+
+        if ($now->greaterThan($checkoutTime)) {
+            return 'Overdue by ' . $checkoutTime->diffForHumans($now, true);
+        }
+
+        return $checkoutTime->diffForHumans($now, true, false, 2) . ' remaining';
+    }
 }

@@ -44,6 +44,10 @@ Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
 Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery');
 
+// Feedback
+Route::get('/feedback', [\App\Http\Controllers\GuestFeedbackController::class, 'create'])->name('feedback.create');
+Route::post('/feedback', [\App\Http\Controllers\GuestFeedbackController::class, 'store'])->name('feedback.store');
+
 // Rooms (public)
 Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
 Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
@@ -83,8 +87,10 @@ Route::middleware(['auth', 'role:receptionist'])->prefix('receptionist')->name('
         'destroy' => 'rooms.destroy',
     ]);
     Route::get('/bookings/{booking}/bill', [ReceptionistDashboardController::class, 'checkoutBill'])->name('bookings.bill');
+    Route::post('/daily-transaction', [ReceptionistDashboardController::class, 'closeDailyTransaction'])->name('daily-transaction');
     Route::get('/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
     Route::get('/contact-messages', [\App\Http\Controllers\ContactMessageController::class, 'index'])->name('contact_messages.index');
+    Route::get('/feedback', [\App\Http\Controllers\GuestFeedbackController::class, 'index'])->name('feedback.index');
 });
 
 // Chef panel

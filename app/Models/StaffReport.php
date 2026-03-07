@@ -23,4 +23,20 @@ class StaffReport extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Scope a query to only include reports of a given type.
+     */
+    public function scopeOfType($query, $type)
+    {
+        return $query->where('report_type', $type);
+    }
+
+    /**
+     * Scope a query to only include reports of a given section.
+     */
+    public function scopeOfSection($query, $section)
+    {
+        return $query->where('section', $section);
+    }
 }

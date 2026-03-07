@@ -3,18 +3,39 @@
 @section('title', 'Book Room')
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold text-slate-800 mb-6">Book {{ $room->name }}</h1>
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="mb-8 p-8 md:p-10 bg-slate-900 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] rounded-3xl text-white relative overflow-hidden shadow-2xl border border-slate-800">
+        <div class="relative z-10 flex flex-col md:flex-row md:justify-between md:items-end gap-6">
+            <div>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/20 border border-accent-500/30 text-accent-300 text-xs font-bold uppercase tracking-wider mb-4 block w-max">
+                    Secure Booking
+                </div>
+                <h1 class="text-4xl md:text-5xl font-serif font-bold text-white mb-2 tracking-tight">Reserve Your Stay</h1>
+                <p class="text-slate-300 text-lg md:text-xl font-light">Booking the elegant <span class="text-accent-400 font-medium italic">{{ $room->name }}</span></p>
+            </div>
+            <div class="bg-slate-800/80 backdrop-blur-md border border-slate-700 p-4 rounded-2xl flex flex-col items-center justify-center shrink-0">
+                <span class="text-sm text-slate-400 font-medium uppercase tracking-wider mb-1">Rate</span>
+                <div class="flex items-baseline gap-1">
+                    <span class="text-3xl md:text-4xl font-bold text-white">${{ number_format($room->price_per_night, 2) }}</span>
+                    <span class="text-slate-400 font-medium">/night</span>
+                </div>
+            </div>
+        </div>
+        <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-accent-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        <div class="absolute -top-24 -left-24 w-64 h-64 bg-primary-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+    </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Booking Form -->
         <div class="lg:col-span-2">
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <h2 class="text-2xl font-semibold mb-6">Booking Information</h2>
+            <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 border border-slate-100 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-bl-full opacity-50"></div>
+                
+                <h2 class="text-3xl font-serif font-bold text-slate-900 mb-8 relative z-10">Guest Details</h2>
                 
                 @if($errors->any())
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                        <ul class="list-disc list-inside">
+                    <div class="bg-red-50 border-l-4 border-red-500 text-red-700 px-6 py-4 rounded-r-xl mb-8 shadow-sm">
+                        <ul class="list-disc list-inside text-sm font-medium">
                             @foreach($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
@@ -22,192 +43,224 @@
                     </div>
                 @endif
 
-                <form action="{{ route('bookings.store') }}" method="POST">
+                <form action="{{ route('bookings.store') }}" method="POST" class="space-y-8 relative z-10">
                     @csrf
                     <input type="hidden" name="room_id" value="{{ $room->id }}">
                     
-                    <div class="grid grid-cols-2 gap-4 mb-4">
+                    <!-- Dates -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-slate-50 p-6 rounded-2xl border border-slate-100">
                         <div>
-                            <label for="check_in" class="block text-sm font-medium text-slate-700 mb-2">Check-in Date</label>
-                            <input type="date" name="check_in" id="check_in" 
-                                   value="{{ old('check_in', $checkIn) }}" 
-                                   min="{{ date('Y-m-d') }}"
-                                   class="w-full border-slate-300 rounded-xl shadow-sm focus:border-orange-500 focus:ring-orange-500" required>
-                        </div>
-                        <div>
-                            <label for="check_out" class="block text-sm font-medium text-slate-700 mb-2">Check-out Date</label>
-                            <input type="date" name="check_out" id="check_out" 
-                                   value="{{ old('check_out', $checkOut) }}"
-                                   min="{{ date('Y-m-d', strtotime('+1 day')) }}"
-                                   class="w-full border-slate-300 rounded-xl shadow-sm focus:border-orange-500 focus:ring-orange-500" required>
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="number_of_guests" class="block text-sm font-medium text-slate-700 mb-2">Number of Guests</label>
-                        <input type="number" name="number_of_guests" id="number_of_guests" 
-                               value="{{ old('number_of_guests', $guests ?? 1) }}" 
-                               min="1" max="{{ $room->capacity }}"
-                               class="w-full border-slate-300 rounded-xl shadow-sm focus:border-orange-500 focus:ring-orange-500" required>
-                        <p class="mt-1 text-sm text-slate-500">Maximum capacity: {{ $room->capacity }} guests</p>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="guest_name" class="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
-                        <input type="text" name="guest_name" id="guest_name" 
-                               value="{{ old('guest_name', auth()->user()?->name ?? '') }}"
-                               class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500" required>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="guest_email" class="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
-                        <input type="email" name="guest_email" id="guest_email" 
-                               value="{{ old('guest_email', auth()->user()?->email ?? '') }}"
-                               class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500" required>
-                    </div>
-
-                    @guest
-                    <div class="mb-4">
-                        <label for="guest_address" class="block text-sm font-medium text-slate-700 mb-2">Full Address</label>
-                        <textarea name="guest_address" id="guest_address" rows="2"
-                               class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500" required>{{ old('guest_address') }}</textarea>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="guest_passport_id" class="block text-sm font-medium text-slate-700 mb-2">Passport ID / National ID Number</label>
-                        <input type="text" name="guest_passport_id" id="guest_passport_id" 
-                               value="{{ old('guest_passport_id') }}"
-                               class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500" required>
-                    </div>
-                    
-                    <div class="bg-primary-50 rounded-xl p-4 mb-4 border border-primary-200">
-                        <h3 class="text-sm font-semibold text-primary-900 mb-3">Create an Account (Optional)</h3>
-                        <p class="text-xs text-primary-700 mb-3">Set a password to manage this booking later and make future bookings easier.</p>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="password" class="block text-xs font-medium text-slate-700 mb-1">Password</label>
-                                <input type="password" name="password" id="password" 
-                                       class="w-full border-slate-300 rounded-lg shadow-sm focus:border-accent-500 focus:ring-accent-500 py-2">
+                            <label for="check_in" class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Check-in Date</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                </span>
+                                <input type="date" name="check_in" id="check_in" 
+                                       value="{{ old('check_in', $checkIn) }}" 
+                                       min="{{ date('Y-m-d') }}"
+                                       class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-accent-500 focus:border-accent-500 transition-all font-medium text-slate-900" required>
                             </div>
-                            <div>
-                                <label for="password_confirmation" class="block text-xs font-medium text-slate-700 mb-1">Confirm Password</label>
-                                <input type="password" name="password_confirmation" id="password_confirmation" 
-                                       class="w-full border-slate-300 rounded-lg shadow-sm focus:border-accent-500 focus:ring-accent-500 py-2">
+                        </div>
+                        <div>
+                            <label for="check_out" class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Check-out Date</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                </span>
+                                <input type="date" name="check_out" id="check_out" 
+                                       value="{{ old('check_out', $checkOut) }}"
+                                       min="{{ date('Y-m-d', strtotime('+1 day')) }}"
+                                       class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-accent-500 focus:border-accent-500 transition-all font-medium text-slate-900" required>
                             </div>
                         </div>
                     </div>
-                    @endguest
 
+                    <!-- Personal Info -->
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="md:col-span-1">
+                                <label for="guest_name" class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Full Name</label>
+                                <input type="text" name="guest_name" id="guest_name" 
+                                       value="{{ old('guest_name', auth()->user()?->name ?? '') }}"
+                                       class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-accent-500 focus:border-accent-500 transition-all text-slate-900" placeholder="e.g. John Doe" required>
+                            </div>
+                            <div class="md:col-span-1">
+                                <label for="number_of_guests" class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Number of Guests</label>
+                                <div class="relative">
+                                    <select name="number_of_guests" id="number_of_guests" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-accent-500 focus:border-accent-500 transition-all text-slate-900 appearance-none" required>
+                                        @for($i = 1; $i <= $room->capacity; $i++)
+                                            <option value="{{ $i }}" {{ old('number_of_guests', $guests ?? 1) == $i ? 'selected' : '' }}>{{ $i }} {{ $i > 1 ? 'Guests' : 'Guest' }}</option>
+                                        @endfor
+                                    </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                                        <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div>
+                            <label for="guest_email" class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Email Address</label>
+                            <input type="email" name="guest_email" id="guest_email" 
+                                   value="{{ old('guest_email', auth()->user()?->email ?? '') }}"
+                                   class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-accent-500 focus:border-accent-500 transition-all text-slate-900" placeholder="john@example.com" required>
+                        </div>
 
-                    <div class="mb-4">
-                        <label for="guest_phone" class="block text-sm font-medium text-slate-700 mb-2">Phone Number (Optional)</label>
-                        <input type="tel" name="guest_phone" id="guest_phone" 
-                               value="{{ old('guest_phone', auth()->user()?->phone ?? '') }}"
-                               class="w-full border-slate-300 rounded-xl shadow-sm focus:border-orange-500 focus:ring-orange-500">
+                        @guest
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <label for="guest_passport_id" class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Passport / National ID</label>
+                                <input type="text" name="guest_passport_id" id="guest_passport_id" 
+                                       value="{{ old('guest_passport_id') }}"
+                                       class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-accent-500 focus:border-accent-500 transition-all text-slate-900" placeholder="ID Number" required>
+                            </div>
+                            <div>
+                                <label for="guest_phone" class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Phone Number</label>
+                                <input type="tel" name="guest_phone" id="guest_phone" 
+                                       value="{{ old('guest_phone') }}"
+                                       class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-accent-500 focus:border-accent-500 transition-all text-slate-900" placeholder="+255 7xx xxx xxx">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="guest_address" class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Full Address</label>
+                            <textarea name="guest_address" id="guest_address" rows="2"
+                                   class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-accent-500 focus:border-accent-500 transition-all text-slate-900 resize-none" placeholder="Residential Address" required>{{ old('guest_address') }}</textarea>
+                        </div>
+                        
+                        <div class="bg-accent-50 rounded-2xl p-6 border border-accent-100 flex flex-col md:flex-row md:items-center gap-6 shadow-sm">
+                            <div class="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center text-accent-500 shadow-sm border border-accent-100">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-sm font-bold text-slate-900 mb-1">Secure Account Creation (Optional)</h3>
+                                <p class="text-xs text-slate-500 mb-3">Save your details for a faster checkout next time.</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <input type="password" name="password" id="password" placeholder="Password"
+                                           class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:border-accent-500 focus:ring-accent-500">
+                                    <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password"
+                                           class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:border-accent-500 focus:ring-accent-500">
+                                </div>
+                            </div>
+                        </div>
+                        @else
+                        <div>
+                            <label for="guest_phone" class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Phone Number (Optional)</label>
+                            <input type="tel" name="guest_phone" id="guest_phone" 
+                                   value="{{ old('guest_phone', auth()->user()?->phone ?? '') }}"
+                                   class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-accent-500 focus:border-accent-500 transition-all text-slate-900" placeholder="+255 7xx xxx xxx">
+                        </div>
+                        @endguest
                     </div>
 
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-slate-700 mb-3">Preferred Contact Method</label>
-                        <div class="grid grid-cols-3 gap-3">
-                            @foreach(['email' => ['label' => 'Email', 'icon' => 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'], 'phone' => ['label' => 'Phone Call', 'icon' => 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'], 'whatsapp' => ['label' => 'WhatsApp', 'icon' => 'M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z']] as $value => $option)
-                                <label class="relative cursor-pointer">
-                                    <input type="radio" name="contact_preference" value="{{ $value }}"
-                                        {{ old('contact_preference', 'email') === $value ? 'checked' : '' }}
-                                        class="peer sr-only">
-                                    <div class="flex flex-col items-center gap-2 p-3 border-2 border-slate-200 rounded-xl text-center transition-all peer-checked:border-orange-500 peer-checked:bg-orange-50 hover:border-orange-300">
-                                        <svg class="w-6 h-6 text-slate-400 peer-checked:text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $option['icon'] }}"/>
-                                        </svg>
-                                        <span class="text-xs font-medium text-slate-600">{{ $option['label'] }}</span>
+                    <!-- Preferences -->
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Preferred Contact Method</label>
+                            <div class="grid grid-cols-3 gap-4">
+                                @foreach(['email' => ['label' => 'Email', 'icon' => 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'], 'phone' => ['label' => 'Phone', 'icon' => 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'], 'whatsapp' => ['label' => 'WhatsApp', 'icon' => 'M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z']] as $value => $option)
+                                    <label class="relative cursor-pointer group">
+                                        <input type="radio" name="contact_preference" value="{{ $value }}"
+                                            {{ old('contact_preference', 'email') === $value ? 'checked' : '' }}
+                                            class="peer sr-only">
+                                        <div class="flex flex-col items-center gap-2 p-4 border-2 border-slate-100 rounded-2xl text-center transition-all peer-checked:border-accent-500 peer-checked:bg-accent-50 group-hover:bg-slate-50 shadow-sm">
+                                            <svg class="w-6 h-6 text-slate-400 peer-checked:text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $option['icon'] }}"/>
+                                            </svg>
+                                            <span class="text-xs font-bold text-slate-500 peer-checked:text-accent-700 uppercase tracking-widest">{{ $option['label'] }}</span>
+                                        </div>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="special_requests" class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Special Requests</label>
+                            <textarea name="special_requests" id="special_requests" rows="3"
+                                      class="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-accent-500 focus:border-accent-500 transition-all text-slate-900 resize-none"
+                                      placeholder="Any specific requirements for your stay?">{{ old('special_requests') }}</textarea>
+                        </div>
+                    </div>
+
+                    <!-- Payment -->
+                    <div class="space-y-4">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Select Payment Method</label>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            @foreach([
+                                'mpesa' => ['label' => 'M-Pesa', 'desc' => 'Instant Mobile Payment'],
+                                'card' => ['label' => 'Credit Card', 'desc' => 'Visa or Mastercard'],
+                                'arrival' => ['label' => 'On Arrival', 'desc' => 'Pay at the reception']
+                            ] as $pm => $dat)
+                                <label class="relative flex items-center gap-4 p-5 border-2 border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all shadow-sm group has-[:checked]:border-accent-500 has-[:checked]:bg-accent-50">
+                                    <input type="radio" name="payment_method" value="{{ $pm }}"
+                                        {{ old('payment_method', 'mpesa') === $pm ? 'checked' : '' }}
+                                        class="w-5 h-5 text-accent-500 border-slate-300 focus:ring-accent-500 shrink-0">
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-slate-800">{{ $dat['label'] }}</span>
+                                        <span class="text-[10px] text-slate-500 uppercase tracking-widest font-medium">{{ $dat['desc'] }}</span>
                                     </div>
                                 </label>
                             @endforeach
                         </div>
                     </div>
 
-                    <div class="mb-6">
-                        <label for="special_requests" class="block text-sm font-medium text-slate-700 mb-2">Special Requests (Optional)</label>
-                        <textarea name="special_requests" id="special_requests" rows="4"
-                                  class="w-full border-slate-300 rounded-xl shadow-sm focus:border-orange-500 focus:ring-orange-500"
-                                  placeholder="Any special requests or notes...">{{ old('special_requests') }}</textarea>
+                    <div class="pt-6 border-t border-slate-100">
+                        <button type="submit" class="w-full bg-accent-500 text-white px-8 py-5 rounded-2xl hover:bg-accent-600 transition-all font-bold text-xl shadow-xl shadow-accent-500/20 transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                            Confirm Your Reservation
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
                     </div>
-
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium text-slate-700 mb-3">Payment Method</label>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <!-- M-Pesa Option -->
-                            <label for="payment_mpesa" class="relative flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 hover:border-accent-300 transition-all has-[:checked]:border-accent-500 has-[:checked]:bg-accent-50">
-                                <input type="radio" name="payment_method" id="payment_mpesa" value="mpesa"
-                                    {{ old('payment_method', 'mpesa') === 'mpesa' ? 'checked' : '' }}
-                                    class="w-5 h-5 text-accent-500 border-slate-300 focus:ring-accent-500 shrink-0">
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-slate-800">M-Pesa</span>
-                                    <span class="text-xs text-slate-500">Pay securely via Mobile</span>
-                                </div>
-                            </label>
-
-                            <!-- Card Option -->
-                            <label for="payment_card" class="relative flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 hover:border-accent-300 transition-all has-[:checked]:border-accent-500 has-[:checked]:bg-accent-50">
-                                <input type="radio" name="payment_method" id="payment_card" value="card"
-                                    {{ old('payment_method', 'mpesa') === 'card' ? 'checked' : '' }}
-                                    class="w-5 h-5 text-accent-500 border-slate-300 focus:ring-accent-500 shrink-0">
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-slate-800">Card</span>
-                                    <span class="text-xs text-slate-500">Credit / Debit Card</span>
-                                </div>
-                            </label>
-
-                            <!-- Arrival Option -->
-                            <label for="payment_arrival" class="relative flex items-center gap-3 p-4 border-2 border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 hover:border-accent-300 transition-all has-[:checked]:border-accent-500 has-[:checked]:bg-accent-50">
-                                <input type="radio" name="payment_method" id="payment_arrival" value="arrival"
-                                    {{ old('payment_method', 'mpesa') === 'arrival' ? 'checked' : '' }}
-                                    class="w-5 h-5 text-accent-500 border-slate-300 focus:ring-accent-500 shrink-0">
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-slate-800">Arrival</span>
-                                    <span class="text-xs text-slate-500">Pay at the desk</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="w-full bg-accent-500 text-white px-6 py-3 rounded-xl hover:bg-accent-600 transition font-semibold shadow-lg">
-                        Proceed to Booking
-                    </button>
                 </form>
             </div>
         </div>
 
-        <!-- Room Summary -->
+        <!-- Room Summary Side -->
         <div class="lg:col-span-1">
-            <div class="bg-white rounded-xl shadow-lg p-6 sticky top-4">
-                <h3 class="text-xl font-semibold mb-4">Room Summary</h3>
-                
-                @if($room->image)
-                    <img src="{{ asset('storage/' . $room->image) }}" alt="{{ $room->name }}" class="w-full h-48 object-cover rounded-xl mb-4">
-                @else
-                    <div class="w-full h-48 bg-gray-200 rounded-xl mb-4 flex items-center justify-center">
-                        <span class="text-slate-400">No Image</span>
-                    </div>
-                @endif
-
-                <h4 class="font-semibold text-lg mb-2">{{ $room->name }}</h4>
-                <p class="text-sm text-slate-600 mb-4">{{ \Illuminate\Support\Str::limit($room->description, 100) }}</p>
-
-                <div class="border-t border-slate-200 pt-4">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-slate-600">Price per night:</span>
-                        <span class="font-semibold">${{ number_format($room->price_per_night, 2) }}</span>
-                    </div>
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-slate-600">Capacity:</span>
-                        <span class="font-semibold">{{ $room->capacity }} guests</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-slate-600">Type:</span>
-                        <span class="font-semibold">{{ $room->type }}</span>
+            <div class="bg-slate-900 rounded-3xl shadow-2xl p-0 sticky top-10 overflow-hidden border border-slate-800">
+                <div class="h-48 relative overflow-hidden">
+                    @if($room->image)
+                        <img src="{{ asset('storage/' . $room->image) }}" alt="{{ $room->name }}" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700">
+                    @else
+                        <div class="w-full h-full bg-slate-800 flex items-center justify-center">
+                            <svg class="w-12 h-12 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        </div>
+                    @endif
+                    <div class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-slate-900 to-transparent">
+                        <h4 class="text-2xl font-serif font-bold text-white">{{ $room->name }}</h4>
+                        <span class="text-accent-400 text-xs font-bold uppercase tracking-widest">{{ $room->type }}</span>
                     </div>
                 </div>
+                
+                <div class="p-8 space-y-6">
+                    <p class="text-slate-400 text-sm font-light leading-relaxed italic line-clamp-2">"{{ $room->description }}"</p>
+
+                    <div class="space-y-4 border-t border-slate-800 pt-6">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Base Rate</span>
+                            <span class="text-xl font-bold text-white">${{ number_format($room->price_per_night, 2) }}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Capacity</span>
+                            <span class="text-white font-medium">{{ $room->capacity }} Guests</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Amenities</span>
+                            <span class="text-accent-400 font-medium">Included</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-800/50 rounded-2xl p-5 border border-slate-800">
+                        <div class="flex items-center gap-3 text-slate-300 text-xs mb-3">
+                            <svg class="w-4 h-4 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="font-medium">Total will be calculated at checkout</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                <h5 class="text-sm font-bold text-slate-900 mb-2 uppercase tracking-tight">Booking Policy</h5>
+                <p class="text-xs text-slate-500 leading-relaxed italic">By proceeding, you agree to our terms of service and cancellation policies. We look forward to hosting you at Salpat Camp.</p>
             </div>
         </div>
     </div>

@@ -42,19 +42,21 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 font-semibold">
-                                    {{ $order->service->name }}</td>
+                                    {{ $order->service->name }}
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{{ $order->quantity }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                            @if($order->status == 'pending') bg-yellow-100 text-yellow-800 
-                                            @elseif($order->status == 'confirmed') bg-primary-100 text-primary-800 
-                                            @elseif($order->status == 'completed') bg-emerald-100 text-emerald-800 
-                                            @else bg-red-100 text-red-800 @endif">
+                                                    @if($order->status == 'pending') bg-yellow-100 text-yellow-800 
+                                                    @elseif($order->status == 'confirmed') bg-primary-100 text-primary-800 
+                                                    @elseif($order->status == 'completed') bg-emerald-100 text-emerald-800 
+                                                    @else bg-red-100 text-red-800 @endif">
                                         {{ ucfirst($order->status) }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                                    {{ $order->requested_at->diffForHumans() }}</td>
+                                    {{ $order->requested_at->diffForHumans() }}
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <form action="{{ route('barkeeper.orders.update', $order) }}" method="POST"
                                         class="inline-block">
@@ -74,6 +76,20 @@
                                     </form>
                                 </td>
                             </tr>
+                            @if($order->comment)
+                                <tr class="bg-amber-50/30">
+                                    <td colspan="7" class="px-6 py-2">
+                                        <div class="flex items-start gap-2">
+                                            <svg class="w-4 h-4 text-amber-500 mt-0.5 shrink-0" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                                            </svg>
+                                            <span class="text-xs font-medium text-slate-600 italic">"{{ $order->comment }}"</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endif
                         @empty
                             <tr>
                                 <td colspan="7" class="px-6 py-12 text-center text-slate-400 italic">No drink orders found.</td>
@@ -104,7 +120,8 @@
                             <p class="text-sm font-bold text-slate-900">{{ $report->title }}</p>
                             <p class="text-xs text-slate-500">
                                 {{ \Carbon\Carbon::parse($report->report_date)->format('M d, Y') }} • <span
-                                    class="capitalize">{{ $report->report_type }}</span></p>
+                                    class="capitalize">{{ $report->report_type }}</span>
+                            </p>
                         </div>
                         <a href="{{ route('staff_reports.show', $report) }}"
                             class="text-primary-600 hover:text-primary-700 font-semibold text-sm">View Details</a>

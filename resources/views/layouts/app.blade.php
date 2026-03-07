@@ -301,168 +301,162 @@
 
     <!-- Footer -->
     <!-- Footer Start -->
-    <footer class="bg-primary-600 text-white mt-auto pt-20 pb-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+    <footer
+        class="bg-slate-900 border-t-4 border-accent-500 text-slate-300 mt-auto pt-20 pb-12 relative overflow-hidden">
+        <!-- Background Accent -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-primary-900/20 rounded-full blur-[100px] pointer-events-none">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
                 <!-- Column 1: Brand & Socials -->
-                <div class="space-y-6">
-                    <a href="{{ route('home') }}" class="inline-block">
-                        <div class="flex items-center gap-3">
+                <div class="space-y-6 flex flex-col items-center md:items-start text-center md:text-left">
+                    <a href="{{ route('home') }}" class="inline-block group">
+                        <div class="flex items-center gap-4">
                             <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Salpat Camp Logo"
-                                class="h-16 w-16 bg-white rounded-full p-1 object-contain border-2 border-white/20">
-                            <h1 class="text-2xl font-serif font-bold text-white uppercase tracking-widest mb-0">Salpat
-                                Camp</h1>
+                                class="h-16 w-16 bg-white rounded-full p-1.5 object-contain shadow-md group-hover:shadow-accent-500/20 transition-all duration-300">
+                            <h1
+                                class="text-2xl font-serif font-bold text-white tracking-widest uppercase m-0 drop-shadow-sm group-hover:text-accent-400 transition-colors">
+                                Salpat Camp</h1>
                         </div>
                     </a>
-                    <p class="text-primary-100 text-sm leading-relaxed">
-                        Salpat Camp is a comfortable mid-range lodge in Moshi, providing quality accommodation for
-                        tourists, business travelers, and families.
+                    <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
+                        Experience the spirit of adventure and the authentic comfort of premium hospitality in the heart
+                        of Moshi, near the majestic Kilimanjaro.
                     </p>
-                    <div class="flex gap-3 pt-2">
-                        <a href="#"
-                            class="w-10 h-10 rounded-full bg-primary-500/50 flex items-center justify-center hover:bg-accent-500 hover:scale-110 transition-all duration-300"><svg
-                                class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <div class="flex gap-4 pt-2">
+                        <a href="#" aria-label="Facebook"
+                            class="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 text-slate-400 flex items-center justify-center hover:bg-accent-500 hover:text-white hover:border-accent-500 hover:-translate-y-1 transition-all duration-300 shadow-sm"><svg
+                                class="w-4 h-4" transform="scale(1.1)" fill="currentColor" viewBox="0 0 24 24">
                                 <path
                                     d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
                             </svg></a>
-                        <a href="#"
-                            class="w-10 h-10 rounded-full bg-primary-500/50 flex items-center justify-center hover:bg-accent-500 hover:scale-110 transition-all duration-300"><svg
-                                class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <a href="#" aria-label="Instagram"
+                            class="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 text-slate-400 flex items-center justify-center hover:bg-accent-500 hover:text-white hover:border-accent-500 hover:-translate-y-1 transition-all duration-300 shadow-sm"><svg
+                                class="w-4 h-4" transform="scale(1.2)" fill="currentColor" viewBox="0 0 24 24">
                                 <path
-                                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                                33:
                             </svg></a>
-                        <a href="#"
-                            class="w-10 h-10 rounded-full bg-primary-500/50 flex items-center justify-center hover:bg-accent-500 hover:scale-110 transition-all duration-300"><svg
-                                class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        34: <a href="#" aria-label="LinkedIn" 35:
+                            class="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 text-slate-400 flex items-center justify-center hover:bg-accent-500 hover:text-white hover:border-accent-500 hover:-translate-y-1 transition-all duration-300 shadow-sm"><svg
+                                36: class="w-4 h-4" transform="scale(1.1)" fill="currentColor" viewBox="0 0 24 24">
+                                37:
                                 <path
-                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.5 12 3.5 12 3.5s-7.505 0-9.377.55a3.016 3.016 0 0 0-2.122 2.136C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.55 9.376.55 9.376.55s7.505 0 9.377-.55a3.016 3.016 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                                    d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
+                                38:
                             </svg></a>
+                        39:
                     </div>
+                    40:
                 </div>
-
-                <!-- Column 2: Quick Links -->
-                <div>
-                    <h6 class="text-white font-bold uppercase tracking-widest mb-8 text-sm relative inline-block">
-                        Quick Links
-                        <span class="absolute -bottom-2 left-0 w-8 h-1 bg-accent-500"></span>
-                    </h6>
-                    <ul class="space-y-4">
-                        <li><a href="{{ route('home') }}"
-                                class="text-sm text-primary-100 hover:text-accent-400 hover:translate-x-1 transition-all inline-flex items-center gap-2">Home</a>
-                        </li>
-                        <li><a href="{{ route('about') }}"
-                                class="text-sm text-primary-100 hover:text-accent-400 hover:translate-x-1 transition-all inline-flex items-center gap-2">About
-                                Us</a></li>
-                        <li><a href="{{ route('rooms.index') }}"
-                                class="text-sm text-primary-100 hover:text-accent-400 hover:translate-x-1 transition-all inline-flex items-center gap-2">Our
-                                Rooms</a></li>
-                        <li><a href="{{ route('gallery') }}"
-                                class="text-sm text-primary-100 hover:text-accent-400 hover:translate-x-1 transition-all inline-flex items-center gap-2">Gallery</a>
-                        </li>
-                        <li><a href="{{ route('contact') }}"
-                                class="text-sm text-primary-100 hover:text-accent-400 hover:translate-x-1 transition-all inline-flex items-center gap-2">Contact
-                                Us</a></li>
-                    </ul>
-                </div>
-
-                <!-- Column 3: Services -->
-                <div>
-                    <h6 class="text-white font-bold uppercase tracking-widest mb-8 text-sm relative inline-block">
-                        Our Amenities
-                        <span class="absolute -bottom-2 left-0 w-8 h-1 bg-accent-500"></span>
-                    </h6>
-                    <ul class="space-y-4">
-                        <li><span class="text-sm text-primary-100 flex items-center gap-2"><svg
-                                    class="w-4 h-4 text-accent-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg> Comfortable Rooms</span></li>
-                        <li><span class="text-sm text-primary-100 flex items-center gap-2"><svg
-                                    class="w-4 h-4 text-accent-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg> Daily Breakfast</span></li>
-                        <li><span class="text-sm text-primary-100 flex items-center gap-2"><svg
-                                    class="w-4 h-4 text-accent-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg> Free WiFi & Parking</span></li>
-                        <li><span class="text-sm text-primary-100 flex items-center gap-2"><svg
-                                    class="w-4 h-4 text-accent-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg> Airport Pickup</span></li>
-                    </ul>
-                </div>
-
-                <!-- Column 4: Contact -->
-                <div>
-                    <h6 class="text-white font-bold uppercase tracking-widest mb-8 text-sm relative inline-block">
-                        Contact Us
-                        <span class="absolute -bottom-2 left-0 w-8 h-1 bg-accent-500"></span>
-                    </h6>
-                    <div class="space-y-5">
-                        <div class="flex gap-4 items-start">
-                            <div
-                                class="w-10 h-10 rounded-lg bg-primary-500/50 flex items-center justify-center shrink-0">
-                                <svg class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                    </path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                </svg>
-                            </div>
-                            <p class="text-sm text-primary-100 pt-1 leading-relaxed">Falcon Street 1,
-                                Soweto<br>Moshi-Kilimanjaro, TZ</p>
-                        </div>
-                        <div class="flex gap-4 items-center">
-                            <div
-                                class="w-10 h-10 rounded-lg bg-primary-500/50 flex items-center justify-center shrink-0">
-                                <svg class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <p class="text-sm text-primary-100 font-medium">+255 0770307759</p>
-                        </div>
-                        <div class="flex gap-4 items-center">
-                            <div
-                                class="w-10 h-10 rounded-lg bg-primary-500/50 flex items-center justify-center shrink-0">
-                                <svg class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <p class="text-sm text-primary-100">salpatcamp@yahoo.com</p>
-                        </div>
-                    </div>
-                </div>
+                41:
+                42: <!-- Column 2: Quick Links -->
+                43: <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                    44: <h6 class="text-white font-serif font-bold tracking-wide mb-6 text-lg relative inline-block">
+                        45: Quick Links
+                        46: <span
+                            class="absolute -bottom-2 left-1/2 md:left-0 -translate-x-1/2 md:translate-x-0 w-8 h-1 bg-accent-500 rounded-full"></span>
+                        47: </h6>
+                    48: <ul class="space-y-3 w-full max-w-[200px]">
+                        49: <li><a href="{{ route('home') }}" 50:
+                                class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">Home</a>
+                            51: </li>
+                        52: <li><a href="{{ route('about') }}" 53:
+                                class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">About
+                                54: Us</a></li>
+                        55: <li><a href="{{ route('rooms.index') }}" 56:
+                                class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">Our
+                                57: Rooms</a></li>
+                        58: <li><a href="{{ route('gallery') }}" 59:
+                                class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">Gallery</a>
+                            60: </li>
+                        61: </ul>
+                    62: </div>
+                63:
+                64: <!-- Column 3: Contact Info -->
+                65: <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                    66: <h6 class="text-white font-serif font-bold tracking-wide mb-6 text-lg relative inline-block">
+                        67: Contact Us
+                        68: <span
+                            class="absolute -bottom-2 left-1/2 md:left-0 -translate-x-1/2 md:translate-x-0 w-8 h-1 bg-accent-500 rounded-full"></span>
+                        69: </h6>
+                    70: <ul class="space-y-4 max-w-xs">
+                        71: <li class="flex flex-col md:flex-row items-center md:items-start gap-3">
+                            72: <svg class="w-5 h-5 text-accent-500 shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                73: <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                </path>
+                                74: <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                75: </svg>
+                            76: <span class="text-sm text-slate-400 leading-relaxed">Falcon Street 1,
+                                Soweto<br>Moshi-Kilimanjaro, TZ</span>
+                            77: </li>
+                        78: <li class="flex flex-col md:flex-row items-center md:items-start gap-3">
+                            79: <svg class="w-5 h-5 text-accent-500 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                80: <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                </path>
+                                88: </svg>
+                            89: <a href="tel:+2550770307759"
+                                class="text-sm text-slate-400 hover:text-accent-400 transition-colors font-medium tracking-wide">+255
+                                0770307759</a>
+                            90: </li>
+                        91: <li class="flex flex-col md:flex-row items-center md:items-start gap-3">
+                            92: <svg class="w-5 h-5 text-accent-500 shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                93: <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                                94: </svg>
+                            95: <a href="mailto:salpatcamp@yahoo.com"
+                                class="text-sm text-slate-400 hover:text-accent-400 transition-colors">salpatcamp@yahoo.com</a>
+                            96: </li>
+                        97: </ul>
+                    98: </div>
+                99:
+                100: <!-- Column 4: Newsletter -->
+                101: <div
+                    class="flex flex-col items-center md:items-start text-center md:text-left bg-slate-800/50 p-6 rounded-2xl border border-slate-800 w-full">
+                    102: <h6 class="text-white font-serif font-bold tracking-wide mb-4 text-lg">
+                        103: Newsletter
+                        104: </h6>
+                    105: <p class="text-sm text-slate-400 mb-6 leading-relaxed">
+                        106: Subscribe to receive our latest updates, special offers, and news perfectly tailored to
+                        you.
+                        107: </p>
+                    108: <form class="w-full flex-col sm:flex-row md:flex-col lg:flex-row flex gap-2"
+                        onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
+                        109: <input type="email" placeholder="Your email address" required 110:
+                            class="w-full bg-slate-900 border-slate-700 text-white placeholder-slate-500 text-sm rounded-xl focus:ring-accent-500 focus:border-accent-500 px-4 py-3">
+                        111: <button type="submit"
+                            class="shrink-0 bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-3 rounded-xl transition-colors whitespace-nowrap shadow-md">
+                            112: Subscribe
+                            113: </button>
+                        114: </form>
+                    115: </div>
+                116:
             </div>
-
-            <!-- Bottom Copyright Row -->
-            <div class="border-t border-primary-500 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="text-sm text-primary-300 text-center md:text-left">
-                    &copy; {{ date('Y') }} <span class="text-white font-bold">Salpat Camp</span>. All Rights Reserved.
-                    <span class="block md:inline md:ml-2">| Designed with ❤️ for Kilimanjaro Lovers</span>
-                </div>
-                <div class="flex flex-wrap justify-center gap-8 text-sm">
-                    <a href="{{ route('home') }}" class="text-primary-100 hover:text-accent-400 transition">Terms</a>
-                    <a href="#" class="text-primary-100 hover:text-accent-400 transition">Privacy</a>
-                    <a href="#" class="text-primary-100 hover:text-accent-400 transition">Cookies</a>
-                    <a href="#" class="text-primary-100 hover:text-accent-400 transition">Help Center</a>
-                </div>
-            </div>
+            117:
+            118: <!-- Bottom Copyright Row -->
+            119: <div
+                class="border-t border-slate-800 pt-8 mt-12 flex flex-col md:flex-row justify-between items-center gap-6">
+                120: <div class="text-sm text-slate-500 text-center md:text-left font-medium">
+                    121: &copy; {{ date('Y') }} <span class="text-white">Salpat Camp</span>. All Rights Reserved.
+                    122: </div>
+                123: <div class="flex flex-wrap justify-center gap-6 text-sm">
+                    124: <a href="#" class="text-slate-500 font-medium hover:text-white transition-colors">Terms of
+                        Service</a>
+                    125: <a href="#" class="text-slate-500 font-medium hover:text-white transition-colors">Privacy
+                        Policy</a>
+                    126: </div>
+                127: </div>
+            128:
         </div>
+        129:
     </footer>
 </body>
 

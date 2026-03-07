@@ -37,6 +37,7 @@ class GuestController extends Controller
             'service_id' => 'required|exists:services,id',
             'room_id' => 'nullable|exists:rooms,id',
             'quantity' => 'required|integer|min:1',
+            'comment' => 'nullable|string|max:500',
         ]);
 
         $service = Service::find($request->service_id);
@@ -49,6 +50,7 @@ class GuestController extends Controller
             'total_price' => $service->price * $request->quantity,
             'status' => 'pending',
             'requested_at' => now(),
+            'comment' => $request->comment,
         ]);
 
         // Notify relevant staff

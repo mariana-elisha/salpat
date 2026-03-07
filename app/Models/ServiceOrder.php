@@ -17,6 +17,7 @@ class ServiceOrder extends Model
         'total_price',
         'status',
         'requested_at',
+        'comment',
     ];
 
     protected $casts = [
