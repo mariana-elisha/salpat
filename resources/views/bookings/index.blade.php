@@ -87,7 +87,8 @@
                                     @endif
                                 </td>
                                 <td class="whitespace-nowrap px-6 py-4 text-sm font-semibold text-slate-900">
-                                    ${{ number_format($booking->total_price ?? 0, 2) }}
+                                    <div>${{ number_format($booking->total_price ?? 0, 2) }}</div>
+                                    <div class="text-[10px] text-slate-500 font-bold uppercase">{{ number_format(($booking->total_price ?? 0) * \App\Models\Room::USD_TO_TZS, 0) }} TZS</div>
                                 </td>
                                 <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">
                                     <a href="{{ route('bookings.show', $booking) }}"

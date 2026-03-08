@@ -98,6 +98,21 @@
                                     </button>
                                 </form>
                             @endif
+                            @if($booking->payment_status === 'pending')
+                                <form action="{{ route('bookings.update-payment-status', $booking) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="payment_status" value="paid">
+                                    <button type="submit"
+                                        class="inline-flex items-center px-4 py-2 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                        <svg class="-ml-1 mr-2 h-5 w-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z">
+                                            </path>
+                                        </svg>
+                                        Mark as Paid
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 @endif
@@ -125,6 +140,16 @@
                                         @else bg-slate-100 text-slate-800
                                         @endif">
                                     {{ ucfirst($booking->status) }}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="text-sm text-slate-500">Payment:</span>
+                                <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold
+                                        @if($booking->payment_status == 'paid') bg-emerald-100 text-emerald-800
+                                        @elseif($booking->payment_status == 'pending') bg-rose-100 text-rose-800
+                                        @else bg-slate-100 text-slate-800
+                                        @endif">
+                                    {{ ucfirst($booking->payment_status) }} ({{ ucfirst($booking->payment_method) }})
                                 </span>
                             </div>
                         </div>
@@ -190,6 +215,7 @@
                 <div class="bg-slate-50 rounded-lg p-4">
                     <p class="text-sm text-slate-500 mb-1">Total Price</p>
                     <p class="text-xl font-bold text-orange-600">${{ number_format($booking->total_price, 2) }}</p>
+                    <p class="text-xs text-orange-400 font-bold uppercase">{{ number_format($booking->total_price * \App\Models\Room::USD_TO_TZS, 0) }} TZS</p>
                     <p class="text-xs text-slate-500 mt-1">{{ $booking->number_of_nights }} night(s)</p>
                 </div>
             </div>

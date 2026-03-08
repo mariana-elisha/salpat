@@ -152,9 +152,10 @@
                             <p class="text-[10px] text-accent-400 uppercase tracking-[0.2em] font-bold mb-2">Luxury Experience
                             </p>
                             <div class="flex items-baseline gap-2">
-                                <span
-                                    class="text-5xl font-serif font-bold">${{ number_format($room->price_per_night, 0) }}</span>
-                                <span class="text-slate-400 font-light tracking-wide text-sm">/ night</span>
+                                <span class="text-5xl font-serif font-bold text-white">${{ number_format($room->price_per_night, 0) }}</span>
+                            </div>
+                            <div class="text-accent-400 font-bold text-lg mt-1">
+                                {{ number_format($room->tzs_price, 0) }} TZS <span class="text-slate-400 font-light tracking-wide text-xs">/ night</span>
                             </div>
                         </div>
 

@@ -12,7 +12,7 @@
         </div>
 
         <form action="{{ route('user.services.store') }}" method="POST" class="space-y-8"
-            x-data="{ selectedService: null, quantity: 1 }">
+            x-data="{ selectedService: null, quantity: 1, price: 0, conversionRate: {{ \App\Models\Service::USD_TO_TZS }} }">
             @csrf
 
             <!-- Room Selection (if confirmed bookings exist) -->
@@ -59,7 +59,10 @@
                                         <h3 class="font-bold text-slate-900">{{ $service->name }}</h3>
                                         <p class="text-xs text-slate-500 mt-1">{{ $service->description }}</p>
                                     </div>
-                                    <span class="text-accent-600 font-bold">${{ number_format($service->price, 2) }}</span>
+                                    <div class="text-right">
+                                        <div class="text-accent-600 font-bold">${{ number_format($service->price, 2) }}</div>
+                                        <div class="text-[10px] text-slate-500 font-bold uppercase">{{ number_format($service->tzs_price, 0) }} TZS</div>
+                                    </div>
                                 </div>
                             </label>
                         @endforeach
@@ -86,6 +89,7 @@
                         <div class="text-center md:text-right">
                             <p class="text-xs opacity-60 uppercase tracking-widest">Total Price</p>
                             <p class="text-3xl font-bold text-accent-400" x-text="'$' + (price * quantity).toFixed(2)"></p>
+                            <p class="text-sm font-bold opacity-80" x-text="((price * quantity) * conversionRate).toLocaleString() + ' TZS'"></p>
                         </div>
                     </div>
 

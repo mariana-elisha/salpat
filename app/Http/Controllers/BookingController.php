@@ -134,10 +134,14 @@ class BookingController extends Controller
         if (in_array($request->payment_method, ['mpesa', 'card'])) {
             return redirect()->route('bookings.payment', $booking)
                 ->with('info', 'Please complete your payment to confirm the booking.');
+        } elseif ($request->payment_method === 'arrival') {
+            return redirect()->route('bookings.payment', $booking)
+                ->with('success', 'Booking created successfully! Please review the arrival details below.');
         }
 
-        return redirect()->route('bookings.show', $booking)
-            ->with('success', 'Booking created successfully! A confirmation email has been sent. You can pay on arrival.');
+        // Fallback, though all payment methods should be covered by the above conditions
+        return redirect()->route('bookings.payment', $booking)
+            ->with('info', 'Please complete your payment to confirm the booking.');
     }
 
     /**
@@ -295,5 +299,32 @@ class BookingController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Booking status updated successfully.');
+    }
+
+    /**
+     * Update payment status (admin/receptionist only).
+     */
+    public function updatePaymentStatus(Request $request, Booking $booking)
+    {
+        $user = auth()->user();
+        if (!$user || (!$user->isAdmin() && !$user->isReceptionist())) {
+            abort(403, 'Unauthorized.');
+        }
+
+        $request->validate([
+            'payment_status' => 'required|in:pending,paid,refunded',
+        ]);
+
+        $oldStatus = $booking->payment_status;
+        $booking->update(['payment_status' => $request->payment_status]);
+
+        // Log Activity
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'Payment Status Updated',
+            'description' => "Booking reference {$booking->booking_reference} payment status updated from {$oldStatus} to {$request->payment_status}.",
+        ]);
+
+        return redirect()->back()->with('success', 'Payment status updated successfully.');
     }
 }

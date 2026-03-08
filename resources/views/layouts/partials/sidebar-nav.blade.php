@@ -237,6 +237,17 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('manager.rooms.index') }}"
+                class="{{ request()->routeIs('*.rooms.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="{{ request()->routeIs('*.rooms.*') ? 'text-white' : 'text-primary-400 group-hover:text-white' }} h-6 w-6 shrink-0 transition-colors"
+                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819" />
+                </svg>
+                Manage Rooms
+            </a>
+        </li>
+        <li>
             <a href="{{ route('staff_reports.index') }}"
                 class="{{ request()->routeIs('staff_reports.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
                 <svg class="h-6 w-6 shrink-0 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24"
@@ -321,6 +332,16 @@
                         d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
                 Browse Rooms
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('feedback.create') }}"
+                class="{{ request()->routeIs('feedback.*') ? 'bg-primary-800 text-white' : 'text-primary-100 hover:text-white hover:bg-primary-800' }} group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold transition-colors">
+                <svg class="h-6 w-6 text-primary-400 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+                </svg>
+                Give Feedback
             </a>
         </li>
     @endif

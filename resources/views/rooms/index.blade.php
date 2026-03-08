@@ -75,10 +75,10 @@
                         </div>
 
                         <div class="p-8 flex flex-col flex-grow relative bg-white">
-                            <!-- Floating Price Tag -->
                             <div class="absolute -top-6 right-8 bg-accent-500 text-white shadow-lg shadow-accent-500/30 px-4 py-2 rounded-xl flex flex-col items-center">
                                 <span class="text-xs font-medium uppercase tracking-widest opacity-80 mb-0.5">Per Night</span>
                                 <span class="text-2xl font-bold leading-none">${{ number_format($room->price_per_night, 0) }}</span>
+                                <span class="text-[10px] font-bold mt-1 opacity-90">{{ number_format($room->tzs_price, 0) }} TZS</span>
                             </div>
 
                             <h3 class="text-2xl font-serif font-bold text-slate-900 mb-3 group-hover:text-accent-600 transition-colors pr-16">

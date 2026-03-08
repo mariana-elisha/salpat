@@ -137,10 +137,15 @@
                             <div class="flex items-end justify-between mt-auto pt-6 border-t border-slate-100">
                                 <div>
                                     <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block mb-1">Starting from</span>
-                                    <div class="flex items-baseline gap-1">
-                                        <span
-                                            class="text-3xl font-bold text-slate-900">${{ number_format($room->price_per_night, 0) }}</span>
-                                        <span class="text-slate-500 font-medium">/night</span>
+                                    <div class="flex flex-col">
+                                        <div class="flex items-baseline gap-1">
+                                            <span
+                                                class="text-3xl font-bold text-slate-900">${{ number_format($room->price_per_night, 0) }}</span>
+                                            <span class="text-slate-500 font-medium">/night</span>
+                                        </div>
+                                        <div class="text-accent-600 font-bold text-xs">
+                                            {{ number_format($room->tzs_price, 0) }} TZS
+                                        </div>
                                     </div>
                                 </div>
                                 <a href="{{ route('bookings.create', $room) }}"

@@ -89,8 +89,9 @@
                             class="px-6 py-6 text-right text-xl font-bold uppercase tracking-widest border-t border-white/10">
                             Grand Total</td>
                         <td
-                            class="px-6 py-6 text-right text-4xl font-black text-accent-400 font-mono border-t border-white/10 decoration-accent-400">
-                            ${{ number_format($grandTotal, 2) }}
+                            class="px-6 py-6 text-right font-black border-t border-white/10 decoration-accent-400">
+                            <div class="text-4xl text-accent-400 font-mono">${{ number_format($grandTotal, 2) }}</div>
+                            <div class="text-sm text-slate-400 mt-1 uppercase tracking-tighter">{{ number_format($grandTotal * \App\Models\Room::USD_TO_TZS, 0) }} TZS</div>
                         </td>
                     </tr>
                 </tfoot>

@@ -26,7 +26,8 @@ class GuestFeedbackController extends Controller
     public function create(Request $request)
     {
         $bookingRef = $request->query('ref');
-        return view('feedback.create', compact('bookingRef'));
+        $guestName = auth()->check() ? auth()->user()->name : null;
+        return view('feedback.create', compact('bookingRef', 'guestName'));
     }
 
     /**
@@ -43,7 +44,7 @@ class GuestFeedbackController extends Controller
 
         $bookingId = null;
         if ($request->booking_reference) {
-            $booking = Booking::where('booking_reference', '=', $request->booking_reference)->first();
+            $booking = Booking::where('booking_reference', $request->booking_reference)->first();
             if ($booking) {
                 // If the booking exists, link it
                 $bookingId = $booking->id;

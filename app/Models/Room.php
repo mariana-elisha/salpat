@@ -9,7 +9,18 @@ class Room extends Model
 {
     use HasFactory;
 
+    public const USD_TO_TZS = 2800;
+
+    /**
+     * Get the price converted to TZS.
+     */
+    public function getTzsPriceAttribute()
+    {
+        return $this->price_per_night * self::USD_TO_TZS;
+    }
+
     protected $fillable = [
+        'room_number',
         'name',
         'description',
         'type',

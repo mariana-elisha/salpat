@@ -10,7 +10,11 @@
                     {{ $room->name }}</h2>
             </div>
             <div class="mt-4 flex md:ml-4 md:mt-0">
-                <a href="{{ auth()->user()->isAdmin() ? route('admin.rooms.index') : route('receptionist.rooms.index') }}"
+                @php
+                    $backRoute = auth()->user()->isAdmin() ? route('admin.rooms.index') : 
+                               (auth()->user()->isManager() ? route('manager.rooms.index') : route('receptionist.rooms.index'));
+                @endphp
+                <a href="{{ $backRoute }}"
                     class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 hover:bg-slate-50">
                     Back to List
                 </a>
@@ -19,7 +23,8 @@
 
         <div class="bg-white shadow-sm ring-1 ring-slate-900/5 sm:rounded-xl md:col-span-2">
             @php
-                $updateRoute = auth()->user()->isAdmin() ? route('admin.rooms.update', $room) : route('receptionist.rooms.update', $room);
+                $updateRoute = auth()->user()->isAdmin() ? route('admin.rooms.update', $room) : 
+                             (auth()->user()->isManager() ? route('manager.rooms.update', $room) : route('receptionist.rooms.update', $room));
             @endphp
             <form action="{{ $updateRoute }}" method="POST" enctype="multipart/form-data">
                 @csrf

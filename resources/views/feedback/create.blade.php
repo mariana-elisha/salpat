@@ -30,7 +30,7 @@
                             <div>
                                 <label for="guest_name" class="block text-sm font-semibold text-slate-700 mb-2">Full Name
                                     <span class="text-rose-500">*</span></label>
-                                <input type="text" id="guest_name" name="guest_name" value="{{ old('guest_name') }}"
+                                <input type="text" id="guest_name" name="guest_name" value="{{ old('guest_name', $guestName) }}"
                                     required
                                     class="w-full rounded-xl border-slate-300 focus:border-accent-500 focus:ring-accent-500 shadow-sm px-4 py-3"
                                     placeholder="Jane Doe">

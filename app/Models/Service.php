@@ -9,6 +9,16 @@ class Service extends Model
 {
     use HasFactory;
 
+    public const USD_TO_TZS = 2800;
+
+    /**
+     * Get the price converted to TZS.
+     */
+    public function getTzsPriceAttribute()
+    {
+        return $this->price * self::USD_TO_TZS;
+    }
+
     protected $fillable = [
         'name',
         'type',

@@ -61,6 +61,7 @@ Route::get('/bookings/{booking}/payment', [BookingController::class, 'payment'])
 Route::get('/bookings/{booking}/payment/processing', [BookingController::class, 'paymentProcessing'])->name('bookings.payment.processing');
 Route::post('/bookings/{booking}/payment', [BookingController::class, 'processPayment'])->name('bookings.payment.process');
 Route::patch('/bookings/{booking}/status', [BookingController::class, 'updateStatus'])->name('bookings.update-status');
+Route::patch('/bookings/{booking}/payment-status', [BookingController::class, 'updatePaymentStatus'])->name('bookings.update-payment-status');
 
 // Admin panel
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -108,13 +109,15 @@ Route::middleware(['auth', 'role:barkeeper'])->prefix('barkeeper')->name('barkee
 // Housekeeping panel
 Route::middleware(['auth', 'role:housekeeping'])->prefix('housekeeping')->name('housekeeping.')->group(function () {
     Route::get('/dashboard', [HousekeepingController::class, 'index'])->name('dashboard');
-    Route::patch('/rooms/{room}/status', [HousekeepingController::class, 'updateRoomStatus'])->name('rooms.update');
-    Route::patch('/orders/{order}/status', [HousekeepingController::class, 'updateOrderStatus'])->name('orders.update');
+    Route::patch('/rooms/{room}', [HousekeepingController::class, 'updateRoomStatus'])->name('rooms.update');
+    Route::post('/rooms/{room}/consult', [HousekeepingController::class, 'consultReceptionist'])->name('rooms.consult');
+    Route::patch('/orders/{order}', [HousekeepingController::class, 'updateOrderStatus'])->name('orders.update');
 });
 
 // Manager panel
 Route::middleware(['auth', 'role:manager'])->prefix('manager')->name('manager.')->group(function () {
     Route::get('/dashboard', [ManagerController::class, 'index'])->name('dashboard');
+    Route::resource('rooms', RoomManagementController::class);
     Route::resource('galleries', \App\Http\Controllers\Admin\GalleryController::class);
     Route::get('/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
     Route::get('/contact-messages', [\App\Http\Controllers\ContactMessageController::class, 'index'])->name('contact_messages.index');

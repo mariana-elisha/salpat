@@ -64,7 +64,9 @@ class RoomManagementController extends Controller
             'description' => "Admin created a new room: {$room->name}.",
         ]);
 
-        return redirect()->route('admin.rooms.index')
+        $redirectRoute = auth()->user()->isAdmin() ? 'admin.rooms.index' : (auth()->user()->isManager() ? 'manager.rooms.index' : 'receptionist.rooms.index');
+
+        return redirect()->route($redirectRoute)
             ->with('success', 'Room created successfully.');
     }
 
@@ -91,7 +93,8 @@ class RoomManagementController extends Controller
             'amenities' => 'nullable|array',
         ]);
 
-        $data = $request->all();
+        $data = $request->except(['image', 'is_available']);
+        $data['is_available'] = $request->has('is_available');
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -103,8 +106,6 @@ class RoomManagementController extends Controller
             $data['image'] = $path;
         }
 
-        $data['is_available'] = $request->has('is_available');
-
         $room->update($data);
 
         \App\Models\ActivityLog::create([
@@ -113,7 +114,9 @@ class RoomManagementController extends Controller
             'description' => "Admin updated room details: {$room->name}.",
         ]);
 
-        return redirect()->route('admin.rooms.index')
+        $redirectRoute = auth()->user()->isAdmin() ? 'admin.rooms.index' : (auth()->user()->isManager() ? 'manager.rooms.index' : 'receptionist.rooms.index');
+
+        return redirect()->route($redirectRoute)
             ->with('success', 'Room updated successfully.');
     }
 
@@ -135,7 +138,9 @@ class RoomManagementController extends Controller
             'description' => "Admin deleted room: {$roomName}.",
         ]);
 
-        return redirect()->route('admin.rooms.index')
+        $redirectRoute = auth()->user()->isAdmin() ? 'admin.rooms.index' : (auth()->user()->isManager() ? 'manager.rooms.index' : 'receptionist.rooms.index');
+
+        return redirect()->route($redirectRoute)
             ->with('success', 'Room deleted successfully.');
     }
 }

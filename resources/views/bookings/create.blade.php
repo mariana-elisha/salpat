@@ -15,21 +15,26 @@
             </div>
             <div class="bg-slate-800/80 backdrop-blur-md border border-slate-700 p-4 rounded-2xl flex flex-col items-center justify-center shrink-0">
                 <span class="text-sm text-slate-400 font-medium uppercase tracking-wider mb-1">Rate</span>
-                <div class="flex items-baseline gap-1">
-                    <span class="text-3xl md:text-4xl font-bold text-white">${{ number_format($room->price_per_night, 2) }}</span>
-                    <span class="text-slate-400 font-medium">/night</span>
+                <div class="flex flex-col items-center">
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-3xl md:text-4xl font-bold text-white">${{ number_format($room->price_per_night, 2) }}</span>
+                        <span class="text-slate-400 font-medium">/night</span>
+                    </div>
+                    <div class="text-accent-400 font-bold text-sm">
+                        {{ number_format($room->tzs_price, 0) }} TZS / night
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-accent-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-        <div class="absolute -top-24 -left-24 w-64 h-64 bg-primary-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-accent-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
+        <div class="absolute -top-24 -left-24 w-64 h-64 bg-primary-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Booking Form -->
         <div class="lg:col-span-2">
             <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 border border-slate-100 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-bl-full opacity-50"></div>
+                <div class="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-bl-full opacity-50 pointer-events-none"></div>
                 
                 <h2 class="text-3xl font-serif font-bold text-slate-900 mb-8 relative z-10">Guest Details</h2>
                 
@@ -43,7 +48,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('bookings.store') }}" method="POST" class="space-y-8 relative z-10">
+                <form action="{{ route('bookings.store') }}" method="POST" class="space-y-8 relative z-10" id="bookingForm">
                     @csrf
                     <input type="hidden" name="room_id" value="{{ $room->id }}">
                     
@@ -129,7 +134,7 @@
                         </div>
                         
                         <div class="bg-accent-50 rounded-2xl p-6 border border-accent-100 flex flex-col md:flex-row md:items-center gap-6 shadow-sm">
-                            <div class="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center text-accent-500 shadow-sm border border-accent-100">
+                            <div class="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center text-accent-500 shadow-sm border border-accent-100" style="pointer-events: none;">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                             </div>
                             <div class="flex-grow">
@@ -157,17 +162,22 @@
                     <div class="space-y-6">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Preferred Contact Method</label>
-                            <div class="grid grid-cols-3 gap-4">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 @foreach(['email' => ['label' => 'Email', 'icon' => 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'], 'phone' => ['label' => 'Phone', 'icon' => 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'], 'whatsapp' => ['label' => 'WhatsApp', 'icon' => 'M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z']] as $value => $option)
-                                    <label class="relative cursor-pointer group">
-                                        <input type="radio" name="contact_preference" value="{{ $value }}"
+                                    <label class="block cursor-pointer group">
+                                        <input type="radio" name="contact_preference" value="{{ $value }}" id="contact_{{ $value }}"
                                             {{ old('contact_preference', 'email') === $value ? 'checked' : '' }}
-                                            class="peer sr-only">
-                                        <div class="flex flex-col items-center gap-2 p-4 border-2 border-slate-100 rounded-2xl text-center transition-all peer-checked:border-accent-500 peer-checked:bg-accent-50 group-hover:bg-slate-50 shadow-sm">
-                                            <svg class="w-6 h-6 text-slate-400 peer-checked:text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $option['icon'] }}"/>
-                                            </svg>
-                                            <span class="text-xs font-bold text-slate-500 peer-checked:text-accent-700 uppercase tracking-widest">{{ $option['label'] }}</span>
+                                            class="peer absolute opacity-0 w-px h-px">
+                                        <div class="flex flex-col items-center gap-3 p-5 border-2 border-slate-100 rounded-2xl text-center transition-all peer-checked:border-accent-500 peer-checked:bg-accent-50 group-hover:bg-slate-50 shadow-sm">
+                                            <div class="w-6 h-6 border-2 border-slate-300 rounded-full flex items-center justify-center peer-checked:border-accent-500 transition-colors">
+                                                <div class="w-3 h-3 bg-accent-500 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+                                            </div>
+                                            <div class="flex flex-col items-center gap-1">
+                                                <svg class="w-8 h-8 text-slate-400 peer-checked:text-accent-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="pointer-events: none;">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $option['icon'] }}"/>
+                                                </svg>
+                                                <span class="text-xs font-bold text-slate-500 peer-checked:text-accent-700 uppercase tracking-widest">{{ $option['label'] }}</span>
+                                            </div>
                                         </div>
                                     </label>
                                 @endforeach
@@ -191,13 +201,18 @@
                                 'card' => ['label' => 'Credit Card', 'desc' => 'Visa or Mastercard'],
                                 'arrival' => ['label' => 'On Arrival', 'desc' => 'Pay at the reception']
                             ] as $pm => $dat)
-                                <label class="relative flex items-center gap-4 p-5 border-2 border-slate-100 rounded-2xl cursor-pointer hover:bg-slate-50 transition-all shadow-sm group has-[:checked]:border-accent-500 has-[:checked]:bg-accent-50">
-                                    <input type="radio" name="payment_method" value="{{ $pm }}"
+                                <label class="block cursor-pointer group">
+                                    <input type="radio" name="payment_method" value="{{ $pm }}" id="pay_{{ $pm }}"
                                         {{ old('payment_method', 'mpesa') === $pm ? 'checked' : '' }}
-                                        class="w-5 h-5 text-accent-500 border-slate-300 focus:ring-accent-500 shrink-0">
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-slate-800">{{ $dat['label'] }}</span>
-                                        <span class="text-[10px] text-slate-500 uppercase tracking-widest font-medium">{{ $dat['desc'] }}</span>
+                                        class="peer absolute opacity-0 w-px h-px">
+                                    <div class="flex items-center gap-4 p-5 border-2 border-slate-100 rounded-2xl transition-all peer-checked:border-accent-500 peer-checked:bg-accent-50 group-hover:bg-slate-50 shadow-sm">
+                                        <div class="w-6 h-6 border-2 border-slate-300 rounded-full flex items-center justify-center peer-checked:border-accent-500 group-hover:border-slate-400 transition-colors">
+                                            <div class="w-3 h-3 bg-accent-500 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="font-bold text-slate-800 peer-checked:text-accent-700">{{ $dat['label'] }}</span>
+                                            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-medium group-hover:text-slate-600">{{ $dat['desc'] }}</span>
+                                        </div>
                                     </div>
                                 </label>
                             @endforeach
@@ -237,7 +252,10 @@
                     <div class="space-y-4 border-t border-slate-800 pt-6">
                         <div class="flex justify-between items-center">
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Base Rate</span>
-                            <span class="text-xl font-bold text-white">${{ number_format($room->price_per_night, 2) }}</span>
+                            <div class="flex flex-col items-end">
+                                <span class="text-xl font-bold text-white">${{ number_format($room->price_per_night, 2) }}</span>
+                                <span class="text-[10px] font-bold text-accent-400">{{ number_format($room->tzs_price, 0) }} TZS</span>
+                            </div>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Capacity</span>

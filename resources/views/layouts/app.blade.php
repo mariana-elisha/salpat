@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Salpat Camp') - {{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
@@ -15,7 +16,7 @@
         rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/theme.css') }}?v=4" rel="stylesheet">
+    <link href="{{ asset('css/theme.css') }}?v={{ time() }}" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -336,127 +337,125 @@
                                 class="w-4 h-4" transform="scale(1.2)" fill="currentColor" viewBox="0 0 24 24">
                                 <path
                                     d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                                33:
+
                             </svg></a>
-                        34: <a href="#" aria-label="LinkedIn" 35:
+<a href="#" aria-label="LinkedIn" 35:
                             class="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 text-slate-400 flex items-center justify-center hover:bg-accent-500 hover:text-white hover:border-accent-500 hover:-translate-y-1 transition-all duration-300 shadow-sm"><svg
-                                36: class="w-4 h-4" transform="scale(1.1)" fill="currentColor" viewBox="0 0 24 24">
-                                37:
+class="w-4 h-4" transform="scale(1.1)" fill="currentColor" viewBox="0 0 24 24">
+
                                 <path
                                     d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
-                                38:
+
                             </svg></a>
-                        39:
+
                     </div>
-                    40:
+
                 </div>
-                41:
-                42: <!-- Column 2: Quick Links -->
-                43: <div class="flex flex-col items-center md:items-start text-center md:text-left">
-                    44: <h6 class="text-white font-serif font-bold tracking-wide mb-6 text-lg relative inline-block">
-                        45: Quick Links
-                        46: <span
+
+<!-- Column 2: Quick Links -->
+<div class="flex flex-col items-center md:items-start text-center md:text-left">
+<h6 class="text-white font-serif font-bold tracking-wide mb-6 text-lg relative inline-block">
+Quick Links
+<span
                             class="absolute -bottom-2 left-1/2 md:left-0 -translate-x-1/2 md:translate-x-0 w-8 h-1 bg-accent-500 rounded-full"></span>
-                        47: </h6>
-                    48: <ul class="space-y-3 w-full max-w-[200px]">
-                        49: <li><a href="{{ route('home') }}" 50:
+</h6>
+<ul class="space-y-3 w-full max-w-[200px]">
+<li><a href="{{ route('home') }}" 50:
                                 class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">Home</a>
-                            51: </li>
-                        52: <li><a href="{{ route('about') }}" 53:
+</li>
+<li><a href="{{ route('about') }}" 53:
                                 class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">About
-                                54: Us</a></li>
-                        55: <li><a href="{{ route('rooms.index') }}" 56:
+Us</a></li>
+<li><a href="{{ route('rooms.index') }}" 56:
                                 class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">Our
-                                57: Rooms</a></li>
-                        58: <li><a href="{{ route('gallery') }}" 59:
+Rooms</a></li>
+<li><a href="{{ route('gallery') }}" 59:
                                 class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">Gallery</a>
-                            60: </li>
-                        61: </ul>
-                    62: </div>
-                63:
-                64: <!-- Column 3: Contact Info -->
-                65: <div class="flex flex-col items-center md:items-start text-center md:text-left">
-                    66: <h6 class="text-white font-serif font-bold tracking-wide mb-6 text-lg relative inline-block">
-                        67: Contact Us
-                        68: <span
+</li>
+</ul>
+</div>
+
+<!-- Column 3: Contact Info -->
+                <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                    <h6 class="text-white font-serif font-bold tracking-wide mb-6 text-lg relative inline-block">
+                        Contact Us
+                        <span
                             class="absolute -bottom-2 left-1/2 md:left-0 -translate-x-1/2 md:translate-x-0 w-8 h-1 bg-accent-500 rounded-full"></span>
-                        69: </h6>
-                    70: <ul class="space-y-4 max-w-xs">
-                        71: <li class="flex flex-col md:flex-row items-center md:items-start gap-3">
-                            72: <svg class="w-5 h-5 text-accent-500 shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                    </h6>
+                    <ul class="space-y-4 max-w-xs">
+                        <li class="flex flex-col md:flex-row items-center md:items-start gap-3">
+                            <svg class="w-5 h-5 text-accent-500 shrink-0 mt-0.5" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
-                                73: <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
                                 </path>
-                                74: <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                75: </svg>
-                            76: <span class="text-sm text-slate-400 leading-relaxed">Falcon Street 1,
+                            </svg>
+                            <span class="text-sm text-slate-400 leading-relaxed">Falcon Street 1,
                                 Soweto<br>Moshi-Kilimanjaro, TZ</span>
-                            77: </li>
-                        78: <li class="flex flex-col md:flex-row items-center md:items-start gap-3">
-                            79: <svg class="w-5 h-5 text-accent-500 shrink-0" fill="none" stroke="currentColor"
+                        </li>
+                        <li class="flex flex-col md:flex-row items-center md:items-start gap-3">
+                            <svg class="w-5 h-5 text-accent-500 shrink-0" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
-                                80: <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
                                 </path>
-                                88: </svg>
-                            89: <a href="tel:+2550770307759"
+                            </svg>
+                            <a href="tel:+2550770307759"
                                 class="text-sm text-slate-400 hover:text-accent-400 transition-colors font-medium tracking-wide">+255
                                 0770307759</a>
-                            90: </li>
-                        91: <li class="flex flex-col md:flex-row items-center md:items-start gap-3">
-                            92: <svg class="w-5 h-5 text-accent-500 shrink-0" fill="none" stroke="currentColor"
+                        </li>
+                        <li class="flex flex-col md:flex-row items-center md:items-start gap-3">
+                            <svg class="w-5 h-5 text-accent-500 shrink-0" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
-                                93: <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
                                 </path>
-                                94: </svg>
-                            95: <a href="mailto:salpatcamp@yahoo.com"
+                            </svg>
+                            <a href="mailto:salpatcamp@yahoo.com"
                                 class="text-sm text-slate-400 hover:text-accent-400 transition-colors">salpatcamp@yahoo.com</a>
-                            96: </li>
-                        97: </ul>
-                    98: </div>
-                99:
-                100: <!-- Column 4: Newsletter -->
-                101: <div
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Newsletter -->
+                <div
                     class="flex flex-col items-center md:items-start text-center md:text-left bg-slate-800/50 p-6 rounded-2xl border border-slate-800 w-full">
-                    102: <h6 class="text-white font-serif font-bold tracking-wide mb-4 text-lg">
-                        103: Newsletter
-                        104: </h6>
-                    105: <p class="text-sm text-slate-400 mb-6 leading-relaxed">
-                        106: Subscribe to receive our latest updates, special offers, and news perfectly tailored to
+                    <h6 class="text-white font-serif font-bold tracking-wide mb-4 text-lg">
+                        Newsletter
+                    </h6>
+                    <p class="text-sm text-slate-400 mb-6 leading-relaxed">
+                        Subscribe to receive our latest updates, special offers, and news perfectly tailored to
                         you.
-                        107: </p>
-                    108: <form class="w-full flex-col sm:flex-row md:flex-col lg:flex-row flex gap-2"
+                    </p>
+                    <form class="w-full flex-col sm:flex-row md:flex-col lg:flex-row flex gap-2"
                         onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
-                        109: <input type="email" placeholder="Your email address" required 110:
+                        <input type="email" placeholder="Your email address" required
                             class="w-full bg-slate-900 border-slate-700 text-white placeholder-slate-500 text-sm rounded-xl focus:ring-accent-500 focus:border-accent-500 px-4 py-3">
-                        111: <button type="submit"
+                        <button type="submit"
                             class="shrink-0 bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-3 rounded-xl transition-colors whitespace-nowrap shadow-md">
-                            112: Subscribe
-                            113: </button>
-                        114: </form>
-                    115: </div>
-                116:
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+
             </div>
-            117:
-            118: <!-- Bottom Copyright Row -->
-            119: <div
+
+            <div
                 class="border-t border-slate-800 pt-8 mt-12 flex flex-col md:flex-row justify-between items-center gap-6">
-                120: <div class="text-sm text-slate-500 text-center md:text-left font-medium">
-                    121: &copy; {{ date('Y') }} <span class="text-white">Salpat Camp</span>. All Rights Reserved.
-                    122: </div>
-                123: <div class="flex flex-wrap justify-center gap-6 text-sm">
-                    124: <a href="#" class="text-slate-500 font-medium hover:text-white transition-colors">Terms of
+                <div class="text-sm text-slate-500 text-center md:text-left font-medium">
+                    &copy; {{ date('Y') }} <span class="text-white">Salpat Camp</span>. All Rights Reserved.
+                </div>
+                <div class="flex flex-wrap justify-center gap-6 text-sm">
+                    <a href="#" class="text-slate-500 font-medium hover:text-white transition-colors">Terms of
                         Service</a>
-                    125: <a href="#" class="text-slate-500 font-medium hover:text-white transition-colors">Privacy
+                    <a href="#" class="text-slate-500 font-medium hover:text-white transition-colors">Privacy
                         Policy</a>
-                    126: </div>
-                127: </div>
-            128:
+                </div>
+            </div>
         </div>
-        129:
+
     </footer>
 </body>
 

@@ -113,6 +113,8 @@
                                 Check-in</th>
                             <th class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Status
                             </th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Payment
+                            </th>
                             <th class="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase tracking-wider">
                                 Action</th>
                         </tr>
@@ -142,6 +144,13 @@
                                                                             @elseif($booking->status == 'cancelled') bg-red-100 text-red-700
                                                                             @else bg-slate-100 text-slate-700
                                                                             @endif">{{ ucfirst($booking->status) }}</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2.5 py-0.5 text-xs font-bold rounded-full uppercase tracking-wide
+                                        @if($booking->payment_status == 'paid') bg-emerald-100 text-emerald-700
+                                        @elseif($booking->payment_status == 'pending') bg-rose-100 text-rose-700
+                                        @else bg-slate-100 text-slate-700
+                                        @endif">{{ ucfirst($booking->payment_status) }}</span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex items-center justify-end gap-2">

@@ -77,6 +77,9 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                                         {{ $booking->room?->name ?? 'N/A' }}
                                     </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                                        {{ $booking->payment_status === 'paid' ? 'Paid' : 'Pending' }}
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right">
                                         <span
                                             class="px-2 py-1 text-xs font-semibold rounded-full bg-slate-100 text-slate-600">{{ ucfirst($booking->status) }}</span>

@@ -20,90 +20,102 @@
                     <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-1">Payment Method</p>
                     <p class="text-lg font-bold text-accent-500 flex items-center gap-2 justify-end">
                         @if($booking->payment_method === 'mpesa')
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                            </svg>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
                             M-Pesa
+                        @elseif($booking->payment_method === 'card')
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                            Credit Card
                         @else
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                            </svg>
-                            Credit/Debit Card
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                            Pay on Arrival
                         @endif
                     </p>
                 </div>
             </div>
 
-            <form action="{{ route('bookings.payment.process', $booking) }}" method="POST">
-                @csrf
-
-                @if($booking->payment_method === 'mpesa')
-                    <div class="mb-6">
-                        <label for="phone" class="block text-sm font-medium text-slate-700 mb-2">M-Pesa Phone Number</label>
-                        <div class="relative">
-                            <span
-                                class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500 font-medium">+255</span>
-                            <input type="text" id="phone" name="phone" placeholder="7XXXXXXXX" required
-                                value="{{ old('phone') }}"
-                                class="w-full pl-16 border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('phone') border-red-500 @enderror">
-                        </div>
-                        @error('phone')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
-                        <p class="text-sm text-slate-500 mt-2">Enter your M-Pesa number to receive a payment prompt on your
-                            phone.</p>
+            @if($booking->payment_method === 'arrival')
+                <div class="text-center py-6">
+                    <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </div>
-                @else
-                    <div class="space-y-4 mb-6">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Cardholder Name</label>
-                            <input type="text" name="card_name" required value="{{ old('card_name') }}"
-                                class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('card_name') border-red-500 @enderror">
-                            @error('card_name')
+                    <h2 class="text-2xl font-bold text-slate-900 mb-2">Reservation Confirmed!</h2>
+                    <p class="text-slate-600 mb-8 max-w-md mx-auto">Your stay has been reserved. You can complete your payment of <span class="font-bold text-slate-900">${{ number_format($booking->total_price, 2) }}</span> at the reception desk when you arrive.</p>
+                    
+                    <a href="{{ route('bookings.show', $booking) }}" 
+                       class="inline-flex items-center justify-center px-8 py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors shadow-lg">
+                        View My Booking Details
+                    </a>
+                </div>
+            @else
+                <form action="{{ route('bookings.payment.process', $booking) }}" method="POST">
+                    @csrf
+
+                    @if($booking->payment_method === 'mpesa')
+                        <div class="mb-6">
+                            <label for="phone" class="block text-sm font-medium text-slate-700 mb-2">M-Pesa Phone Number</label>
+                            <div class="relative">
+                                <span
+                                    class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-500 font-medium">+255</span>
+                                <input type="text" id="phone" name="phone" placeholder="7XXXXXXXX" required
+                                    value="{{ old('phone') }}"
+                                    class="w-full pl-16 border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('phone') border-red-500 @enderror">
+                            </div>
+                            @error('phone')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
+                            <p class="text-sm text-slate-500 mt-2">Enter your M-Pesa number to receive a payment prompt on your
+                                phone.</p>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Card Number</label>
-                            <input type="text" name="card_number" placeholder="XXXX XXXX XXXX XXXX" required
-                                value="{{ old('card_number') }}"
-                                class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('card_number') border-red-500 @enderror">
-                            @error('card_number')
-                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
+                    @else
+                        <div class="space-y-4 mb-6">
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">Expiry Date</label>
-                                <input type="text" name="expiry" placeholder="MM/YY" required value="{{ old('expiry') }}"
-                                    class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('expiry') border-red-500 @enderror">
-                                @error('expiry')
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Cardholder Name</label>
+                                <input type="text" name="card_name" required value="{{ old('card_name') }}"
+                                    class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('card_name') border-red-500 @enderror">
+                                @error('card_name')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">CVV</label>
-                                <input type="text" name="cvv" placeholder="XXX" required value="{{ old('cvv') }}"
-                                    class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('cvv') border-red-500 @enderror">
-                                @error('cvv')
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Card Number</label>
+                                <input type="text" name="card_number" placeholder="XXXX XXXX XXXX XXXX" required
+                                    value="{{ old('card_number') }}"
+                                    class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('card_number') border-red-500 @enderror">
+                                @error('card_number')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Expiry Date</label>
+                                    <input type="text" name="expiry" placeholder="MM/YY" required value="{{ old('expiry') }}"
+                                        class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('expiry') border-red-500 @enderror">
+                                    @error('expiry')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">CVV</label>
+                                    <input type="text" name="cvv" placeholder="XXX" required value="{{ old('cvv') }}"
+                                        class="w-full border-slate-300 rounded-xl shadow-sm focus:border-accent-500 focus:ring-accent-500 py-3 @error('cvv') border-red-500 @enderror">
+                                    @error('cvv')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                @endif
+                    @endif
 
-                <button type="submit"
-                    class="w-full bg-accent-500 text-white px-6 py-4 rounded-xl hover:bg-accent-600 transition font-bold shadow-lg text-lg flex justify-center items-center gap-2">
-                    Pay ${{ number_format($booking->total_price, 2) }} Now
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                </button>
-            </form>
+                    <button type="submit"
+                        class="w-full bg-accent-500 text-white px-6 py-4 rounded-xl hover:bg-accent-600 transition font-bold shadow-lg text-lg flex justify-center items-center gap-2">
+                        Pay ${{ number_format($booking->total_price, 2) }} Now
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </button>
+                </form>
+            @endif
         </div>
     </div>
 @endsection

@@ -5,18 +5,23 @@
 @section('breadcrumbs', 'Housekeeping / Dashboard')
 
 @section('content')
-    <div class="space-y-8">
-        <!-- Room Status Section -->
+    <div class="space-y-8" x-data="{ showConsultModal: false, selectedRoom: null, selectedRoomName: '' }">
         <!-- Room Status Section -->
         <div class="space-y-4">
-            <div class="flex justify-between items-end mb-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-4">
                 <div>
                     <h2 class="text-2xl font-serif font-bold text-slate-900">Room Availability Status</h2>
                     <p class="text-sm text-slate-600">Mark rooms as ready for guests or report them as occupied/needing attention.</p>
                 </div>
-                <div class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-xl font-bold border border-emerald-200 shadow-sm flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    {{ $allRooms->where('is_available', true)->where('housekeeping_status', 'clean')->count() }} Available Rooms
+                <div class="flex gap-3">
+                    <div class="bg-red-50 text-red-700 px-4 py-2 rounded-xl font-bold border border-red-200 shadow-sm flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                        {{ $dirtyRoomsCount }} Rooms Need Cleaning
+                    </div>
+                    <div class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-xl font-bold border border-emerald-200 shadow-sm flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        {{ $allRooms->where('is_available', true)->where('housekeeping_status', 'clean')->count() }} Available Rooms
+                    </div>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -25,13 +30,20 @@
                         class="card p-6 bg-white border-l-4 @if($room->housekeeping_status == 'clean' && $room->is_available) border-emerald-500 @elseif($room->housekeeping_status == 'dirty') border-red-500 @else border-yellow-500 @endif">
                         <div class="flex justify-between items-start mb-4">
                             <div>
-                                <h3 class="text-lg font-bold text-slate-900">{{ $room->name }}</h3>
+                                <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                                    <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-xs font-mono">#{{ $room->room_number ?? 'N/A' }}</span>
+                                    {{ $room->name }}
+                                </h3>
                                 <p class="text-sm text-slate-500 lowercase">{{ $room->type }}</p>
+                                
                                 @if($room->is_occupied)
-                                    <p class="text-xs font-bold text-rose-500 mt-1 uppercase flex items-center gap-1">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                        {{ $room->time_remaining ?? 'Occupied' }}
-                                    </p>
+                                    <div class="mt-2 p-2 bg-rose-50 rounded-lg border border-rose-100">
+                                        <p class="text-[10px] font-bold text-rose-400 uppercase tracking-wider mb-1">Check-out Countdown</p>
+                                        <p class="text-xs font-bold text-rose-600 flex items-center gap-1">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                            {{ $room->time_remaining ?? 'Occupied' }}
+                                        </p>
+                                    </div>
                                 @endif
                             </div>
                             <span
@@ -46,22 +58,32 @@
                             </span>
                         </div>
 
-                        <form action="{{ route('housekeeping.rooms.update', $room) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
+                        <div class="space-y-3">
+                            <form action="{{ route('housekeeping.rooms.update', $room) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <div class="flex gap-2">
+                                    <select name="status"
+                                        class="flex-[2] rounded-lg border-slate-300 text-sm focus:border-primary-500 focus:ring-primary-500 py-1.5 px-2">
+                                        <option value="clean" {{ $room->housekeeping_status == 'clean' ? 'selected' : '' }}>Clean / Ready</option>
+                                        <option value="dirty" {{ $room->housekeeping_status == 'dirty' ? 'selected' : '' }}>Occupied / Dirty</option>
+                                        <option value="cleaning_in_progress" {{ $room->housekeeping_status == 'cleaning_in_progress' ? 'selected' : '' }}>Cleaning</option>
+                                    </select>
+                                    <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg text-xs px-3 py-1.5 transition-colors flex-[1]">Update</button>
+                                </div>
+                            </form>
+                            
                             <div class="flex gap-2">
-                                <select name="status"
-                                    class="flex-[2] rounded-lg border-slate-300 text-sm focus:border-primary-500 focus:ring-primary-500 py-1.5 px-2">
-                                    <option value="clean" {{ $room->housekeeping_status == 'clean' ? 'selected' : '' }}>Available</option>
-                                    <option value="dirty" {{ $room->housekeeping_status == 'dirty' ? 'selected' : '' }}>Occupied/Dirty</option>
-                                    <option value="cleaning_in_progress" {{ $room->housekeeping_status == 'cleaning_in_progress' ? 'selected' : '' }}>Cleaning</option>
-                                </select>
-                                <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg text-xs px-3 py-1.5 transition-colors flex-[1]">Update</button>
-                                <a href="{{ route('staff_reports.create') }}" class="bg-amber-100 hover:bg-amber-200 text-amber-700 rounded-lg p-1.5 transition-colors flex items-center justify-center shrink-0" title="Report Issue">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                <button @click="selectedRoom = {{ $room->id }}; selectedRoomName = '{{ $room->room_number ?? $room->name }}'; showConsultModal = true" 
+                                    class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2 rounded-lg text-[10px] uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+                                    Consult Receptionist
+                                </button>
+                                <a href="{{ route('staff_reports.create') }}" class="bg-amber-50 hover:bg-amber-100 text-amber-600 rounded-lg px-3 py-2 transition-colors flex items-center justify-center shrink-0 border border-amber-100" title="Report Issue">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
                                 </a>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 @empty
                     <div class="col-span-full p-12 card text-center text-slate-500 bg-slate-50 italic border border-dashed border-slate-200">
@@ -70,6 +92,32 @@
                 @endforelse
             </div>
         </div>
+
+        <!-- Consultation Modal -->
+        <template x-if="showConsultModal">
+            <div class="fixed inset-0 z-[100] flex items-center justify-center px-4">
+                <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" @click="showConsultModal = false"></div>
+                <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md relative z-10 overflow-hidden">
+                    <div class="bg-slate-900 p-6 text-white flex justify-between items-center">
+                        <h3 class="text-xl font-bold font-serif">Consult Receptionist</h3>
+                        <button @click="showConsultModal = false" class="text-slate-400 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
+                    <form :action="`/housekeeping/rooms/${selectedRoom}/consult`" method="POST" class="p-6">
+                        @csrf
+                        <div class="mb-4">
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Message regarding <span x-text="selectedRoomName" class="text-primary-600"></span></label>
+                            <textarea name="message" rows="4" required class="w-full rounded-xl border-slate-300 focus:ring-primary-500 focus:border-primary-500" placeholder="Ask receptionist about room availability, cleaning permission, etc..."></textarea>
+                        </div>
+                        <div class="flex justify-end gap-3">
+                            <button type="button" @click="showConsultModal = false" class="px-4 py-2 text-sm font-bold text-slate-500 hover:text-slate-700 transition-colors">Cancel</button>
+                            <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white font-bold px-6 py-2 rounded-xl shadow-lg transition-colors">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </template>
 
         <!-- Housekeeping Orders Section -->
         <div class="space-y-4">
@@ -161,7 +209,6 @@
                     </table>
                 </div>
             </div>
-        </div>
         </div>
 
         <!-- Recent Reports -->
