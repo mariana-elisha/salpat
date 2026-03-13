@@ -16,12 +16,14 @@
 
             <div class="relative mx-auto max-w-7xl px-6 lg:px-8 text-center z-10">
                 <div
-                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/20 border border-accent-500/30 text-accent-300 text-xs font-bold uppercase tracking-widest mb-6">
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/20 border border-accent-500/30 text-accent-300 text-xs font-bold uppercase tracking-widest mb-6 animate-fade-in">
+                    <span class="w-1.5 h-1.5 rounded-full bg-accent-500 animate-pulse"></span>
                     Our Heritage
                 </div>
-                <h1 class="text-4xl sm:text-6xl font-serif font-bold tracking-tight text-white mb-6 drop-shadow-lg">About
-                    Salpat Camp</h1>
-                <p class="mt-6 text-lg leading-8 text-slate-300 max-w-2xl mx-auto font-light">
+                <h1 class="text-4xl sm:text-7xl font-serif font-bold tracking-tight text-white mb-6 drop-shadow-xl animate-slide-up">
+                    The <span class="text-accent-400 italic">Salpat</span> Story
+                </h1>
+                <p class="mt-6 text-lg md:text-xl leading-8 text-slate-300 max-w-2xl mx-auto font-light animate-slide-up animation-delay-200">
                     Your luxury sanctuary in Moshi, where the spirit of adventure meets unparalleled comfort.
                 </p>
             </div>
@@ -31,15 +33,27 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20 space-y-24">
 
             <!-- Our Story Section -->
-            <section class="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 md:p-16">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <section class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 p-8 md:p-16 relative overflow-hidden animate-slide-up animation-delay-400">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-accent-500/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
                     <div class="relative group">
                         <div
                             class="absolute inset-0 bg-accent-500 rounded-2xl transform rotate-3 transition-transform duration-500 group-hover:rotate-6 opacity-20">
                         </div>
                         <img src="https://images.unsplash.com/photo-1542314831-c6a4d14cd44b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
                             alt="Salpat Camp Exterior"
-                            class="relative rounded-2xl shadow-2xl w-full object-cover h-96 transform transition-transform duration-500 group-hover:-translate-y-2">
+                            class="relative rounded-2xl shadow-2xl w-full object-cover h-[450px] transform transition-transform duration-700 group-hover:scale-[1.02]">
+                        <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-2xl shadow-xl hidden md:block animate-bounce-slow">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-accent-500 rounded-full flex items-center justify-center text-white">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Quality</p>
+                                    <p class="text-sm font-bold text-slate-900">Guaranteed</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="space-y-6">
@@ -73,11 +87,12 @@
             </section>
 
             <!-- Values Section -->
-            <section>
+            <section class="animate-slide-up animation-delay-600">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-serif font-bold text-slate-900 mb-4">What Sets Us Apart</h2>
-                    <p class="text-slate-500 max-w-xl mx-auto">Discover the foundational pillars that elevate the Salpat
+                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 mb-4">What Sets Us <span class="text-accent-500 italic">Apart</span></h2>
+                    <p class="text-slate-500 max-w-xl mx-auto text-lg font-light">Discover the foundational pillars that elevate the Salpat
                         Camp experience above the rest.</p>
+                    <div class="w-24 h-1 bg-accent-500 mx-auto mt-6 rounded-full opacity-30"></div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -145,26 +160,23 @@
 
             <!-- CTA -->
             <section
-                class="bg-slate-900 rounded-3xl p-12 md:p-16 text-center relative overflow-hidden shadow-2xl border border-slate-800">
-                <div
-                    class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30">
-                </div>
-                <div class="absolute -bottom-24 gap-4 flex justify-center w-full opacity-20 filter blur-2xl">
-                    <div class="w-64 h-64 bg-accent-500 rounded-full mix-blend-multiply"></div>
+                class="bg-slate-900 rounded-3xl p-12 md:p-20 text-center relative overflow-hidden shadow-2xl border border-slate-800 animate-slide-up">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30"></div>
+                <div class="absolute inset-0 z-0 pointer-events-none">
+                    <div class="absolute w-[500px] h-[500px] rounded-full bg-accent-500 blur-[120px] -top-64 -left-64 opacity-20"></div>
+                    <div class="absolute w-[400px] h-[400px] rounded-full bg-primary-500 blur-[100px] -bottom-48 -right-48 opacity-10"></div>
                 </div>
 
                 <div class="relative z-10 max-w-3xl mx-auto">
-                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-6">Ready to Experience Salpat Camp?
-                    </h2>
-                    <p class="text-slate-300 font-light mb-10 text-lg md:text-xl">
+                    <h2 class="text-4xl md:text-6xl font-serif font-bold text-white mb-8">Ready to Experience <br><span class="text-accent-400 italic">Salpat Camp?</span></h2>
+                    <p class="text-slate-300 font-light mb-12 text-lg md:text-xl leading-relaxed">
                         Browse our rooms and book your escape today. An unforgettable Kilimanjaro adventure awaits.
                     </p>
                     <a href="{{ route('rooms.index') }}"
-                        class="inline-flex items-center justify-center bg-accent-500 text-white hover:bg-accent-600 shadow-xl shadow-accent-500/20 hover:shadow-accent-500/40 px-10 py-4 rounded-xl font-bold text-lg transition-all transform hover:-translate-y-1">
+                        class="inline-flex items-center justify-center bg-accent-500 text-white hover:bg-accent-600 shadow-2xl shadow-accent-500/40 px-12 py-5 rounded-2xl font-bold text-xl transition-all transform hover:-translate-y-1 hover:scale-105">
                         Reserve Your Stay
-                        <svg class="w-6 h-6 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        <svg class="w-6 h-6 ml-3 animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                     </a>
                 </div>
@@ -172,3 +184,31 @@
         </div>
     </div>
 @endsection
+
+@push('styles')
+<style>
+    @keyframes slide-up {
+        0%   { opacity: 0; transform: translateY(40px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade-in {
+        0%   { opacity: 0; }
+        100% { opacity: 1; }
+    }
+    @keyframes bounce-x {
+        0%, 100% { transform: translateX(0); }
+        50%       { transform: translateX(6px); }
+    }
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50%       { transform: translateY(-10px); }
+    }
+    .animate-slide-up   { animation: slide-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+    .animate-fade-in    { animation: fade-in 1.2s ease-out forwards; opacity: 0; }
+    .animate-bounce-x   { animation: bounce-x 1.5s ease-in-out infinite; }
+    .animate-bounce-slow{ animation: float 3s ease-in-out infinite; }
+    .animation-delay-200{ animation-delay: 200ms; }
+    .animation-delay-400{ animation-delay: 400ms; }
+    .animation-delay-600{ animation-delay: 600ms; }
+</style>
+@endpush

@@ -3,131 +3,109 @@
 @section('title', 'Gallery')
 
 @section('content')
-    <div class="bg-slate-50 min-h-screen pb-24">
+    <div class="bg-slate-950 min-h-screen">
         <!-- Hero Section -->
-        <div class="relative isolate overflow-hidden bg-slate-900 py-24 sm:py-32 border-b-4 border-accent-500">
-            <div
-                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1496545672447-f699b503d270?ixlib=rb-4.0.3')] bg-cover bg-center opacity-30 filter grayscale mix-blend-overlay">
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent"></div>
-            <div
-                class="absolute -top-24 -left-24 w-64 h-64 bg-accent-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20">
-            </div>
+        <div class="relative isolate overflow-hidden bg-slate-950 py-28 sm:py-36">
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1496545672447-f699b503d270?ixlib=rb-4.0.3')] bg-cover bg-center opacity-30 filter grayscale mix-blend-overlay"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/50 to-slate-950"></div>
+            <!-- Decorative blobs -->
+            <div class="absolute -top-32 -right-32 w-96 h-96 bg-accent-500 rounded-full blur-[120px] opacity-15 pointer-events-none"></div>
+            <div class="absolute -bottom-32 -left-32 w-80 h-80 bg-primary-500 rounded-full blur-[100px] opacity-10 pointer-events-none"></div>
 
             <div class="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 text-center">
-                <div
-                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-500/20 border border-accent-500/30 text-accent-300 text-xs font-bold uppercase tracking-widest mb-6">
-                    Visual Journey</div>
-                <h1 class="text-4xl md:text-6xl font-serif font-bold tracking-tight text-white mb-6 drop-shadow-lg">Our
-                    Gallery</h1>
-                <p class="text-lg leading-8 text-slate-300 max-w-2xl mx-auto font-light">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-500/20 border border-accent-500/30 text-accent-300 text-xs font-bold uppercase tracking-widest mb-8 animate-fade-in">
+                    <span class="w-1.5 h-1.5 rounded-full bg-accent-500 animate-pulse"></span>
+                    Visual Journey
+                </div>
+                <h1 class="text-5xl md:text-7xl font-serif font-bold tracking-tight text-white mb-6 drop-shadow-xl animate-slide-up">
+                    Our <span class="text-accent-400 italic">Experiences</span>
+                </h1>
+                <p class="text-lg md:text-xl leading-8 text-slate-300 max-w-2xl mx-auto font-light animate-slide-up animation-delay-200">
                     Explore our accommodations, scenic views, and the vibrant life within our sanctuary.
                 </p>
             </div>
         </div>
 
         <!-- Gallery Grid -->
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px]">
-                <!-- Item 1 (Large) -->
-                <div
-                    class="group relative overflow-hidden rounded-3xl md:col-span-2 row-span-2 bg-slate-900 shadow-xl border border-slate-100">
-                    <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
-                        alt="Luxury Rooms"
-                        class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-                    <div
-                        class="absolute inset-0 p-8 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <span
-                            class="text-accent-400 text-sm font-bold tracking-widest uppercase mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Interior</span>
-                        <h3 class="text-white text-3xl font-bold font-serif">Luxury Suites</h3>
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 -mt-4 relative z-20 pb-0">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[320px]">
+                @forelse($galleries as $gallery)
+                    <div class="group relative overflow-hidden rounded-3xl {{ $loop->first ? 'md:col-span-2 row-span-2' : '' }} bg-slate-900 shadow-2xl gallery-item" style="animation-delay: {{ $loop->index * 100 }}ms">
+                        <img src="{{ asset('storage/' . $gallery->image_path) }}"
+                            alt="{{ $gallery->title }}"
+                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/30 to-transparent"></div>
+                        <div class="absolute inset-0 bg-accent-500/0 group-hover:bg-accent-500/10 transition-colors duration-500"></div>
+                        <div class="absolute inset-0 p-8 flex flex-col justify-end transform translate-y-3 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="text-white text-2xl font-bold font-serif">{{ $gallery->title }}</h3>
+                            @if($gallery->description)
+                                <p class="text-slate-300 text-sm mt-2 font-light opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
+                                    {{ $gallery->description }}
+                                </p>
+                            @endif
+                        </div>
+                        <!-- Zoom icon -->
+                        <div class="absolute top-4 right-4 w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 scale-75 group-hover:scale-100">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="group relative overflow-hidden rounded-3xl bg-slate-900 shadow-xl border border-slate-100">
-                    <img src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
-                        alt="Night Sky"
-                        class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-                    <div
-                        class="absolute inset-0 p-6 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <span
-                            class="text-accent-400 text-xs font-bold tracking-widest uppercase mb-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Views</span>
-                        <h3 class="text-white text-xl font-bold font-serif">Starry Nights</h3>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="group relative overflow-hidden rounded-3xl bg-slate-900 shadow-xl border border-slate-100">
-                    <img src="https://images.unsplash.com/photo-1532339142463-fd0a8979791a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
-                        alt="Campfire"
-                        class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-                    <div
-                        class="absolute inset-0 p-6 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <span
-                            class="text-accent-400 text-xs font-bold tracking-widest uppercase mb-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Experience</span>
-                        <h3 class="text-white text-xl font-bold font-serif">Bonfire Gatherings</h3>
-                    </div>
-                </div>
-
-                <!-- Item 4 (Tall) -->
-                <div
-                    class="group relative overflow-hidden rounded-3xl row-span-2 bg-slate-900 shadow-xl border border-slate-100">
-                    <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
-                        alt="Forest Trail"
-                        class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-                    <div
-                        class="absolute inset-0 p-8 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <span
-                            class="text-accent-400 text-sm font-bold tracking-widest uppercase mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Nature</span>
-                        <h3 class="text-white text-2xl font-bold font-serif">Scenic Surroundings</h3>
-                    </div>
-                </div>
-
-                <!-- Item 5 -->
-                <div class="group relative overflow-hidden rounded-3xl bg-slate-900 shadow-xl border border-slate-100">
-                    <img src="https://images.unsplash.com/photo-1510312305653-8ed496efae75?ixlib=rb-4.0.3&auto=format&fit=crop&w=1548&q=80"
-                        alt="Morning Coffee"
-                        class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-                    <div
-                        class="absolute inset-0 p-6 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <span
-                            class="text-accent-400 text-xs font-bold tracking-widest uppercase mb-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Dining</span>
-                        <h3 class="text-white text-xl font-bold font-serif">Morning Bliss</h3>
-                    </div>
-                </div>
-
-                <!-- Item 6 -->
-                <div class="group relative overflow-hidden rounded-3xl bg-slate-900 shadow-xl border border-slate-100">
-                    <img src="https://images.unsplash.com/photo-1492648272180-61e45a8d98a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80"
-                        alt="Cabin Interior"
-                        class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-                    <div
-                        class="absolute inset-0 p-6 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <span
-                            class="text-accent-400 text-xs font-bold tracking-widest uppercase mb-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Accommodations</span>
-                        <h3 class="text-white text-xl font-bold font-serif">Cozy Interiors</h3>
-                    </div>
-                </div>
+                @empty
+                    <!-- Placeholder if empty -->
+                    @foreach([1, 2, 3, 4, 5] as $i)
+                        <div class="group relative overflow-hidden rounded-3xl bg-slate-900 shadow-xl gallery-item" style="animation-delay: {{ $i * 100 }}ms">
+                            <div class="h-full w-full bg-slate-800 flex items-center justify-center">
+                                <span class="text-slate-600 font-serif italic text-xl">Coming Soon</span>
+                            </div>
+                        </div>
+                    @endforeach
+                @endforelse
             </div>
+        </div>
 
-            <!-- CTA -->
-            <div class="mt-24 text-center pb-8 border-b border-slate-200">
-                <h3 class="text-3xl font-serif font-bold text-slate-900 mb-6">Experience it for yourself</h3>
+        <!-- CTA -->
+        <div class="bg-slate-950 py-24 relative overflow-hidden mt-4">
+            <div class="absolute inset-0 z-0">
+                <div class="absolute w-[500px] h-[500px] rounded-full bg-accent-500 blur-[120px] -top-64 left-1/2 -translate-x-1/2 opacity-10"></div>
+            </div>
+            <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+                <h3 class="text-4xl md:text-5xl font-serif font-bold text-white mb-6">Experience it <span class="text-accent-400 italic">for yourself</span></h3>
+                <p class="text-slate-400 text-lg font-light mb-10">Don't just see it — live it. Book your stay and make your own memories.</p>
                 <a href="{{ route('rooms.index') }}"
-                    class="inline-flex items-center justify-center bg-accent-500 text-white hover:bg-accent-600 shadow-xl shadow-accent-500/20 px-10 py-4 rounded-xl font-bold text-lg transition-transform transform hover:-translate-y-1">
+                    class="inline-flex items-center justify-center bg-accent-500 text-white hover:bg-accent-600 shadow-2xl shadow-accent-500/40 px-12 py-5 rounded-2xl font-bold text-xl transition-all hover:-translate-y-1 hover:scale-105">
                     Book Your Stay
-                    <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
-                        </path>
+                    <svg class="w-5 h-5 ml-3 animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                     </svg>
                 </a>
             </div>
         </div>
     </div>
 @endsection
+
+@push('styles')
+<style>
+    @keyframes slide-up {
+        0%   { opacity: 0; transform: translateY(40px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade-in {
+        0%   { opacity: 0; }
+        100% { opacity: 1; }
+    }
+    @keyframes bounce-x {
+        0%, 100% { transform: translateX(0); }
+        50%       { transform: translateX(5px); }
+    }
+    .animate-slide-up   { animation: slide-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+    .animate-fade-in    { animation: fade-in 1.2s ease-out forwards; opacity: 0; }
+    .animate-bounce-x   { animation: bounce-x 1.5s ease-in-out infinite; }
+    .animation-delay-200{ animation-delay: 200ms; }
+
+    .gallery-item { animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; opacity: 0; }
+    .gallery-delay-1 { animation-delay: 100ms; }
+    .gallery-delay-2 { animation-delay: 200ms; }
+    .gallery-delay-3 { animation-delay: 300ms; }
+    .gallery-delay-4 { animation-delay: 400ms; }
+    .gallery-delay-5 { animation-delay: 500ms; }
+</style>
+@endpush

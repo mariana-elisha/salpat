@@ -28,18 +28,10 @@ class ReceptionistDashboardController extends Controller
             ->take(10)
             ->get();
 
-        $recentActivity = \App\Models\ActivityLog::with('user')->whereIn('action', ['Booking Created', 'Booking Updated', 'Login'])->latest()->take(5)->get();
         $recentReports = \App\Models\StaffReport::with('user')->where('section', 'Reception')->latest()->take(5)->get();
+        // Removed recentActivity and staffActivity as per request to hide system activity from receptionists
 
-        $staffActivity = \App\Models\ActivityLog::with('user')
-            ->whereHas('user', function ($q) {
-                $q->whereIn('role', ['housekeeping', 'barkeeper']);
-            })
-            ->latest()
-            ->take(10)
-            ->get();
-
-        return view('receptionist.dashboard', compact('stats', 'upcomingBookings', 'recentActivity', 'recentReports', 'staffActivity'));
+        return view('receptionist.dashboard', compact('stats', 'upcomingBookings', 'recentReports'));
     }
 
     /**

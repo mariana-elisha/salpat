@@ -6,9 +6,13 @@
 
 @section('content')
     <div class="max-w-4xl mx-auto space-y-8">
-        <div class="text-center">
-            <h1 class="text-3xl font-serif font-bold text-slate-900">Request a Service</h1>
-            <p class="text-slate-500 mt-2">Food, drinks, or housekeeping. We're at your service.</p>
+        <div class="text-center py-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-50 text-primary-600 text-[10px] font-black uppercase tracking-widest mb-4">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse"></span>
+                Concierge Services
+            </div>
+            <h1 class="text-4xl font-serif font-bold text-slate-900 tracking-tight">Request a Service</h1>
+            <p class="text-slate-500 mt-3 font-light">Food, spirits, or housekeeping. Our team is at your command.</p>
         </div>
 
         <form action="{{ route('user.services.store') }}" method="POST" class="space-y-8"
@@ -71,38 +75,70 @@
             </div>
 
             <!-- Quantity and Finalize -->
-            <div x-show="selectedService" class="card p-6 bg-slate-900 text-white shadow-xl fade-in">
-                <div class="flex flex-col gap-6">
-                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                        <div class="flex items-center gap-4">
-                            <label class="text-sm font-medium opacity-80 uppercase tracking-widest">Quantity</label>
-                            <div class="flex items-center gap-2">
+            <div x-show="selectedService" class="bg-slate-950 rounded-[32px] p-8 sm:p-10 text-white shadow-2xl relative overflow-hidden fade-in border border-white/5">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-primary-500/10 rounded-full blur-[80px] -mr-32 -mt-32"></div>
+                
+                <div class="relative z-10 flex flex-col gap-10">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                        <div class="space-y-4">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] block">Select Quantity</label>
+                            <div class="flex items-center bg-white/5 border border-white/10 rounded-2xl p-2 gap-4">
                                 <button type="button" @click="if(quantity > 1) quantity--"
-                                    class="w-10 h-10 rounded-full border border-white/20 hover:bg-white/10 flex items-center justify-center font-bold">-</button>
+                                    class="w-12 h-12 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center text-xl font-bold transition-colors">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+                                </button>
                                 <input type="number" name="quantity" x-model="quantity"
-                                    class="w-16 bg-transparent border-0 text-center font-bold text-xl focus:ring-0" readonly>
+                                    class="w-16 bg-transparent border-0 text-center font-black text-2xl focus:ring-0" readonly>
                                 <button type="button" @click="quantity++"
-                                    class="w-10 h-10 rounded-full border border-white/20 hover:bg-white/10 flex items-center justify-center font-bold">+</button>
+                                    class="w-12 h-12 rounded-xl bg-primary-600 hover:bg-primary-500 flex items-center justify-center text-xl font-bold transition-colors shadow-lg shadow-primary-600/20">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                                </button>
                             </div>
                         </div>
 
                         <div class="text-center md:text-right">
-                            <p class="text-xs opacity-60 uppercase tracking-widest">Total Price</p>
-                            <p class="text-3xl font-bold text-accent-400" x-text="'$' + (price * quantity).toFixed(2)"></p>
-                            <p class="text-sm font-bold opacity-80" x-text="((price * quantity) * conversionRate).toLocaleString() + ' TZS'"></p>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2">Estimated Investment</p>
+                            <div class="flex items-baseline justify-center md:justify-end gap-3">
+                                <span class="text-5xl font-black text-white" x-text="'$' + (price * quantity).toFixed(2)"></span>
+                                <span class="text-primary-400 font-serif italic text-lg opacity-80">USD</span>
+                            </div>
+                            <p class="text-sm font-bold text-slate-500 mt-2 uppercase tracking-tighter" x-text="'~' + ((price * quantity) * conversionRate).toLocaleString() + ' TZS'"></p>
                         </div>
                     </div>
 
-                    <div class="border-t border-white/10 pt-4">
-                        <label for="comment" class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Special Instructions / Comments</label>
-                        <textarea name="comment" id="comment" rows="2" 
-                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:ring-accent-500 focus:border-accent-500 placeholder-white/20 text-white"
-                            placeholder="e.g. No mayo, extra spicy, or deliver at 8:00 PM..."></textarea>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-white/10">
+                        <div class="space-y-4">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] block">Payment Gateway</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="relative group cursor-pointer">
+                                    <input type="radio" name="payment_type" value="individual" class="sr-only peer" x-model="payment_type" required>
+                                    <div class="p-4 rounded-2xl border border-white/10 bg-white/5 transition-all peer-checked:bg-primary-600 peer-checked:border-primary-600 text-center">
+                                        <span class="block text-xs font-black uppercase tracking-widest text-slate-300 peer-checked:text-white">Personal</span>
+                                    </div>
+                                </label>
+                                <label class="relative group cursor-pointer">
+                                    <input type="radio" name="payment_type" value="company" class="sr-only peer" x-model="payment_type">
+                                    <div class="p-4 rounded-2xl border border-white/10 bg-white/5 transition-all peer-checked:bg-primary-600 peer-checked:border-primary-600 text-center">
+                                        <span class="block text-xs font-black uppercase tracking-widest text-slate-300 peer-checked:text-white">Corporate</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <label for="comment" class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] block">Special Directives</label>
+                            <textarea name="comment" id="comment" rows="2" 
+                                class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:ring-primary-500 focus:border-primary-500 placeholder-slate-600 transition-all font-medium resize-none"
+                                placeholder="Preferred time or preparation details..."></textarea>
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn-accent px-8 py-4 rounded-xl text-lg font-bold w-full md:w-auto">
-                        Confirm Order
-                    </button>
+                    <div class="pt-6">
+                        <button type="submit" class="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 text-white font-black py-6 rounded-[24px] shadow-2xl shadow-primary-500/30 transform active:scale-[0.98] transition-all uppercase tracking-[0.3em] text-sm flex items-center justify-center gap-3">
+                            <span>Finalize Service Order</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
     </div>

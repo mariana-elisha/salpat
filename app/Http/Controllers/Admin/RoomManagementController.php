@@ -32,42 +32,65 @@ class RoomManagementController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'room_numbers' => 'nullable|string', // Comma separated list for batch creation
             'name' => 'required|string|max:255',
             'type' => 'required|string|max:100',
             'price_per_night' => 'required|numeric|min:0',
+            'resident_price_per_night' => 'nullable|numeric|min:0',
             'capacity' => 'required|integer|min:1',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:2048', // Primary Image
+            'images.*' => 'nullable|image|max:2048', // Additional Images Array
             'amenities' => 'nullable|array',
             'is_available' => 'boolean',
         ]);
 
-        $data = $request->all();
+        $data = $request->except(['image', 'images', 'is_available', 'room_numbers']);
 
-        // Handle image upload
+        // Handle primary image upload
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('rooms', 'public');
             $data['image'] = $path;
         }
 
-        // Handle amenities (ensure it's stored as array/json if model casts it, 
-        // usually standard request array works if cast is 'array' or 'json')
-        // The model casts 'amenities' => 'array' (or should).
+        // Handle multiple images upload
+        if ($request->hasFile('images')) {
+            $imagePaths = [];
+            foreach ($request->file('images') as $file) {
+                $imagePaths[] = $file->store('rooms/multiple', 'public');
+            }
+            $data['images'] = $imagePaths;
+        }
 
         $data['is_available'] = $request->has('is_available');
 
-        $room = Room::create($data);
+        // Check for batch creation
+        if ($request->filled('room_numbers')) {
+            $roomNumbers = array_map('trim', explode(',', $request->room_numbers));
+            foreach ($roomNumbers as $number) {
+                if (!empty($number)) {
+                    $batchData = $data;
+                    $batchData['room_number'] = $number;
+                    // For batch, we'll append the room number to the name to differentiate
+                    $batchData['name'] = $data['name'] . ' - ' . $number;
+                    Room::create($batchData);
+                }
+            }
+            $message = count($roomNumbers) . ' rooms created successfully.';
+        } else {
+            Room::create($data);
+            $message = 'Room created successfully.';
+        }
 
         \App\Models\ActivityLog::create([
             'user_id' => auth()->id(),
-            'action' => 'Room Created',
-            'description' => "Admin created a new room: {$room->name}.",
+            'action' => 'Room(s) Created',
+            'description' => "Admin created new room(s): {$request->name}.",
         ]);
 
         $redirectRoute = auth()->user()->isAdmin() ? 'admin.rooms.index' : (auth()->user()->isManager() ? 'manager.rooms.index' : 'receptionist.rooms.index');
 
-        return redirect()->route($redirectRoute)
-            ->with('success', 'Room created successfully.');
+        return redirect()->route($redirectRoute)->with('success', $message);
     }
 
     /**
@@ -84,21 +107,23 @@ class RoomManagementController extends Controller
     public function update(Request $request, Room $room)
     {
         $request->validate([
+            'room_number' => 'nullable|string|max:50',
             'name' => 'required|string|max:255',
             'type' => 'required|string|max:100',
             'price_per_night' => 'required|numeric|min:0',
+            'resident_price_per_night' => 'nullable|numeric|min:0',
             'capacity' => 'required|integer|min:1',
             'description' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'images.*' => 'nullable|image|max:2048',
             'amenities' => 'nullable|array',
         ]);
 
-        $data = $request->except(['image', 'is_available']);
+        $data = $request->except(['image', 'images', 'is_available']);
         $data['is_available'] = $request->has('is_available');
 
         // Handle image upload
         if ($request->hasFile('image')) {
-            // Delete old image if exists
             if ($room->image) {
                 Storage::disk('public')->delete($room->image);
             }
@@ -106,12 +131,21 @@ class RoomManagementController extends Controller
             $data['image'] = $path;
         }
 
+        // Handle multiple images upload (append to existing)
+        if ($request->hasFile('images')) {
+            $imagePaths = $room->images ?? [];
+            foreach ($request->file('images') as $file) {
+                $imagePaths[] = $file->store('rooms/multiple', 'public');
+            }
+            $data['images'] = $imagePaths;
+        }
+
         $room->update($data);
 
         \App\Models\ActivityLog::create([
             'user_id' => auth()->id(),
             'action' => 'Room Updated',
-            'description' => "Admin updated room details: {$room->name}.",
+            'description' => auth()->user()->role . " updated room details: {$room->name}.",
         ]);
 
         $redirectRoute = auth()->user()->isAdmin() ? 'admin.rooms.index' : (auth()->user()->isManager() ? 'manager.rooms.index' : 'receptionist.rooms.index');
@@ -127,6 +161,12 @@ class RoomManagementController extends Controller
     {
         if ($room->image) {
             Storage::disk('public')->delete($room->image);
+        }
+        
+        if ($room->images) {
+            foreach ($room->images as $img) {
+                Storage::disk('public')->delete($img);
+            }
         }
 
         $roomName = $room->name;

@@ -42,7 +42,9 @@ class BookingController extends Controller
             'number_of_guests' => 'required|integer|min:1',
             'special_requests' => 'nullable|string|max:1000',
             'password' => 'nullable|string|min:8|confirmed',
-            'payment_method' => 'required|in:mpesa,card,arrival',
+            'payment_method' => 'nullable|string', // Removed strict restriction
+            'booking_type' => 'required|in:individual,company',
+            'company_name' => 'required_if:booking_type,company|nullable|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -71,7 +73,14 @@ class BookingController extends Controller
         $checkIn = \Carbon\Carbon::parse($request->check_in);
         $checkOut = \Carbon\Carbon::parse($request->check_out);
         $nights = $checkIn->diffInDays($checkOut);
-        $totalPrice = $room->price_per_night * $nights;
+        
+        $pricePerNight = $room->price_per_night;
+        if ($request->resident_status === 'resident' && $room->resident_price_per_night) {
+            // Convert TSH resident price to USD for storage consistency
+            $pricePerNight = $room->resident_price_per_night / Room::USD_TO_TZS;
+        }
+        
+        $totalPrice = $pricePerNight * $nights;
 
         // Handle optional user creation
         $userId = auth()->id();
@@ -110,10 +119,12 @@ class BookingController extends Controller
             'number_of_guests' => $request->number_of_guests,
             'total_price' => $totalPrice,
             'status' => 'pending',
-            'payment_method' => $request->payment_method,
+            'payment_method' => $request->payment_method ?? 'manual',
             'payment_status' => 'pending',
             'special_requests' => $request->special_requests,
             'booking_reference' => Booking::generateBookingReference(),
+            'booking_type' => $request->booking_type,
+            'company_name' => $request->company_name,
         ]);
 
         // Send confirmation email
@@ -131,17 +142,19 @@ class BookingController extends Controller
             'description' => "Booking reference {$booking->booking_reference} created for room {$room->name}.",
         ]);
 
-        if (in_array($request->payment_method, ['mpesa', 'card'])) {
-            return redirect()->route('bookings.payment', $booking)
-                ->with('info', 'Please complete your payment to confirm the booking.');
-        } elseif ($request->payment_method === 'arrival') {
-            return redirect()->route('bookings.payment', $booking)
-                ->with('success', 'Booking created successfully! Please review the arrival details below.');
-        }
+        // All successful bookings redirect to WhatsApp for payment coordination
+        $message = "Hello Salpat Camp! I have just made a reservation.\n\n" .
+                  "*Reference:* {$booking->booking_reference}\n" .
+                  "*Guest:* {$booking->guest_name}\n" .
+                  "*Room:* {$room->name}\n" .
+                  "*Dates:* " . $checkIn->format('d M') . " to " . $checkOut->format('d M') . "\n" .
+                  "*Total:* $" . number_format($booking->total_price, 2) . " / " . number_format($booking->total_price * Room::USD_TO_TZS, 0) . " TZS\n\n" .
+                  "Please provide payment guidance for my stay.";
+        
+        $whatsappUrl = "https://wa.me/255770307759?text=" . urlencode($message);
+        
+        return redirect()->away($whatsappUrl);
 
-        // Fallback, though all payment methods should be covered by the above conditions
-        return redirect()->route('bookings.payment', $booking)
-            ->with('info', 'Please complete your payment to confirm the booking.');
     }
 
     /**
@@ -214,8 +227,8 @@ class BookingController extends Controller
     {
         $user = auth()->user();
 
-        // If user is admin or receptionist, allow access
-        if ($user && ($user->isAdmin() || $user->isReceptionist())) {
+        // If user is admin, manager, or receptionist, allow access
+        if ($user && ($user->isAdmin() || $user->isManager() || $user->isReceptionist())) {
             return view('bookings.show', compact('booking'));
         }
 
@@ -244,7 +257,7 @@ class BookingController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
-        if ($user && ($user->isAdmin() || $user->isReceptionist())) {
+        if ($user && ($user->isAdmin() || $user->isReceptionist() || $user->isManager())) {
             $bookings = Booking::with('room')->latest()->paginate(15);
         } elseif ($user) {
             $bookings = $user->bookings()->with('room')->latest()->paginate(15);
@@ -260,7 +273,7 @@ class BookingController extends Controller
     public function updateStatus(Request $request, Booking $booking)
     {
         $user = auth()->user();
-        if (!$user || (!$user->isAdmin() && !$user->isReceptionist())) {
+        if (!$user || (!$user->isAdmin() && !$user->isReceptionist() && !$user->isManager())) {
             abort(403, 'Unauthorized.');
         }
 
@@ -307,7 +320,7 @@ class BookingController extends Controller
     public function updatePaymentStatus(Request $request, Booking $booking)
     {
         $user = auth()->user();
-        if (!$user || (!$user->isAdmin() && !$user->isReceptionist())) {
+        if (!$user || (!$user->isAdmin() && !$user->isReceptionist() && !$user->isManager())) {
             abort(403, 'Unauthorized.');
         }
 
@@ -326,5 +339,131 @@ class BookingController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Payment status updated successfully.');
+    }
+
+    /**
+     * Check-in a guest. (Admin, Manager, Receptionist)
+     */
+    public function checkIn(Request $request, Booking $booking)
+    {
+        $user = auth()->user();
+        if (!$user || (!$user->isAdmin() && !$user->isManager() && !$user->isReceptionist())) {
+            abort(403, 'Unauthorized.');
+        }
+
+        if ($booking->status !== 'confirmed') {
+            return redirect()->back()->with('error', 'Only confirmed bookings can be checked in.');
+        }
+
+        $booking->update([
+            'status' => 'checked_in'
+        ]);
+
+        \App\Models\ActivityLog::create([
+            'user_id' => $user->id,
+            'action' => 'Guest Checked In',
+            'description' => "Guest checked into room {$booking->room->name} for booking {$booking->booking_reference}.",
+        ]);
+
+        return redirect()->back()->with('success', 'Guest successfully checked in.');
+    }
+
+    /**
+     * Check-out a guest. (Admin, Manager, Receptionist)
+     */
+    public function checkOut(Request $request, Booking $booking)
+    {
+        $user = auth()->user();
+        if (!$user || (!$user->isAdmin() && !$user->isManager() && !$user->isReceptionist())) {
+            abort(403, 'Unauthorized.');
+        }
+
+        if ($booking->status !== 'checked_in') {
+            return redirect()->back()->with('error', 'Guest is not currently checked in.');
+        }
+
+        $booking->update([
+            'status' => 'completed'
+        ]);
+
+        \App\Models\ActivityLog::create([
+            'user_id' => $user->id,
+            'action' => 'Guest Checked Out',
+            'description' => "Guest checked out of room {$booking->room->name} for booking {$booking->booking_reference}.",
+        ]);
+
+        return redirect()->back()->with('success', 'Guest successfully checked out.');
+    }
+
+    /**
+     * Show stay extension form.
+     */
+    public function extendShow(Booking $booking)
+    {
+        // Only confirmed or checked_in bookings can be extended
+        if (!in_array($booking->status, ['confirmed', 'checked_in'])) {
+            return redirect()->back()->with('error', 'Only active or confirmed bookings can be extended.');
+        }
+
+        return view('bookings.extend', compact('booking'));
+    }
+
+    /**
+     * Update booking with modified stay (extension or reduction).
+     */
+    public function extendUpdate(Request $request, Booking $booking)
+    {
+        $user = auth()->user();
+        if (!$user || (!$user->isAdmin() && !$user->isManager() && !$user->isReceptionist())) {
+            abort(403, 'Unauthorized.');
+        }
+
+        $request->validate([
+            'new_check_out' => 'required|date',
+        ]);
+
+        $newCheckOut = \Carbon\Carbon::parse($request->new_check_out);
+        $oldCheckOut = $booking->check_out;
+        $checkIn = $booking->check_in;
+
+        // Validation: New checkout must be after check-in
+        if ($newCheckOut->lessThanOrEqualTo($checkIn)) {
+            return redirect()->back()->with('error', 'New check-out date must be after the check-in date.');
+        }
+
+        // Validation: If already checked in, cannot reduce stay before today
+        if ($booking->status === 'checked_in' && $newCheckOut->lessThan(today())) {
+            return redirect()->back()->with('error', 'Cannot set check-out date to the past for an active stay.');
+        }
+
+        $room = $booking->room;
+        
+        // Check availability ONLY if extending
+        if ($newCheckOut->greaterThan($oldCheckOut)) {
+            if (!$room->isAvailableForDates($oldCheckOut->format('Y-m-d'), $newCheckOut->format('Y-m-d'), $booking->id)) {
+                return redirect()->back()->with('error', 'Sorry, the room is not available for the extended period.');
+            }
+        }
+
+        $totalNights = $checkIn->diffInDays($newCheckOut);
+        if ($totalNights <= 0) $totalNights = 1; // Minimum 1 night
+        
+        // Calculate new total price
+        // We use the original price per night to maintain consistency
+        $pricePerNight = $booking->total_price / ($booking->number_of_nights ?: 1);
+        $newTotalPrice = $pricePerNight * $totalNights;
+
+        $booking->update([
+            'check_out' => $request->new_check_out,
+            'total_price' => $newTotalPrice,
+        ]);
+
+        \App\Models\ActivityLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'Booking Modified',
+            'description' => "Booking {$booking->booking_reference} stay modified to {$request->new_check_out}. New total: ${$newTotalPrice}.",
+        ]);
+
+        return redirect()->route('bookings.show', $booking)->with('success', 'Stay modified successfully.');
     }
 }

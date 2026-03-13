@@ -56,12 +56,21 @@ Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show')
 Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
 Route::get('/rooms/{room}/book', [BookingController::class, 'create'])->name('bookings.create');
 Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-Route::get('/bookings/{booking:booking_reference}', [BookingController::class, 'show'])->name('bookings.show');
-Route::get('/bookings/{booking}/payment', [BookingController::class, 'payment'])->name('bookings.payment');
-Route::get('/bookings/{booking}/payment/processing', [BookingController::class, 'paymentProcessing'])->name('bookings.payment.processing');
-Route::post('/bookings/{booking}/payment', [BookingController::class, 'processPayment'])->name('bookings.payment.process');
-Route::patch('/bookings/{booking}/status', [BookingController::class, 'updateStatus'])->name('bookings.update-status');
-Route::patch('/bookings/{booking}/payment-status', [BookingController::class, 'updatePaymentStatus'])->name('bookings.update-payment-status');
+    // Administrative booking actions requiring authentication
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/bookings/{booking}/extend', [BookingController::class, 'extendShow'])->name('bookings.extend');
+        Route::post('/bookings/{booking}/extend', [BookingController::class, 'extendUpdate'])->name('bookings.extend.update');
+        Route::patch('/bookings/{booking}/status', [BookingController::class, 'updateStatus'])->name('bookings.update-status');
+        Route::patch('/bookings/{booking}/payment-status', [BookingController::class, 'updatePaymentStatus'])->name('bookings.update-payment-status');
+        Route::post('/bookings/{booking}/checkin', [BookingController::class, 'checkIn'])->name('bookings.checkin');
+        Route::post('/bookings/{booking}/checkout', [BookingController::class, 'checkOut'])->name('bookings.checkout');
+    });
+
+    // Public / Guest accessible booking actions
+    Route::get('/bookings/{booking:booking_reference}', [BookingController::class, 'show'])->name('bookings.show');
+    Route::get('/bookings/{booking}/payment', [BookingController::class, 'payment'])->name('bookings.payment');
+    Route::get('/bookings/{booking}/payment/processing', [BookingController::class, 'paymentProcessing'])->name('bookings.payment.processing');
+    Route::post('/bookings/{booking}/payment', [BookingController::class, 'processPayment'])->name('bookings.payment.process');
 
 // Admin panel
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -97,7 +106,12 @@ Route::middleware(['auth', 'role:receptionist'])->prefix('receptionist')->name('
 // Chef panel
 Route::middleware(['auth', 'role:chef'])->prefix('chef')->name('chef.')->group(function () {
     Route::get('/dashboard', [ChefController::class, 'index'])->name('dashboard');
-    Route::patch('/orders/{order}/status', [ChefController::class, 'updateStatus'])->name('orders.update');
+    Route::patch('/orders/{order}', [ChefController::class, 'updateStatus'])->name('orders.update');
+
+    // Chef Inventory Management
+    Route::get('/inventory', [ChefController::class, 'inventory'])->name('inventory');
+    Route::post('/inventory', [ChefController::class, 'storeInventory'])->name('inventory.store');
+    Route::post('/inventory/{item}/use', [ChefController::class, 'useInventory'])->name('inventory.use');
 });
 
 // Bar Keeper panel
@@ -111,7 +125,13 @@ Route::middleware(['auth', 'role:housekeeping'])->prefix('housekeeping')->name('
     Route::get('/dashboard', [HousekeepingController::class, 'index'])->name('dashboard');
     Route::patch('/rooms/{room}', [HousekeepingController::class, 'updateRoomStatus'])->name('rooms.update');
     Route::post('/rooms/{room}/consult', [HousekeepingController::class, 'consultReceptionist'])->name('rooms.consult');
+    Route::post('/rooms/{room}/issue', [HousekeepingController::class, 'reportIssue'])->name('rooms.issue');
     Route::patch('/orders/{order}', [HousekeepingController::class, 'updateOrderStatus'])->name('orders.update');
+
+    // Housekeeping Inventory Management
+    Route::get('/inventory', [HousekeepingController::class, 'inventory'])->name('inventory');
+    Route::post('/inventory', [HousekeepingController::class, 'storeInventory'])->name('inventory.store');
+    Route::post('/inventory/{item}/use', [HousekeepingController::class, 'useInventory'])->name('inventory.use');
 });
 
 // Manager panel
@@ -122,6 +142,7 @@ Route::middleware(['auth', 'role:manager'])->prefix('manager')->name('manager.')
     Route::get('/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
     Route::get('/contact-messages', [\App\Http\Controllers\ContactMessageController::class, 'index'])->name('contact_messages.index');
     Route::get('/activity-log', [\App\Http\Controllers\Manager\ActivityLogController::class, 'index'])->name('activity_log.index');
+    Route::patch('/issues/{issue}/resolve', [ManagerController::class, 'resolveIssue'])->name('issues.resolve');
 });
 
 // User panel (Guest)

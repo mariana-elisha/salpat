@@ -30,15 +30,32 @@
                 @csrf
                 <div class="px-4 py-6 sm:p-8">
                     <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        <div class="sm:col-span-4">
-                            <label for="name" class="block text-sm font-medium leading-6 text-slate-900">Room
-                                Name</label>
+                        <div class="sm:col-span-6 border-b border-slate-900/10 pb-4 mb-4">
+                            <h3 class="text-base font-semibold leading-7 text-slate-900">Room Details</h3>
+                            <p class="mt-1 max-w-2xl text-sm leading-6 text-slate-600">Enter room name and optional room numbers for batch creation.</p>
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label for="name" class="block text-sm font-medium leading-6 text-slate-900">Room Name</label>
                             <div class="mt-2">
                                 <input type="text" name="name" id="name" autocomplete="off" required
                                     value="{{ old('name') }}"
                                     class="block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6">
                             </div>
                             @error('name')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label for="room_numbers" class="block text-sm font-medium leading-6 text-slate-900">Room Numbers (Comma Separated)</label>
+                            <div class="mt-2">
+                                <input type="text" name="room_numbers" id="room_numbers" autocomplete="off"
+                                    value="{{ old('room_numbers') }}" placeholder="e.g. 101, 102, 103"
+                                    class="block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6">
+                            </div>
+                            <p class="mt-1 text-xs text-slate-500">To create multiple rooms at once, enter comma-separated numbers.</p>
+                            @error('room_numbers')
                                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
@@ -61,11 +78,10 @@
                         </div>
 
                         <div class="sm:col-span-2">
-                            <label for="price_per_night" class="block text-sm font-medium leading-6 text-slate-900">Price
-                                per Night ($)</label>
+                            <label for="price_per_night" class="block text-sm font-medium leading-6 text-slate-900">Non-Resident Price ($)</label>
                             <div class="mt-2">
-                                <input type="number" name="price_per_night" id="price_per_night" step="0.01" min="0"
-                                    required value="{{ old('price_per_night') }}"
+                                <input type="number" name="price_per_night" id="price_per_night" step="0.01" min="0" required
+                                    value="{{ old('price_per_night') }}"
                                     class="block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6">
                             </div>
                             @error('price_per_night')
@@ -74,8 +90,19 @@
                         </div>
 
                         <div class="sm:col-span-2">
-                            <label for="capacity" class="block text-sm font-medium leading-6 text-slate-900">Max
-                                Capacity</label>
+                            <label for="resident_price_per_night" class="block text-sm font-medium leading-6 text-slate-900">Resident Price (TSH)</label>
+                            <div class="mt-2">
+                                <input type="number" name="resident_price_per_night" id="resident_price_per_night" step="0.01" min="0"
+                                    value="{{ old('resident_price_per_night') }}"
+                                    class="block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6">
+                            </div>
+                            @error('resident_price_per_night')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label for="capacity" class="block text-sm font-medium leading-6 text-slate-900">Max Capacity</label>
                             <div class="mt-2">
                                 <input type="number" name="capacity" id="capacity" min="1" required
                                     value="{{ old('capacity') }}"
@@ -99,27 +126,24 @@
                             @enderror
                         </div>
 
-                        <div class="col-span-full">
-                            <label for="image" class="block text-sm font-medium leading-6 text-slate-900">Room
-                                Image</label>
-                            <div
-                                class="mt-2 flex justify-center rounded-lg border border-dashed border-slate-900/25 px-6 py-10">
+                        <div class="col-span-full border-b border-slate-900/10 pb-4 mb-4">
+                            <h3 class="text-base font-semibold leading-7 text-slate-900">Room Media & Amenities</h3>
+                        </div>
+
+                        <div class="col-span-full sm:col-span-3">
+                            <label for="image" class="block text-sm font-medium leading-6 text-slate-900">Primary Thumbnail Image</label>
+                            <div class="mt-2 flex justify-center rounded-lg border border-dashed border-slate-900/25 px-6 py-6">
                                 <div class="text-center">
-                                    <svg class="mx-auto h-12 w-12 text-slate-300" viewBox="0 0 24 24" fill="currentColor"
-                                        aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                            d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
-                                            clip-rule="evenodd" />
+                                    <svg class="mx-auto h-10 w-10 text-slate-300" viewBox="0 0 24 24" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061z" clip-rule="evenodd" />
                                     </svg>
-                                    <div class="mt-4 flex text-sm leading-6 text-slate-600 justify-center">
-                                        <label for="image"
-                                            class="relative cursor-pointer rounded-md bg-white font-semibold text-primary-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-primary-600 focus-within:ring-offset-2 hover:text-primary-500">
+                                    <div class="mt-2 flex text-sm justify-center">
+                                        <label for="image" class="relative cursor-pointer rounded-md bg-white font-semibold text-primary-600 hover:text-primary-500">
                                             <span>Upload a file</span>
                                             <input id="image" name="image" type="file" class="sr-only">
                                         </label>
-                                        <p class="pl-1">or drag and drop</p>
                                     </div>
-                                    <p class="text-xs leading-5 text-slate-600">PNG, JPG, GIF up to 2MB</p>
+                                    <p class="text-xs text-slate-600">Primary cover image.</p>
                                 </div>
                             </div>
                             @error('image')
@@ -127,15 +151,58 @@
                             @enderror
                         </div>
 
+                        <div class="col-span-full sm:col-span-3">
+                            <label for="images" class="block text-sm font-medium leading-6 text-slate-900">Additional Images</label>
+                            <div class="mt-2 flex justify-center rounded-lg border border-dashed border-slate-900/25 px-6 py-6">
+                                <div class="text-center">
+                                    <svg class="mx-auto h-10 w-10 text-slate-300" viewBox="0 0 24 24" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M11.622 1.602a4.5 4.5 0 011.756 0l2.358.834a2.25 2.25 0 001.362.08l2.368-.684a4.5 4.5 0 012.51.53c.691.432 1.253 1.05 1.636 1.772l1.06 2.016a2.25 2.25 0 001.071 1.07l2.016 1.06a4.5 4.5 0 011.772 1.636c.432.691.53 1.512.43 2.51l-.684 2.368a2.25 2.25 0 00.08 1.362l.834 2.358a4.5 4.5 0 010 1.756l-.834 2.358a2.25 2.25 0 00-.08 1.362l.684 2.368c.099.998-.108 2.016-.54 2.71a4.5 4.5 0 01-1.636 1.772l-2.016 1.06a2.25 2.25 0 00-1.071 1.07l-1.06 2.016a4.5 4.5 0 01-1.772 1.636 4.411 4.411 0 01-2.51.53l-2.368-.684a2.25 2.25 0 00-1.362-.08l-2.358.834a4.5 4.5 0 01-1.756 0l-2.358-.834a2.25 2.25 0 00-1.362-.08l-2.368.684a4.5 4.5 0 01-2.51-.53c-.691-.432-1.253-1.05-1.636-1.772l-1.06-2.016a2.25 2.25 0 00-1.071-1.07l-2.016-1.06a4.5 4.5 0 01-1.772-1.636 4.411 4.411 0 01-.53-2.51l.684-2.368a2.25 2.25 0 00-.08-1.362l-.834-2.358a4.5 4.5 0 010-1.756l.834-2.358a2.25 2.25 0 00.08-1.362l-.684-2.368a4.5 4.5 0 01.53-2.51c.432-.691 1.05-1.253 1.772-1.636l2.016-1.06a2.25 2.25 0 001.071-1.07l1.06-2.016c.432-.691 1.05-1.253 1.772-1.636a4.411 4.411 0 012.51-.53l2.368.684a2.25 2.25 0 001.362.08l2.358-.834zM12 8.25a3.75 3.75 0 100 7.5 3.75 3.75 0 000-7.5z" clip-rule="evenodd" />
+                                    </svg>
+                                    <div class="mt-2 flex text-sm justify-center">
+                                        <label for="images" class="relative cursor-pointer rounded-md bg-white font-semibold text-primary-600 hover:text-primary-500">
+                                            <span>Upload multiple files</span>
+                                            <input id="images" name="images[]" type="file" multiple class="sr-only">
+                                        </label>
+                                    </div>
+                                    <p class="text-xs text-slate-600">Select multiple gallery images.</p>
+                                </div>
+                            </div>
+                            @error('images')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                            @error('images.*')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         <div class="col-span-full">
+                            <label class="block text-sm font-medium leading-6 text-slate-900">Amenities</label>
+                            <div class="mt-2 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                                @php
+                                    $availableAmenities = ['Wi-Fi', 'TV', 'Air Conditioning', 'Balcony', 'Mini Fridge', 'Room Service', 'Coffee Maker', 'Ocean View'];
+                                @endphp
+                                @foreach($availableAmenities as $amenity)
+                                    <div class="relative flex items-start">
+                                        <div class="flex h-6 items-center">
+                                            <input id="amenity_{{ $loop->index }}" name="amenities[]" type="checkbox" value="{{ $amenity }}"
+                                                class="h-4 w-4 rounded border-slate-300 text-primary-600 focus:ring-primary-600">
+                                        </div>
+                                        <div class="ml-3 text-sm leading-6">
+                                            <label for="amenity_{{ $loop->index }}" class="font-medium text-slate-700">{{ $amenity }}</label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="col-span-full border-t border-slate-900/10 pt-4 mt-4">
                             <div class="relative flex gap-x-3">
                                 <div class="flex h-6 items-center">
                                     <input id="is_available" name="is_available" type="checkbox" value="1" checked
                                         class="h-4 w-4 rounded border-slate-300 text-primary-600 focus:ring-primary-600">
                                 </div>
                                 <div class="text-sm leading-6">
-                                    <label for="is_available" class="font-medium text-slate-900">Available for
-                                        booking</label>
+                                    <label for="is_available" class="font-medium text-slate-900">Available for booking</label>
                                     <p class="text-slate-500">Uncheck to mark this room as unavailable/maintenance mode.</p>
                                 </div>
                             </div>

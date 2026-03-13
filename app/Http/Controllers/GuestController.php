@@ -37,6 +37,7 @@ class GuestController extends Controller
             'service_id' => 'required|exists:services,id',
             'room_id' => 'nullable|exists:rooms,id',
             'quantity' => 'required|integer|min:1',
+            'payment_type' => 'required|in:individual,company',
             'comment' => 'nullable|string|max:500',
         ]);
 
@@ -51,6 +52,7 @@ class GuestController extends Controller
             'status' => 'pending',
             'requested_at' => now(),
             'comment' => $request->comment,
+            'payment_type' => $request->payment_type,
         ]);
 
         // Notify relevant staff

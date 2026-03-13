@@ -5,10 +5,17 @@
 @section('content')
     <!-- Hero Section -->
     <div class="relative bg-slate-900 overflow-hidden flex items-center justify-center min-h-[90vh]">
-        <div class="absolute inset-0 z-0">
-            <img src="{{ asset('images/logo.png') }}" class="absolute -left-20 -top-20 opacity-5 w-[120%] h-auto blur-sm">
+        <div class="absolute inset-0 z-0 bg-black">
+            <!-- Background Video -->
+            <video id="hero-video" class="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 opacity-100" muted playsinline autoplay>
+                <source src="{{ asset('images/salpatcamp env.mp4') }}" type="video/mp4">
+            </video>
+            
+            <!-- Slideshow Container -->
+            <div id="hero-slideshow" class="absolute inset-0 w-full h-full z-0 opacity-0 transition-opacity duration-1000"></div>
+
             <div
-                class="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/90 mix-blend-multiply">
+                class="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/90 mix-blend-multiply z-10">
             </div>
         </div>
 
@@ -129,6 +136,79 @@
             </a>
         </div>
     </div>
+
+    <!-- Scripts for Hero Slideshow -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('hero-video');
+            const slideshowContainer = document.getElementById('hero-slideshow');
+            
+            let images = [
+                "{{ asset('images/pcs1.jpeg') }}",
+                "{{ asset('images/pcs2.jpeg') }}",
+                "{{ asset('images/pcs3.jpeg') }}",
+                "{{ asset('images/pcs4.png') }}",
+                "{{ asset('images/pcs5.png') }}",
+                "{{ asset('images/pcs6.png') }}",
+                "{{ asset('images/pcs7.png') }}",
+                "{{ asset('images/pcs8.png') }}",
+                "{{ asset('images/pcs9.png') }}",
+                "{{ asset('images/pcs10.png') }}",
+                "{{ asset('images/pcs11.png') }}",
+                "{{ asset('images/pcs12.png') }}",
+                "{{ asset('images/pcs13.png') }}",
+                "{{ asset('images/pcs14.png') }}",
+                "{{ asset('images/pcs15.jpeg') }}",
+                "{{ asset('images/pcs16.png') }}",
+                "{{ asset('images/pcs17.png') }}",
+                "{{ asset('images/pcs18.png') }}"
+            ];
+            
+            let currentImageIndex = 0;
+            let slideInterval;
+
+            function updateSlide() {
+                const nextSlide = document.createElement('div');
+                nextSlide.className = 'absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 opacity-0';
+                nextSlide.style.backgroundImage = `url('${images[currentImageIndex]}')`;
+                slideshowContainer.appendChild(nextSlide);
+                
+                // Trigger reflow
+                void nextSlide.offsetWidth;
+                
+                nextSlide.classList.replace('opacity-0', 'opacity-100');
+                
+                setTimeout(() => {
+                    const slides = slideshowContainer.querySelectorAll('div');
+                    if (slides.length > 2) {
+                        slides[0].remove();
+                    }
+                }, 1000);
+                
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+            }
+
+            if (video) {
+                video.addEventListener('ended', function() {
+                    video.classList.replace('opacity-100', 'opacity-0');
+                    slideshowContainer.classList.replace('opacity-0', 'opacity-100');
+                    updateSlide();
+                    slideInterval = setInterval(updateSlide, 4000);
+                });
+                
+                let playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        // Autoplay blocked, just show slideshow immediately
+                        video.classList.replace('opacity-100', 'opacity-0');
+                        slideshowContainer.classList.replace('opacity-0', 'opacity-100');
+                        updateSlide();
+                        slideInterval = setInterval(updateSlide, 4000);
+                    });
+                }
+            }
+        });
+    </script>
 @endsection
 
 @push('styles')

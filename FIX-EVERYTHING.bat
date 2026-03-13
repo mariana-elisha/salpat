@@ -4,7 +4,7 @@ echo ========================================
 echo LODGE BOOKING SYSTEM - FIX EVERYTHING
 echo ========================================
 echo.
-cd /d C:\xampp\htdocs\Campsallpat
+cd /d C:\xampp\htdocs\salpat
 echo Current directory: %CD%
 echo.
 

@@ -25,37 +25,37 @@
 <body class="flex flex-col min-h-full font-sans text-slate-900 antialiased bg-slate-50">
 
     <!-- Navigation -->
-    <nav class="bg-primary-600 sticky top-0 z-50 shadow-lg" x-data="{ mobileMenuOpen: false }">
+    <nav class="sticky top-0 z-50 shadow-lg" style="background-color: #87CEEB;" x-data="{ mobileMenuOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20">
                 <div class="flex">
                     <div class="flex-shrink-0 flex items-center">
                         <a href="{{ route('home') }}" class="flex items-center gap-4">
                             <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Salpat Camp Logo"
-                                class="h-20 w-20 bg-white rounded-full p-1 object-contain shadow-lg border-2 border-primary-500">
-                            <span class="text-2xl font-serif font-bold text-white tracking-tight">Salpat Camp</span>
+                                class="h-20 w-20 bg-white rounded-full p-1 object-contain shadow-lg border-2 border-white/40">
+                            <span class="text-2xl font-serif font-bold text-slate-900 tracking-tight">Salpat Camp</span>
                         </a>
                     </div>
                 </div>
                 <div class="hidden sm:ml-8 sm:flex sm:items-center sm:space-x-4">
                     <a href="{{ route('home') }}"
-                        class="text-sm font-medium text-primary-100 hover:text-white hover:bg-primary-500 rounded-lg px-3 py-2 transition">Home</a>
+                        class="text-sm font-bold text-slate-800 hover:text-slate-900 hover:bg-white/30 rounded-lg px-3 py-2 transition-all duration-200">Home</a>
                     <a href="{{ route('rooms.index') }}"
-                        class="text-sm font-medium text-primary-100 hover:text-white hover:bg-primary-500 rounded-lg px-3 py-2 transition">Rooms</a>
+                        class="text-sm font-bold text-slate-800 hover:text-slate-900 hover:bg-white/30 rounded-lg px-3 py-2 transition-all duration-200">Rooms</a>
                     <a href="{{ route('gallery') }}"
-                        class="text-sm font-medium text-primary-100 hover:text-white hover:bg-primary-500 rounded-lg px-3 py-2 transition">Gallery</a>
+                        class="text-sm font-bold text-slate-800 hover:text-slate-900 hover:bg-white/30 rounded-lg px-3 py-2 transition-all duration-200">Experiences</a>
                     <a href="{{ route('about') }}"
-                        class="text-sm font-medium text-primary-100 hover:text-white hover:bg-primary-500 rounded-lg px-3 py-2 transition">About</a>
+                        class="text-sm font-bold text-slate-800 hover:text-slate-900 hover:bg-white/30 rounded-lg px-3 py-2 transition-all duration-200">Our Story</a>
                     <a href="{{ route('services') }}"
-                        class="text-sm font-medium text-primary-100 hover:text-white hover:bg-primary-500 rounded-lg px-3 py-2 transition">Services</a>
+                        class="text-sm font-bold text-slate-800 hover:text-slate-900 hover:bg-white/30 rounded-lg px-3 py-2 transition-all duration-200">Services</a>
                     <a href="{{ route('contact') }}"
-                        class="text-sm font-medium text-primary-100 hover:text-white hover:bg-primary-500 rounded-lg px-3 py-2 transition">Contact</a>
+                        class="text-sm font-bold text-slate-800 hover:text-slate-900 hover:bg-white/30 rounded-lg px-3 py-2 transition-all duration-200">Contact</a>
 
                     @auth
                         <!-- Notifications Indicator -->
                         <div class="relative mr-4" x-data="{ open: false }">
                             <button @click="open = !open" @click.away="open = false"
-                                class="text-primary-100 hover:text-white transition relative">
+                                class="text-slate-700 hover:text-slate-900 transition relative">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -96,9 +96,9 @@
 
                         <div class="relative ml-4" x-data="{ open: false }">
                             <button @click="open = !open" @click.away="open = false"
-                                class="flex items-center gap-2 text-sm font-bold text-white hover:text-accent-200 transition focus:outline-none">
+                                class="flex items-center gap-2 text-sm font-bold text-slate-800 hover:text-slate-900 transition focus:outline-none">
                                 <span>{{ Auth::user()->name }}</span>
-                                <svg class="h-4 w-4 text-primary-200" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                <svg class="h-4 w-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke-width="2"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                 </svg>
@@ -159,8 +159,8 @@
                     @else
                         <div class="flex items-center gap-4 ml-4">
                             <a href="{{ route('login') }}"
-                                class="rounded-full bg-accent-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-accent-600 transition">Log
-                                in</a>
+                            class="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-700 transition">Log
+                            in</a>
                         </div>
                     @endauth
                 </div>
@@ -168,7 +168,7 @@
                 <!-- Mobile menu button -->
                 <div class="flex items-center sm:hidden">
                     <button @click="mobileMenuOpen = !mobileMenuOpen" type="button"
-                        class="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-primary-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        class="inline-flex items-center justify-center rounded-md p-2 text-slate-800 hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-slate-800">
                         <span class="sr-only">Open main menu</span>
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                             aria-hidden="true">
@@ -181,28 +181,27 @@
         </div>
 
         <!-- Mobile menu -->
-        <div x-show="mobileMenuOpen" class="sm:hidden bg-primary-700 border-b border-primary-600">
+        <div x-show="mobileMenuOpen" style="background-color: #87CEEB;" class="sm:hidden border-b border-sky-400">
             <div class="space-y-1 pb-3 pt-2">
                 <a href="{{ route('home') }}"
-                    class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-primary-100 hover:border-accent-400 hover:bg-primary-800 hover:text-white">Home</a>
+                    class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-slate-800 hover:border-slate-900 hover:bg-white/30 transition-all">Home</a>
                 <a href="{{ route('rooms.index') }}"
-                    class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-primary-100 hover:border-accent-400 hover:bg-primary-800 hover:text-white">Rooms</a>
+                    class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-slate-800 hover:border-slate-900 hover:bg-white/30 transition-all">Rooms</a>
                 <a href="{{ route('gallery') }}"
-                    class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-primary-100 hover:border-accent-400 hover:bg-primary-800 hover:text-white">Gallery</a>
+                    class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-slate-800 hover:border-slate-900 hover:bg-white/30 transition-all">Experiences</a>
                 <a href="{{ route('about') }}"
-                    class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-primary-100 hover:border-accent-400 hover:bg-primary-800 hover:text-white">About</a>
+                    class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-slate-800 hover:border-slate-900 hover:bg-white/30 transition-all">Our Story</a>
                 <a href="{{ route('services') }}"
-                    class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-primary-100 hover:border-accent-400 hover:bg-primary-800 hover:text-white">Services</a>
+                    class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-slate-800 hover:border-slate-900 hover:bg-white/30 transition-all">Services</a>
                 <a href="{{ route('contact') }}"
-                    class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-primary-100 hover:border-accent-400 hover:bg-primary-800 hover:text-white">Contact
-                    Us</a>
+                    class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-bold text-slate-800 hover:border-slate-900 hover:bg-white/30 transition-all">Contact Us</a>
             </div>
-            <div class="border-t border-primary-600 pb-3 pt-4">
+            <div class="border-t border-sky-400 pb-3 pt-4">
                 @auth
                     <div class="flex items-center px-4">
                         <div class="ml-3">
-                            <div class="text-base font-medium text-white">{{ Auth::user()->name }}</div>
-                            <div class="text-sm font-medium text-primary-200">{{ Auth::user()->email }}</div>
+                            <div class="text-base font-bold text-slate-900">{{ Auth::user()->name }}</div>
+                            <div class="text-sm font-medium text-slate-700">{{ Auth::user()->email }}</div>
                         </div>
                     </div>
                     <div class="mt-3 space-y-1">
@@ -360,17 +359,15 @@ Quick Links
                             class="absolute -bottom-2 left-1/2 md:left-0 -translate-x-1/2 md:translate-x-0 w-8 h-1 bg-accent-500 rounded-full"></span>
 </h6>
 <ul class="space-y-3 w-full max-w-[200px]">
-<li><a href="{{ route('home') }}" 50:
+<li><a href="{{ route('home') }}"
                                 class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">Home</a>
 </li>
-<li><a href="{{ route('about') }}" 53:
-                                class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">About
-Us</a></li>
-<li><a href="{{ route('rooms.index') }}" 56:
-                                class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">Our
-Rooms</a></li>
-<li><a href="{{ route('gallery') }}" 59:
-                                class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">Gallery</a>
+<li><a href="{{ route('about') }}"
+                                class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">Our Story</a></li>
+<li><a href="{{ route('rooms.index') }}"
+                                class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">Our Rooms</a></li>
+<li><a href="{{ route('gallery') }}"
+                                class="text-sm font-medium text-slate-400 hover:text-accent-400 transition-colors inline-block w-full">Experiences</a>
 </li>
 </ul>
 </div>
@@ -413,8 +410,8 @@ Rooms</a></li>
                                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
                                 </path>
                             </svg>
-                            <a href="mailto:salpatcamp@yahoo.com"
-                                class="text-sm text-slate-400 hover:text-accent-400 transition-colors">salpatcamp@yahoo.com</a>
+                            <a href="mailto:salpatcamp@gmail.com"
+                                class="text-sm text-slate-400 hover:text-accent-400 transition-colors">salpatcamp@gmail.com</a>
                         </li>
                     </ul>
                 </div>

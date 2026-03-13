@@ -52,7 +52,9 @@ class GalleryController extends Controller
             'description' => "Admin uploaded a new gallery image: {$gallery->title}.",
         ]);
 
-        return redirect()->route('admin.galleries.index')
+        $redirectRoute = auth()->user()->isAdmin() ? 'admin.galleries.index' : 'manager.galleries.index';
+
+        return redirect()->route($redirectRoute)
             ->with('success', 'Image uploaded successfully.');
     }
 
@@ -95,7 +97,9 @@ class GalleryController extends Controller
             'description' => "Admin updated gallery image: {$gallery->title}.",
         ]);
 
-        return redirect()->route('admin.galleries.index')
+        $redirectRoute = auth()->user()->isAdmin() ? 'admin.galleries.index' : 'manager.galleries.index';
+
+        return redirect()->route($redirectRoute)
             ->with('success', 'Image updated successfully.');
     }
 
@@ -117,7 +121,9 @@ class GalleryController extends Controller
             'description' => "Admin deleted gallery image: {$galleryTitle}.",
         ]);
 
-        return redirect()->route('admin.galleries.index')
+        $redirectRoute = auth()->user()->isAdmin() ? 'admin.galleries.index' : 'manager.galleries.index';
+
+        return redirect()->route($redirectRoute)
             ->with('success', 'Image deleted successfully.');
     }
 }

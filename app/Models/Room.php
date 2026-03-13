@@ -16,6 +16,9 @@ class Room extends Model
      */
     public function getTzsPriceAttribute()
     {
+        if ($this->resident_price_per_night > 0) {
+            return $this->resident_price_per_night;
+        }
         return $this->price_per_night * self::USD_TO_TZS;
     }
 
@@ -26,7 +29,9 @@ class Room extends Model
         'type',
         'capacity',
         'price_per_night',
+        'resident_price_per_night',
         'image',
+        'images',
         'amenities',
         'is_available',
         'housekeeping_status',
@@ -34,8 +39,10 @@ class Room extends Model
 
     protected $casts = [
         'amenities' => 'array',
+        'images' => 'array',
         'is_available' => 'boolean',
         'price_per_night' => 'decimal:2',
+        'resident_price_per_night' => 'decimal:2',
         'housekeeping_status' => 'string',
     ];
 
@@ -58,15 +65,20 @@ class Room extends Model
     /**
      * Check if room is available for given dates.
      */
-    public function isAvailableForDates($checkIn, $checkOut)
+    public function isAvailableForDates($checkIn, $checkOut, $excludeBookingId = null)
     {
         if (!$this->is_available) {
             return false;
         }
 
-        return !$this->bookings()
-            ->where('status', '!=', 'cancelled')
-            ->where(function ($query) use ($checkIn, $checkOut) {
+        $query = $this->bookings()
+            ->where('status', '!=', 'cancelled');
+
+        if ($excludeBookingId) {
+            $query->where('id', '!=', $excludeBookingId);
+        }
+
+        return !$query->where(function ($query) use ($checkIn, $checkOut) {
                 $query->whereBetween('check_in', [$checkIn, $checkOut])
                     ->orWhereBetween('check_out', [$checkIn, $checkOut])
                     ->orWhere(function ($q) use ($checkIn, $checkOut) {

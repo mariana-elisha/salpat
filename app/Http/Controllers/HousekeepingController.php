@@ -11,12 +11,13 @@ class HousekeepingController extends Controller
 {
     public function index()
     {
-        $allRooms = Room::all();
-        $dirtyRoomsCount = Room::where('housekeeping_status', 'dirty')->count();
+        $dirtyRoomsCount = \App\Models\Room::where('housekeeping_status', 'dirty')->count();
+        $allRooms = \App\Models\Room::orderBy('room_number')->get();
 
-        $orders = ServiceOrder::with(['service', 'user', 'room'])
+        $orders = \App\Models\ServiceOrder::with(['service', 'user', 'room'])
             ->whereHas('service', function ($query) {
-                $query->where('type', 'housekeeping');
+                $query->where('type', 'cleaning')
+                      ->orWhere('type', 'maintenance');
             })
             ->where('status', '!=', 'completed')
             ->orderBy('requested_at', 'asc')
@@ -24,7 +25,11 @@ class HousekeepingController extends Controller
 
         $recentReports = \App\Models\StaffReport::where('user_id', auth()->id())->latest()->take(5)->get();
 
-        return view('housekeeping.dashboard', compact('orders', 'allRooms', 'recentReports', 'dirtyRoomsCount'));
+        $inventoryItems = \App\Models\InventoryItem::where('department_id', auth()->id())
+            ->orWhere('department', 'housekeeping')
+            ->get();
+
+        return view('housekeeping.dashboard', compact('dirtyRoomsCount', 'allRooms', 'orders', 'recentReports', 'inventoryItems'));
     }
 
     public function consultReceptionist(Request $request, Room $room)
@@ -80,5 +85,80 @@ class HousekeepingController extends Controller
         }
 
         return back()->with('success', 'Order status updated successfully.');
+    }
+
+    public function reportIssue(Room $room, Request $request)
+    {
+        $request->validate([
+            'description' => 'required|string|max:1000',
+        ]);
+
+        $issue = \App\Models\RoomIssue::create([
+            'room_id' => $room->id,
+            'reporter_id' => auth()->id(),
+            'description' => $request->description,
+            'status' => 'pending',
+        ]);
+
+        // Notify Managers
+        $managers = \App\Models\User::where('role', 'manager')->get();
+        foreach ($managers as $manager) {
+            $manager->notify(new \App\Notifications\SystemNotification(
+                "New issue reported in Room {$room->name} by " . auth()->user()->name,
+                route('manager.dashboard'), // Managers will see this on dashboard
+                'warning'
+            ));
+        }
+
+        return back()->with('success', 'Room issue reported successfully to management.');
+    }
+
+    public function inventory()
+    {
+        $items = \App\Models\InventoryItem::where('department_id', auth()->id())
+            ->orWhere('department', 'housekeeping')
+            ->get();
+        return view('housekeeping.inventory', compact('items'));
+    }
+
+    public function storeInventory(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'quantity' => 'required|integer|min:0',
+            'unit' => 'nullable|string|max:50',
+            'unit_price' => 'nullable|numeric|min:0',
+        ]);
+
+        \App\Models\InventoryItem::create([
+            'name' => $request->name,
+            'quantity' => $request->quantity,
+            'unit' => $request->unit,
+            'unit_price' => $request->unit_price,
+            'department_id' => auth()->id(),
+            'department' => 'housekeeping',
+        ]);
+
+        return back()->with('success', 'Item added to inventory.');
+    }
+
+    public function useInventory(Request $request, \App\Models\InventoryItem $item)
+    {
+        $request->validate([
+            'quantity' => 'required|numeric|min:0.01|max:' . $item->quantity,
+            'description' => 'required|string|max:500',
+        ]);
+
+        $item->decrement('quantity', $request->quantity);
+
+        \App\Models\InventoryTransaction::create([
+            'inventory_item_id' => $item->id,
+            'user_id' => auth()->id(),
+            'type' => 'out',
+            'quantity' => $request->quantity,
+            'description' => $request->description,
+        ]);
+
+        return back()->with('success', 'Inventory usage recorded successfully.');
     }
 }

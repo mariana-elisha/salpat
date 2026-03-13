@@ -18,6 +18,7 @@ class ServiceOrder extends Model
         'status',
         'requested_at',
         'comment',
+        'payment_type', // 'individual' or 'company'
     ];
 
     protected $casts = [

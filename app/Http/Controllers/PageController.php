@@ -36,7 +36,8 @@ class PageController extends Controller
      */
     public function gallery()
     {
-        return view('pages.gallery');
+        $galleries = \App\Models\Gallery::latest()->get();
+        return view('pages.gallery', compact('galleries'));
     }
 
     /**

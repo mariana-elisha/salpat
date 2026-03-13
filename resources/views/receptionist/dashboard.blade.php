@@ -3,327 +3,211 @@
 @section('title', 'Receptionist Dashboard')
 
 @section('content')
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center mb-8">
-            <div>
-                <h1 class="text-3xl font-serif font-bold text-slate-800">Reception Dashboard</h1>
-                <p class="text-slate-500 mt-1">Overview of today's activities and bookings</p>
+<div class="space-y-8">
+
+    {{-- Welcome Banner + Actions --}}
+    {{-- Premium Dark Welcome Banner --}}
+    <div class="relative bg-slate-900 rounded-3xl p-8 overflow-hidden shadow-2xl border border-slate-800">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
+        <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary-600/20 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-accent-600/10 rounded-full blur-3xl"></div>
+        
+        <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div class="flex items-center gap-6">
+                <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary-500/20">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-primary-400 text-xs font-bold uppercase tracking-widest mb-1">Front Desk Excellence</p>
+                    <h1 class="text-3xl md:text-4xl font-serif font-bold text-white">Reception Operations</h1>
+                    <p class="text-slate-400 mt-1 font-light">Warm welcomes. Efficient check-ins. Premium hospitality.</p>
+                </div>
             </div>
-            <div class="flex gap-3">
+            <div class="flex flex-wrap gap-3">
                 <form action="{{ route('receptionist.daily-transaction') }}" method="POST"
-                    onsubmit="return confirm('Are you sure you want to close the daily transaction and submit the report to the manager?');">
+                    onsubmit="return confirm('Close the daily transaction and submit to manager?');">
                     @csrf
                     <button type="submit"
-                        class="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600 font-medium transition shadow-sm flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Close Daily Transaction
+                        class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-5 py-2.5 rounded-xl font-bold shadow-lg transition-all hover:-translate-y-0.5 text-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Close Daily
                     </button>
                 </form>
                 <a href="{{ route('receptionist.rooms.index') }}"
-                    class="bg-white text-slate-700 border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-50 font-medium transition shadow-sm">
+                    class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur border border-white/20 text-white px-5 py-2.5 rounded-xl font-bold transition-all hover:-translate-y-0.5 text-sm">
                     Manage Rooms
                 </a>
                 <a href="{{ route('receptionist.bookings') }}"
-                    class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 font-bold transition shadow-md flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
+                    class="inline-flex items-center gap-2 bg-white text-primary-700 hover:bg-primary-50 px-5 py-2.5 rounded-xl font-bold shadow-lg transition-all hover:-translate-y-0.5 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
                     New Booking
                 </a>
             </div>
         </div>
+    </div>
 
-        <!-- Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
-                <div class="flex justify-between items-start">
-                    <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Total Rooms</div>
-                    <div class="p-2 bg-slate-100 rounded-lg text-slate-600">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                    </div>
+    {{-- Stats Grid --}}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="group bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-800 p-6 hover:border-amber-500/50 transition-all duration-500 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-amber-600/10 rounded-full -mr-12 -mt-12 blur-2xl"></div>
+            <div class="relative z-10 flex items-center gap-5">
+                <div class="w-14 h-14 bg-amber-500/20 border border-amber-500/30 rounded-2xl flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                 </div>
-                <div class="text-3xl font-bold text-slate-800 mt-4">{{ $stats['rooms'] }}</div>
+                <div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-1">Today's Intake</p>
+                    <p class="text-3xl font-black text-white leading-none">{{ $stats['today_bookings'] }} <span class="text-sm font-medium text-slate-400 ml-1 italic">Bookings</span></p>
+                </div>
             </div>
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
-                <div class="flex justify-between items-start">
-                    <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Check-ins</div>
-                    <div class="p-2 bg-green-50 rounded-lg text-green-600">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                        </svg>
-                    </div>
+        </div>
+        
+        <div class="group bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-800 p-6 hover:border-orange-500/50 transition-all duration-500 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-orange-600/10 rounded-full -mr-12 -mt-12 blur-2xl"></div>
+            <div class="relative z-10 flex items-center gap-5">
+                <div class="w-14 h-14 bg-orange-500/20 border border-orange-500/30 rounded-2xl flex items-center justify-center text-orange-400 group-hover:bg-orange-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
                 </div>
-                <div class="text-3xl font-bold text-green-600 mt-4">{{ $stats['today_checkins'] }}</div>
-                <div class="text-xs text-green-600 font-medium mt-1">Today</div>
-            </div>
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
-                <div class="flex justify-between items-start">
-                    <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Check-outs</div>
-                    <div class="p-2 bg-red-50 rounded-lg text-red-600">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                        </svg>
-                    </div>
+                <div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-1">Arrivals</p>
+                    <p class="text-3xl font-black text-white leading-none">{{ $stats['pending_checkins'] }} <span class="text-sm font-medium text-slate-400 ml-1 italic">Expect</span></p>
                 </div>
-                <div class="text-3xl font-bold text-slate-800 mt-4">{{ $stats['today_checkouts'] }}</div>
-                <div class="text-xs text-slate-500 font-medium mt-1">Today</div>
-            </div>
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between">
-                <div class="flex justify-between items-start">
-                    <div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Pending</div>
-                    <div class="p-2 bg-amber-50 rounded-lg text-amber-600">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="text-3xl font-bold text-amber-600 mt-4">{{ $stats['pending_bookings'] }}</div>
-                <div class="text-xs text-amber-600 font-medium mt-1">Require Action</div>
             </div>
         </div>
 
-        <!-- Upcoming Bookings -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                <h2 class="text-lg font-bold text-slate-800">Upcoming Bookings</h2>
-                <a href="{{ route('receptionist.bookings') }}"
-                    class="text-sm font-semibold text-primary-600 hover:text-primary-700 hover:underline">View All</a>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-slate-100">
-                    <thead class="bg-slate-50">
-                        <tr>
-                            <th class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">
-                                Reference</th>
-                            <th class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Guest
-                            </th>
-                            <th class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Room
-                            </th>
-                            <th class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">
-                                Check-in</th>
-                            <th class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Status
-                            </th>
-                            <th class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Payment
-                            </th>
-                            <th class="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase tracking-wider">
-                                Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100 bg-white">
-                        @forelse($upcomingBookings as $booking)
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span
-                                        class="font-mono text-sm font-semibold text-primary-600 bg-primary-50 px-2 py-1 rounded">{{ $booking->booking_reference }}</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-slate-900">{{ $booking->guest_name }}</div>
-                                    <div class="text-xs text-slate-500">{{ $booking->email ?? 'No email' }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
-                                    {{ $booking->room->name }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
-                                    <span class="font-medium">{{ $booking->check_in->format('M d') }}</span>,
-                                    {{ $booking->check_in->format('Y') }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2.5 py-0.5 text-xs font-bold rounded-full uppercase tracking-wide
-                                                                            @if($booking->status == 'confirmed') bg-green-100 text-green-700
-                                                                            @elseif($booking->status == 'pending') bg-amber-100 text-amber-700
-                                                                            @elseif($booking->status == 'cancelled') bg-red-100 text-red-700
-                                                                            @else bg-slate-100 text-slate-700
-                                                                            @endif">{{ ucfirst($booking->status) }}</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2.5 py-0.5 text-xs font-bold rounded-full uppercase tracking-wide
-                                        @if($booking->payment_status == 'paid') bg-emerald-100 text-emerald-700
-                                        @elseif($booking->payment_status == 'pending') bg-rose-100 text-rose-700
-                                        @else bg-slate-100 text-slate-700
-                                        @endif">{{ ucfirst($booking->payment_status) }}</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <div class="flex items-center justify-end gap-2">
-                                        <a href="{{ route('bookings.show', $booking) }}"
-                                            class="text-slate-400 hover:text-primary-600 transition-colors"
-                                            title="View Details">
-                                            <span class="sr-only">View</span>
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                        </a>
-
-                                        @if($booking->status === 'pending')
-                                            <form action="{{ route('bookings.update-status', $booking) }}" method="POST"
-                                                class="inline-block">
-                                                @csrf
-                                                @method('PATCH')
-                                                <input type="hidden" name="status" value="confirmed">
-                                                <button type="submit"
-                                                    class="text-emerald-500 hover:text-emerald-700 transition-colors"
-                                                    title="Confirm Booking">
-                                                    <span class="sr-only">Confirm</span>
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                            d="M5 13l4 4L19 7" />
-                                                    </svg>
-                                                </button>
-                                            </form>
-                                        @endif
-
-                                        @if($booking->status !== 'cancelled')
-                                            <form action="{{ route('bookings.update-status', $booking) }}" method="POST"
-                                                onsubmit="return confirm('Are you sure you want to cancel this booking?');"
-                                                class="inline-block">
-                                                @csrf
-                                                @method('PATCH')
-                                                <input type="hidden" name="status" value="cancelled">
-                                                <button type="submit" class="text-red-400 hover:text-red-600 transition-colors"
-                                                    title="Cancel Booking">
-                                                    <span class="sr-only">Cancel</span>
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                            d="M6 18L18 6M6 6l12 12" />
-                                                    </svg>
-                                                </button>
-                                            </form>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="px-6 py-12 text-center text-slate-500">
-                                    No upcoming bookings found.
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+        <div class="group bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-800 p-6 hover:border-blue-500/50 transition-all duration-500 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-blue-600/10 rounded-full -mr-12 -mt-12 blur-2xl"></div>
+            <div class="relative z-10 flex items-center gap-5">
+                <div class="w-14 h-14 bg-blue-500/20 border border-blue-500/30 rounded-2xl flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-1">Departures</p>
+                    <p class="text-3xl font-black text-white leading-none">{{ $stats['pending_checkouts'] }} <span class="text-sm font-medium text-slate-400 ml-1 italic">Expect</span></p>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
-        <!-- Recent Activity (Filtered for Reception) -->
-        <div class="card bg-white overflow-hidden shadow-sm border border-slate-200">
-            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-                    <svg class="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Recent Activity
-                </h2>
-            </div>
-            <div class="divide-y divide-slate-100 max-h-[300px] overflow-y-auto">
-                @forelse($recentActivity ?? [] as $log)
-                    <div class="px-6 py-4 hover:bg-slate-50 transition-colors flex items-start gap-4">
-                        <div
-                            class="w-8 h-8 rounded-full bg-primary-50 flex items-center justify-center text-primary-600 shrink-0 text-xs font-bold">
-                            {{ substr($log->user?->name ?? '?', 0, 1) }}
-                        </div>
-                        <div class="min-w-0 flex-1">
-                            <p class="text-sm text-slate-900 leading-tight">
-                                <span class="font-bold text-slate-700">{{ $log->user?->name ?? 'System' }}</span>
-                                <span class="text-slate-500">{{ strtolower($log->action) }}</span>
-                            </p>
-                            <p class="text-[11px] text-slate-400 mt-0.5 truncate">{{ $log->description }}</p>
-                        </div>
-                        <div class="shrink-0 text-right">
-                            <span
-                                class="text-[10px] font-medium text-slate-400 uppercase">{{ $log->created_at->diffForHumans() }}</span>
-                        </div>
-                    </div>
-                @empty
-                    <div class="px-6 py-10 text-center text-slate-400 text-sm italic">No recent booking activity.</div>
-                @endforelse
-            </div>
-        </div>
-
-        <!-- Reception Section Reports -->
-        <div class="card bg-white overflow-hidden shadow-sm border border-slate-200">
-            <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-                    <svg class="w-5 h-5 text-accent-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    Reception Reports
-                </h2>
-                <a href="{{ route('staff_reports.index') }}"
-                    class="text-xs font-bold text-accent-600 hover:text-accent-700 uppercase underline">View All</a>
-            </div>
-            <div class="divide-y divide-slate-100">
-                @forelse($recentReports ?? [] as $report)
-                    <a href="{{ route('staff_reports.show', $report) }}"
-                        class="block px-6 py-4 hover:bg-slate-50 transition-colors">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="text-sm font-bold text-slate-900 truncate">{{ $report->title }}</span>
-                            <span
-                                class="text-[10px] text-slate-400 whitespace-nowrap">{{ \Carbon\Carbon::parse($report->report_date)->format('M d, Y') }}</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs text-slate-500">By {{ $report->user->name }}</span>
-                            <span
-                                class="text-[10px] px-2 py-0.5 rounded-full bg-accent-50 text-accent-700 font-bold uppercase">{{ $report->report_type }}</span>
-                        </div>
-                    </a>
-                @empty
-                    <div class="px-6 py-10 text-center text-slate-400 text-sm italic">No reports submitted yet.</div>
-                @endforelse
-            </div>
-        </div>
-    </div>
-
-    <!-- Staff Activity Log (Housekeeping & Barkeeper) -->
-    <div class="card bg-white mt-8 overflow-hidden shadow-sm border border-slate-200">
-        <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-            <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-                <svg class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                Housekeeping & Bar Activity
+    {{-- Bookings Table --}}
+    <div class="bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-800 overflow-hidden">
+        <div class="px-6 py-5 border-b border-slate-800 flex justify-between items-center bg-slate-800/30">
+            <h2 class="text-lg font-bold text-white font-serif flex items-center gap-2">
+                <span class="w-1.5 h-6 bg-amber-500 rounded-full shadow-[0_0_15px_rgba(245,158,11,0.5)]"></span>
+                Recent Bookings
             </h2>
+            <a href="{{ route('receptionist.bookings') }}" class="text-xs font-bold text-primary-600 hover:text-primary-700 uppercase tracking-widest">View All →</a>
         </div>
-        <div class="divide-y divide-slate-100 max-h-[300px] overflow-y-auto">
-            @forelse($staffActivity ?? [] as $log)
-                <div class="px-6 py-4 hover:bg-slate-50 transition-colors flex items-start gap-4">
-                    <div
-                        class="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 shrink-0 text-xs font-bold uppercase">
-                        {{ substr($log->user?->role ?? 'S', 0, 1) }}
-                    </div>
-                    <div class="min-w-0 flex-1">
-                        <p class="text-sm text-slate-900 leading-tight">
-                            <span class="font-bold text-slate-700">{{ $log->user?->name ?? 'Staff' }}</span>
-                            <span class="text-slate-500 text-xs">({{ ucfirst($log->user?->role) }})</span>
-                            <span class="text-slate-500">{{ strtolower($log->action) }}</span>
-                        </p>
-                        <p class="text-[11px] text-slate-400 mt-0.5 truncate">{{ $log->description }}</p>
-                    </div>
-                    <div class="shrink-0 text-right">
-                        <span
-                            class="text-[10px] font-medium text-slate-400 uppercase">{{ $log->created_at->diffForHumans() }}</span>
-                    </div>
-                </div>
-            @empty
-                <div class="px-6 py-10 text-center text-slate-400 text-sm italic">No recent housekeeping or bar activity.</div>
-            @endforelse
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-800">
+                <thead class="bg-slate-800/50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">Guest</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">Room</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">Dates</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">Status</th>
+                        <th class="px-6 py-3 text-right text-xs font-bold text-slate-400 uppercase tracking-widest">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800">
+                    @forelse($recentBookings as $booking)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-300">#{{ $booking->id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-9 w-9 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white text-xs font-bold uppercase shadow-lg">
+                                        {{ strtoupper(substr($booking->user?->name ?? $booking->guest_name ?? 'G', 0, 1)) }}
+                                    </div>
+                                    <div class="ml-3">
+                                        <div class="text-sm font-semibold text-white">{{ $booking->user?->name ?? $booking->guest_name ?? 'Guest' }}</div>
+                                        <div class="text-xs text-slate-400">{{ $booking->user?->email ?? $booking->guest_email ?? '—' }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <span class="text-white font-bold">{{ $booking->room?->name ?? '—' }}</span>
+                                @if($booking->room?->room_number)
+                                    <span class="block text-[10px] text-primary-400 font-black uppercase tracking-widest mt-0.5">Room #{{ $booking->room->room_number }}</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
+                                {{ $booking->check_in ? \Carbon\Carbon::parse($booking->check_in)->format('M d') : '—' }} - {{ $booking->check_out ? \Carbon\Carbon::parse($booking->check_out)->format('M d, Y') : '—' }}
+                                @if($booking->check_in && $booking->check_out)
+                                    <span class="block text-xs text-slate-500">{{ \Carbon\Carbon::parse($booking->check_in)->diffInDays($booking->check_out) }} nights</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
+                                    @if($booking->status == 'confirmed') bg-emerald-500/10 text-emerald-400 border border-emerald-500/20
+                                    @elseif($booking->status == 'pending') bg-amber-500/10 text-amber-500 border border-amber-500/20
+                                    @elseif($booking->status == 'cancelled') bg-red-500/10 text-red-400 border border-red-500/20
+                                    @else bg-slate-800 text-slate-400 border border-slate-700 @endif">{{ ucfirst($booking->status) }}</span>
+                                <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full mt-1
+                                    @if($booking->payment_status == 'paid') bg-emerald-500/10 text-emerald-400 border border-emerald-500/20
+                                    @else bg-rose-500/10 text-rose-400 border border-rose-500/20 @endif">{{ ucfirst($booking->payment_status ?? 'Pending') }}</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a href="{{ route('bookings.show', $booking) }}" class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-100 hover:bg-primary-100 text-slate-500 hover:text-primary-600 transition-colors" title="View">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                    </a>
+                                    {{-- Quick Check In --}}
+                                    @if($booking->status === 'confirmed')
+                                        <form action="{{ route('bookings.checkin', $booking) }}" method="POST" class="inline-block">
+                                            @csrf
+                                            <button type="submit" class="w-8 h-8 flex items-center justify-center rounded-lg bg-emerald-500/10 hover:bg-emerald-500 text-emerald-500 hover:text-white transition-all" title="Check In">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                                            </button>
+                                        </form>
+                                    @endif
+
+                                    {{-- Quick Check Out --}}
+                                    @if($booking->status === 'checked_in')
+                                        <form action="{{ route('bookings.checkout', $booking) }}" method="POST" onsubmit="return confirm('Confirm check out?');" class="inline-block">
+                                            @csrf
+                                            <button type="submit" class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary-500/10 hover:bg-primary-500 text-primary-500 hover:text-white transition-all" title="Check Out">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                                            </button>
+                                        </form>
+                                    @endif
+
+                                    @if($booking->status === 'pending')
+                                        <form action="{{ route('bookings.update-status', $booking) }}" method="POST" class="inline-block">
+                                            @csrf @method('PATCH')
+                                            <input type="hidden" name="status" value="confirmed">
+                                            <button type="submit" class="w-8 h-8 flex items-center justify-center rounded-lg bg-emerald-50 hover:bg-emerald-500 text-emerald-500 hover:text-white transition-colors" title="Confirm">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                            </button>
+                                        </form>
+                                    @endif
+                                    @if($booking->status !== 'cancelled' && $booking->status !== 'completed' && $booking->status !== 'checked_in')
+                                        <form action="{{ route('bookings.update-status', $booking) }}" method="POST" onsubmit="return confirm('Cancel this booking?');" class="inline-block">
+                                            @csrf @method('PATCH')
+                                            <input type="hidden" name="status" value="cancelled">
+                                            <button type="submit" class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-50 hover:bg-red-500 text-red-400 hover:text-white transition-colors" title="Cancel">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="px-6 py-16 text-center">
+                                <div class="w-14 h-14 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <svg class="w-7 h-7 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                                </div>
+                                <p class="text-sm font-semibold text-slate-700 mb-1">No upcoming bookings</p>
+                                <p class="text-xs text-slate-400">Bookings will appear here when created.</p>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
-    </div>
+</div>
 @endsection

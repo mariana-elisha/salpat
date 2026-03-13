@@ -29,7 +29,14 @@ class ManagerController extends Controller
         $recentActivity = \App\Models\ActivityLog::with('user')->latest()->take(10)->get();
         $recentReports = \App\Models\StaffReport::with('user')->latest()->take(5)->get();
         $roomStatuses = Room::select('name', 'housekeeping_status', 'is_available')->get();
+        $roomIssues = \App\Models\RoomIssue::with('room', 'reporter')->where('status', 'pending')->latest()->get();
 
-        return view('manager.dashboard', compact('stats', 'recentBookings', 'recentOrders', 'roomStatuses', 'recentActivity', 'recentReports'));
+        return view('manager.dashboard', compact('stats', 'recentBookings', 'recentOrders', 'roomStatuses', 'recentActivity', 'recentReports', 'roomIssues'));
+    }
+
+    public function resolveIssue(\App\Models\RoomIssue $issue)
+    {
+        $issue->update(['status' => 'resolved']);
+        return back()->with('success', 'Issue marked as resolved.');
     }
 }

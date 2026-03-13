@@ -1,294 +1,251 @@
 @extends('layouts.panel')
 
 @section('title', 'Dashboard')
-
 @section('breadcrumbs', 'Overview')
 
 @section('content')
-    <div class="space-y-6">
-        {{-- Stats Grid --}}
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {{-- Total Rooms --}}
-            <div class="overflow-hidden rounded-lg bg-white shadow">
-                <div class="p-6">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <svg class="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                            </svg>
-                        </div>
-                        <div class="ml-5 w-0 flex-1">
-                            <dl>
-                                <dt class="truncate text-sm font-medium text-slate-500">Total Rooms</dt>
-                                <dd class="text-3xl font-bold text-slate-900">{{ $stats['rooms'] ?? 0 }}</dd>
-                            </dl>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="space-y-8">
 
-            {{-- Total Bookings --}}
-            <div class="overflow-hidden rounded-lg bg-white shadow">
-                <div class="p-6">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <svg class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                            </svg>
-                        </div>
-                        <div class="ml-5 w-0 flex-1">
-                            <dl>
-                                <dt class="truncate text-sm font-medium text-slate-500">Total Bookings</dt>
-                                <dd class="text-3xl font-bold text-slate-900">{{ $stats['bookings'] ?? 0 }}</dd>
-                            </dl>
-                        </div>
-                    </div>
-                </div>
+    {{-- Welcome Banner --}}
+    <div class="relative bg-slate-900 rounded-3xl p-8 overflow-hidden shadow-xl border border-slate-800">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
+        <div class="absolute -top-16 -right-16 w-48 h-48 bg-accent-500 rounded-full blur-3xl opacity-20"></div>
+        <div class="absolute -bottom-16 -left-16 w-48 h-48 bg-primary-500 rounded-full blur-3xl opacity-10"></div>
+        <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <p class="text-accent-400 text-xs font-bold uppercase tracking-widest mb-1">Control Center</p>
+                <h1 class="text-3xl font-serif font-bold text-white">Admin Dashboard</h1>
+                <p class="text-slate-400 mt-1 font-light">Full overview of Salpat Camp operations.</p>
             </div>
-
-            {{-- Pending Bookings --}}
-            <div class="overflow-hidden rounded-lg bg-white shadow">
-                <div class="p-6">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <svg class="h-8 w-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <div class="ml-5 w-0 flex-1">
-                            <dl>
-                                <dt class="truncate text-sm font-medium text-slate-500">Pending</dt>
-                                <dd class="text-3xl font-bold text-slate-900">{{ $stats['pending_bookings'] ?? 0 }}</dd>
-                            </dl>
-                        </div>
-                    </div>
-                </div>
+            <div class="text-right">
+                <p class="text-slate-400 text-xs uppercase tracking-widest">Today</p>
+                <p class="text-white font-bold">{{ now()->format('l, M d Y') }}</p>
             </div>
+        </div>
+    </div>
 
-            {{-- Total Users --}}
-            <div class="overflow-hidden rounded-lg bg-white shadow">
-                <div class="p-6">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <svg class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                        </div>
-                        <div class="ml-5 w-0 flex-1">
-                            <dl>
-                                <dt class="truncate text-sm font-medium text-slate-500">Total Users</dt>
-                                <dd class="text-3xl font-bold text-slate-900">{{ $stats['users'] ?? 0 }}</dd>
-                            </dl>
-                        </div>
-                    </div>
+    {{-- Stats Grid --}}
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="group bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-800 p-6 hover:border-primary-500/50 transition-all duration-500 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-primary-600/10 rounded-full -mr-12 -mt-12 blur-2xl"></div>
+            <div class="relative z-10 flex items-center gap-5">
+                <div class="w-14 h-14 bg-primary-500/20 border border-primary-500/30 rounded-2xl flex items-center justify-center text-primary-400 group-hover:bg-primary-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-1">Asset Base</p>
+                    <p class="text-3xl font-black text-white leading-none">{{ $stats['rooms'] ?? 0 }} <span class="text-sm font-medium text-slate-400 ml-1 italic">Rooms</span></p>
                 </div>
             </div>
         </div>
 
-        {{-- Recent Bookings --}}
-        <div class="overflow-hidden rounded-lg bg-white shadow">
-            <div class="border-b border-slate-200 bg-white px-6 py-4">
-                <h3 class="text-lg font-semibold leading-6 text-slate-900">Recent Bookings</h3>
+        <div class="group bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-800 p-6 hover:border-emerald-500/50 transition-all duration-500 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-600/10 rounded-full -mr-12 -mt-12 blur-2xl"></div>
+            <div class="relative z-10 flex items-center gap-5">
+                <div class="w-14 h-14 bg-emerald-500/20 border border-emerald-500/30 rounded-2xl flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-1">Total Volume</p>
+                    <p class="text-3xl font-black text-white leading-none">{{ $stats['bookings'] ?? 0 }} <span class="text-sm font-medium text-slate-400 ml-1 italic">Sales</span></p>
+                </div>
             </div>
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-slate-200">
-                    <thead class="bg-slate-50">
-                        <tr>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
-                                Booking ID</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
-                                Guest</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
-                                Room</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
-                                Check-in</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
-                                Initial</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
-                                Status</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500">
-                                Total</th>
-                            <th scope="col"
-                                class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-slate-500">
-                                Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-200 bg-white">
-                        @forelse($recentBookings ?? [] as $booking)
-                            <tr class="hover:bg-slate-50">
-                                <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-900">
-                                    #{{ $booking->id }}
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">
-                                    {{ $booking->user?->name ?? 'Guest' }}
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">
-                                    {{ $booking->room?->name ?? 'N/A' }}
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">
-                                    {{ $booking->check_in ? \Carbon\Carbon::parse($booking->check_in)->format('M d, Y') : 'N/A' }}
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-sm text-slate-500">
-                                    {{ substr($booking->user?->name ?? $booking->guest_name ?? 'G', 0, 1) }}
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-sm">
-                                    @if ($booking->status === 'confirmed')
-                                        <span
-                                            class="inline-flex rounded-full bg-emerald-100 px-2 text-xs font-semibold leading-5 text-emerald-800">Confirmed</span>
-                                    @elseif($booking->status === 'pending')
-                                        <span
-                                            class="inline-flex rounded-full bg-amber-100 px-2 text-xs font-semibold leading-5 text-amber-800">Pending</span>
-                                    @elseif($booking->status === 'cancelled')
-                                        <span
-                                            class="inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800">Cancelled</span>
-                                    @else
-                                        <span
-                                            class="inline-flex rounded-full bg-slate-100 px-2 text-xs font-semibold leading-5 text-slate-800">{{ ucfirst($booking->status) }}</span>
+        </div>
+
+        <div class="group bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-800 p-6 hover:border-amber-500/50 transition-all duration-500 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-amber-600/10 rounded-full -mr-12 -mt-12 blur-2xl"></div>
+            <div class="relative z-10 flex items-center gap-5">
+                <div class="w-14 h-14 bg-amber-500/20 border border-amber-500/30 rounded-2xl flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-1">Pending Ops</p>
+                    <p class="text-3xl font-black text-white leading-none">{{ $stats['pending_bookings'] ?? 0 }} <span class="text-sm font-medium text-slate-400 ml-1 italic">Waiting</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="group bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-800 p-6 hover:border-blue-500/50 transition-all duration-500 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-blue-600/10 rounded-full -mr-12 -mt-12 blur-2xl"></div>
+            <div class="relative z-10 flex items-center gap-5">
+                <div class="w-14 h-14 bg-blue-500/20 border border-blue-500/30 rounded-2xl flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-1">Guest Network</p>
+                    <p class="text-3xl font-black text-white leading-none">{{ $stats['users'] ?? 0 }} <span class="text-sm font-medium text-slate-400 ml-1 italic">Members</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Recent Bookings Table --}}
+    <div class="bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-800 overflow-hidden">
+        <div class="border-b border-slate-800 px-6 py-5 flex justify-between items-center bg-slate-800/30">
+            <h3 class="text-lg font-bold text-white font-serif flex items-center gap-2">
+                <span class="w-1.5 h-6 bg-primary-500 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"></span>
+                Recent Reservations
+            </h3>
+            <a href="{{ route('admin.bookings') }}" class="text-[10px] font-bold text-slate-400 hover:text-white uppercase tracking-widest transition-colors">Global Log →</a>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-800">
+                <thead class="bg-slate-800/50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">Guest</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">Room</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">Check-in</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-slate-400 uppercase tracking-widest">Total</th>
+                        <th class="px-6 py-3 text-right text-xs font-bold text-slate-400 uppercase tracking-widest">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800">
+                    @forelse($recentBookings ?? [] as $booking)
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="font-mono text-sm font-bold text-primary-500">#{{ $booking->id }}</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-lg">
+                                        {{ strtoupper(substr($booking->user?->name ?? $booking->guest_name ?? 'G', 0, 1)) }}
+                                    </div>
+                                    <span class="text-sm font-semibold text-white">{{ $booking->user?->name ?? 'Guest' }}</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <span class="text-white font-bold">{{ $booking->room?->name ?? '—' }}</span>
+                                @if($booking->room?->room_number)
+                                    <span class="block text-[10px] text-primary-400 font-black uppercase tracking-widest mt-0.5">Room #{{ $booking->room->room_number }}</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{{ $booking->check_in ? \Carbon\Carbon::parse($booking->check_in)->format('M d, Y') : '—' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if ($booking->status === 'confirmed')
+                                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Confirmed</span>
+                                @elseif($booking->status === 'pending')
+                                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/20 text-xs font-bold"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>Pending</span>
+                                @elseif($booking->status === 'cancelled')
+                                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 text-xs font-bold"><span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>Cancelled</span>
+                                @else
+                                    <span class="inline-flex px-3 py-1 rounded-lg bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold">{{ ucfirst($booking->status) }}</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-black text-white">${{ number_format($booking->total_price ?? 0, 2) }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a href="{{ route('bookings.show', $booking) }}" class="text-xs font-bold text-white bg-slate-800 hover:bg-primary-600 border border-slate-700 px-4 py-2 rounded-xl transition-all">Details</a>
+                                    @if($booking->status === 'confirmed')
+                                        <form action="{{ route('bookings.checkin', $booking) }}" method="POST" class="inline-block">
+                                            @csrf
+                                            <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-white transition-all border border-emerald-500/20 text-xs font-bold">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                                                Check In
+                                            </button>
+                                        </form>
                                     @endif
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-sm font-semibold text-slate-900">
-                                    ${{ number_format($booking->total_price ?? 0, 2) }}
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                                    <a href="{{ route('bookings.show', $booking) }}"
-                                        class="text-primary-600 hover:text-primary-900">View</a>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" class="px-6 py-10 text-center text-slate-500">
-                                    <svg class="mx-auto h-12 w-12 text-slate-400" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" aria-hidden="true">
-                                        <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                                    </svg>
-                                    <h3 class="mt-2 text-sm font-semibold text-slate-900">No bookings found</h3>
-                                    <p class="mt-1 text-sm text-slate-500">Get started by creating a new booking.</p>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                                    @if($booking->status === 'checked_in')
+                                        <form action="{{ route('bookings.checkout', $booking) }}" method="POST" onsubmit="return confirm('Confirm check out?');" class="inline-block">
+                                            @csrf
+                                            <button type="submit" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-blue-500/10 hover:bg-blue-500 text-blue-400 hover:text-white transition-all border border-blue-500/20 text-xs font-bold">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                                                Check Out
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="px-6 py-16 text-center">
+                                <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-3 border border-slate-700">
+                                    <svg class="h-8 w-8 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                                </div>
+                                <p class="text-sm font-semibold text-slate-300">No reservations records found</p>
+                                <p class="text-xs text-slate-500 mt-1">Data will populate as bookings are secured.</p>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {{-- System Activity Log --}}
+        <div class="lg:col-span-2 bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-800 overflow-hidden">
+            <div class="px-6 py-5 border-b border-slate-800 flex justify-between items-center bg-slate-800/30">
+                <h3 class="text-lg font-bold text-white font-serif flex items-center gap-2">
+                    <span class="w-1.5 h-6 bg-primary-500 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.3)]"></span>
+                    Operational Intelligence
+                </h3>
+                <a href="{{ route('manager.activity_log.index') }}" class="text-[10px] font-bold text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Audit Rail →</a>
             </div>
-            <div class="border-t border-slate-200 px-6 py-4 bg-slate-50">
-                <a href="{{ route('admin.bookings') }}"
-                    class="text-sm font-semibold leading-6 text-primary-600 hover:text-primary-500">View all bookings <span
-                        aria-hidden="true">&rarr;</span></a>
+            <div class="divide-y divide-slate-800 overflow-y-auto max-h-[380px] custom-scrollbar">
+                @forelse($recentActivity ?? [] as $log)
+                    <div class="p-4 hover:bg-white/5 transition-all flex items-start gap-4 border-l-2 border-transparent hover:border-primary-500">
+                        <div class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-primary-400 shrink-0 text-sm font-black shadow-lg">
+                            {{ strtoupper(substr($log->user?->name ?? '?', 0, 1)) }}
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-sm text-slate-200"><span class="font-bold text-white tracking-tight">{{ $log->user?->name ?? 'System' }}</span> <span class="text-slate-400 lowercase">{{ $log->action }}</span></p>
+                            <p class="text-[11px] text-slate-500 leading-relaxed truncate mt-1">{{ $log->description }}</p>
+                        </div>
+                        <p class="text-[9px] font-bold text-slate-600 uppercase tracking-tighter shrink-0 pt-1">{{ $log->created_at->diffForHumans() }}</p>
+                    </div>
+                @empty
+                    <div class="p-12 text-center text-slate-500 text-sm italic">No recent activity recorded.</div>
+                @endforelse
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
-            <!-- System Activity Log (Wider) -->
-            <div class="lg:col-span-2 card bg-white overflow-hidden shadow">
-                <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                    <h3 class="text-lg font-bold text-slate-900 font-serif flex items-center gap-2">
-                        <svg class="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        System Activity
-                    </h3>
-                    <a href="{{ route('manager.activity_log.index') }}"
-                        class="text-xs font-semibold text-primary-600 hover:text-primary-700 uppercase tracking-wider underline">View
-                        All Log</a>
-                </div>
-                <div class="divide-y divide-slate-100 overflow-y-auto max-h-[400px]">
-                    @forelse($recentActivity ?? [] as $log)
-                        <div class="p-4 hover:bg-slate-50 transition-colors flex items-start gap-3">
-                            <div
-                                class="w-8 h-8 rounded-full bg-primary-50 flex items-center justify-center text-primary-600 shrink-0 text-xs font-bold">
-                                {{ substr($log->user?->name ?? '?', 0, 1) }}
-                            </div>
-                            <div class="min-w-0 flex-1">
-                                <p class="text-sm text-slate-900">
-                                    <span class="font-bold text-primary-700">{{ $log->user?->name ?? 'System' }}</span>
-                                    {{ strtolower($log->action) }}
-                                </p>
-                                <p class="text-xs text-slate-500 truncate mt-0.5">{{ $log->description }}</p>
-                            </div>
-                            <div class="text-right shrink-0">
-                                <p class="text-[10px] font-medium text-slate-400 uppercase tracking-tighter">
-                                    {{ $log->created_at->diffForHumans() }}
-                                </p>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="p-10 text-center text-slate-400 text-sm italic">No recent activity recorded.</div>
-                    @endforelse
-                </div>
+        {{-- Staff Reports --}}
+        <div class="bg-slate-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-800 overflow-hidden">
+            <div class="px-6 py-5 border-b border-slate-800 flex justify-between items-center bg-slate-800/30">
+                <h3 class="text-lg font-bold text-white font-serif flex items-center gap-2">
+                    <span class="w-1.5 h-6 bg-accent-500 rounded-full shadow-[0_0_15px_rgba(232,153,104,0.5)]"></span>
+                    Staff Reports
+                </h3>
+                <a href="{{ route('staff_reports.index') }}" class="text-[10px] font-bold text-slate-400 hover:text-white uppercase tracking-widest transition-colors">Review →</a>
             </div>
-
-            <!-- Recent Staff Reports -->
-            <div class="card bg-white overflow-hidden shadow">
-                <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                    <h3 class="text-lg font-bold text-slate-900 font-serif flex items-center gap-2">
-                        <svg class="w-5 h-5 text-accent-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        Staff Reports
-                    </h3>
-                    <a href="{{ route('staff_reports.index') }}"
-                        class="text-xs font-semibold text-accent-600 hover:text-accent-700 uppercase tracking-wider underline">Reports</a>
-                </div>
-                <div class="divide-y divide-slate-100">
-                    @forelse($recentReports ?? [] as $report)
-                        <a href="{{ route('staff_reports.show', $report) }}"
-                            class="block p-4 hover:bg-slate-50 transition-colors">
-                            <div class="flex justify-between items-start mb-1">
-                                <span
-                                    class="text-xs font-bold px-2 py-0.5 rounded-full bg-accent-50 text-accent-700">{{ $report->section }}</span>
-                                <span
-                                    class="text-[10px] text-slate-400">{{ \Carbon\Carbon::parse($report->report_date)->format('M d') }}</span>
-                            </div>
-                            <p class="text-sm font-semibold text-slate-900 truncate">{{ $report->title }}</p>
-                            <p class="text-xs text-slate-500 mt-1 flex justify-between">
-                                <span>By {{ $report->user?->name }}</span>
-                                <span class="capitalize">{{ $report->report_type }}</span>
-                            </p>
-                        </a>
-                    @empty
-                        <div class="p-10 text-center text-slate-400 text-sm italic">No reports submitted yet.</div>
-                    @endforelse
-                </div>
+            <div class="divide-y divide-slate-800">
+                @forelse($recentReports ?? [] as $report)
+                    <a href="{{ route('staff_reports.show', $report) }}" class="block p-5 hover:bg-white/5 transition-all group">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] font-black px-2 py-0.5 rounded bg-accent-500/10 text-accent-400 border border-accent-500/20 uppercase tracking-widest">{{ $report->section }}</span>
+                            <span class="text-[9px] font-bold text-slate-500 uppercase">{{ \Carbon\Carbon::parse($report->report_date)->format('M d') }}</span>
+                        </div>
+                        <p class="text-sm font-bold text-white group-hover:text-accent-400 transition-colors truncate">{{ $report->title }}</p>
+                        <p class="text-[11px] text-slate-500 mt-2 flex justify-between items-center italic">
+                            <span>By {{ $report->user?->name }}</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700 not-italic text-[9px] font-bold uppercase">{{ $report->report_type }}</span>
+                        </p>
+                    </a>
+                @empty
+                    <div class="py-12 text-center text-slate-600 text-sm font-medium italic">No strategic reports yet.</div>
+                @endforelse
             </div>
         </div>
     </div>
 
     {{-- Quick Links --}}
-    <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <a href="{{ route('admin.rooms.index') }}"
-            class="relative block rounded-lg border border-slate-300 bg-white px-6 py-5 shadow-sm hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
-            <div class="flex items-center space-x-3">
-                <div class="flex-shrink-0">
-                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50">
-                        <svg class="h-6 w-6 text-primary-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
-                        </svg>
-                    </span>
+    <div>
+        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-4">Strategic Fast-Tracks</h3>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <a href="{{ route('admin.rooms.index') }}"
+                class="group flex items-center gap-4 bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-2xl px-6 py-5 shadow-2xl hover:border-primary-500/50 hover:-translate-y-1 transition-all duration-500">
+                <span class="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center text-primary-400 group-hover:bg-primary-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" /></svg>
+                </span>
+                <div>
+                    <p class="text-sm font-bold text-white group-hover:text-primary-400 transition-colors tracking-tight">Manage Inventory</p>
+                    <p class="text-[11px] text-slate-500 font-medium">Control Rooms & Suites</p>
                 </div>
-                <div class="min-w-0 flex-1">
-                    <span class="absolute inset-0" aria-hidden="true"></span>
-                    <p class="text-sm font-medium text-slate-900">Manage Rooms</p>
-                    <p class="truncate text-sm text-slate-500">Add, edit, or remove rooms</p>
-                </div>
-            </div>
-        </a>
+            </a>
+        </div>
     </div>
+</div>
 @endsection

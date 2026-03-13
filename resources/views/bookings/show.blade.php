@@ -62,54 +62,82 @@
             </div>
 
             @auth
-                @if((auth()->user()->isAdmin() || auth()->user()->isReceptionist()) && $booking->status !== 'completed')
-                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-6 mb-8">
-                        <h3 class="text-lg font-semibold text-slate-800 mb-4">Manage Booking</h3>
-                        <div class="flex flex-wrap gap-4">
-                            @if($booking->status === 'pending')
-                                <form action="{{ route('bookings.update-status', $booking) }}" method="POST">
+                @php $user = auth()->user(); @endphp
+                @if(($user->isAdmin() || $user->isReceptionist() || $user->isManager()) && $booking->status !== 'completed')
+                    <div class="bg-slate-50 border border-slate-200 rounded-3xl p-8 mb-10 shadow-sm border-dashed">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center text-primary-600">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            </div>
+                            <h3 class="text-xl font-serif font-bold text-slate-900">Staff Management Console</h3>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {{-- Check In --}}
+                            @if($booking->status === 'confirmed')
+                                <form action="{{ route('bookings.checkin', $booking) }}" method="POST" class="h-full">
                                     @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="status" value="confirmed">
-                                    <button type="submit"
-                                        class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                        <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
-                                            </path>
-                                        </svg>
-                                        Confirm Booking
+                                    <button type="submit" class="w-full h-full bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-2xl font-bold shadow-lg shadow-emerald-500/20 transition-all hover:-translate-y-1 flex items-center justify-center gap-3">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                                        Check In
                                     </button>
                                 </form>
                             @endif
 
-                            @if($booking->status !== 'cancelled')
-                                <form action="{{ route('bookings.update-status', $booking) }}" method="POST"
-                                    onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                            {{-- Check Out --}}
+                            @if($booking->status === 'checked_in')
+                                <form action="{{ route('bookings.checkout', $booking) }}" method="POST" onsubmit="return confirm('Confirm check out? Ensure all bills are paid.');" class="h-full">
                                     @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="status" value="cancelled">
-                                    <button type="submit"
-                                        class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                        <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M6 18L18 6M6 6l12 12"></path>
-                                        </svg>
-                                        Cancel Booking
+                                    <button type="submit" class="w-full h-full bg-primary-600 hover:bg-primary-700 text-white p-4 rounded-2xl font-bold shadow-lg shadow-primary-500/20 transition-all hover:-translate-y-1 flex items-center justify-center gap-3">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                                        Check Out
                                     </button>
                                 </form>
                             @endif
-                            @if($booking->payment_status === 'pending')
-                                <form action="{{ route('bookings.update-payment-status', $booking) }}" method="POST">
+
+                            {{-- Modify Stay --}}
+                            @if(in_array($booking->status, ['confirmed', 'checked_in']))
+                                <a href="{{ route('bookings.extend', $booking) }}" class="bg-white border-2 border-slate-200 text-slate-700 p-4 rounded-2xl font-bold shadow-sm hover:bg-slate-50 transition-all hover:border-primary-300 flex items-center justify-center gap-3">
+                                    <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    Modify Stay
+                                </a>
+                            @endif
+
+                            {{-- Mark as Paid --}}
+                            @if($booking->payment_status !== 'paid')
+                                <form action="{{ route('bookings.update-payment-status', $booking) }}" method="POST" class="h-full">
                                     @csrf
                                     @method('PATCH')
                                     <input type="hidden" name="payment_status" value="paid">
-                                    <button type="submit"
-                                        class="inline-flex items-center px-4 py-2 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                                        <svg class="-ml-1 mr-2 h-5 w-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z">
-                                            </path>
-                                        </svg>
+                                    <button type="submit" class="w-full h-full bg-slate-800 hover:bg-slate-900 text-white p-4 rounded-2xl font-bold shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center gap-3">
+                                        <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                         Mark as Paid
+                                    </button>
+                                </form>
+                            @endif
+
+                            {{-- Confirm (if pending) --}}
+                            @if($booking->status === 'pending')
+                                <form action="{{ route('bookings.update-status', $booking) }}" method="POST" class="h-full">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="status" value="confirmed">
+                                    <button type="submit" class="w-full h-full bg-amber-500 hover:bg-amber-600 text-white p-4 rounded-2xl font-bold shadow-lg shadow-amber-500/20 transition-all hover:-translate-y-1 flex items-center justify-center gap-3">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                        Confirm Reservation
+                                    </button>
+                                </form>
+                            @endif
+
+                            {{-- Cancel --}}
+                            @if($booking->status !== 'cancelled' && $booking->status !== 'completed')
+                                <form action="{{ route('bookings.update-status', $booking) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this booking?');" class="h-full">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="status" value="cancelled">
+                                    <button type="submit" class="w-full h-full bg-red-50 hover:bg-red-100 text-red-600 p-4 rounded-2xl font-bold border-2 border-red-200 transition-all flex items-center justify-center gap-3">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                        Cancel Booking
                                     </button>
                                 </form>
                             @endif

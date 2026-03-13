@@ -5,10 +5,17 @@
 @section('content')
     <!-- Hero Section -->
     <div class="relative bg-slate-900 overflow-hidden flex flex-col items-center justify-center min-h-[90vh] pb-32">
-        <div class="absolute inset-0 z-0">
-            <img src="{{ asset('images/logo.png') }}" class="absolute -left-20 -top-20 opacity-5 w-[120%] h-auto blur-sm">
+        <div class="absolute inset-0 z-0 bg-black">
+            <!-- Background Video -->
+            <video id="hero-video" class="absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 opacity-100" muted playsinline autoplay>
+                <source src="{{ asset('images/salpatcamp env.mp4') }}" type="video/mp4">
+            </video>
+            
+            <!-- Slideshow Container -->
+            <div id="hero-slideshow" class="absolute inset-0 w-full h-full z-0 opacity-0 transition-opacity duration-1000"></div>
+
             <div
-                class="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/90 mix-blend-multiply">
+                class="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/40 to-slate-900/90 mix-blend-multiply z-10">
             </div>
         </div>
 
@@ -127,32 +134,83 @@
                             </div>
                         </div>
 
-                        <div class="p-8 flex flex-col flex-grow relative">
-                            <h3
-                                class="text-2xl font-serif font-bold text-slate-900 mb-3 group-hover:text-accent-600 transition-colors">
-                                {{ $room->name }}
-                            </h3>
-                            <p class="text-slate-600 mb-8 flex-grow line-clamp-3 leading-relaxed">{{ $room->description }}</p>
-
-                            <div class="flex items-end justify-between mt-auto pt-6 border-t border-slate-100">
-                                <div>
-                                    <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block mb-1">Starting from</span>
-                                    <div class="flex flex-col">
-                                        <div class="flex items-baseline gap-1">
-                                            <span
-                                                class="text-3xl font-bold text-slate-900">${{ number_format($room->price_per_night, 0) }}</span>
-                                            <span class="text-slate-500 font-medium">/night</span>
-                                        </div>
-                                        <div class="text-accent-600 font-bold text-xs">
-                                            {{ number_format($room->tzs_price, 0) }} TZS
-                                        </div>
+                        <div class="p-8 flex flex-col flex-grow bg-white">
+                            <div class="flex flex-col mb-4">
+                                <div class="flex justify-between items-start gap-4 mb-2">
+                                    <h3 class="text-2xl font-serif font-bold text-slate-900 group-hover:text-accent-600 transition-colors">
+                                        {{ $room->name }}
+                                        @if($room->room_number)
+                                            <span class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1 italic">Room #{{ $room->room_number }}</span>
+                                        @endif
+                                    </h3>
+                                    <div class="bg-accent-50 text-accent-600 px-4 py-2 rounded-xl flex flex-col items-center shrink-0 border border-accent-100">
+                                        <span class="text-2xl font-bold leading-none">${{ number_format($room->price_per_night, 0) }}</span>
+                                        <span class="text-[9px] font-black uppercase tracking-widest mt-1 opacity-70">Per Night</span>
                                     </div>
                                 </div>
-                                <a href="{{ route('bookings.create', $room) }}"
-                                    class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-50 text-slate-400 group-hover:bg-accent-500 group-hover:text-white transition-all shadow-sm group-hover:shadow-accent-500/30">
-                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                
+                                <div class="text-accent-600 font-bold text-xs bg-accent-50/50 px-2 py-1 rounded w-fit">
+                                    ~ {{ number_format($room->tzs_price, 0) }} TZS
+                                </div>
+                            </div>
+
+                             <p class="text-slate-600 mb-4 flex-grow line-clamp-3 leading-relaxed font-light italic">{{ $room->description }}</p>
+
+                            {{-- Amenities Preview --}}
+                            @if($room->amenities && count($room->amenities) > 0)
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                @foreach(array_slice($room->amenities, 0, 4) as $amenity)
+                                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold uppercase tracking-wide border border-emerald-100">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                    {{ $amenity }}
+                                </span>
+                                @endforeach
+                                @if(count($room->amenities) > 4)
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-wide border border-slate-200">
+                                    +{{ count($room->amenities) - 4 }} more
+                                </span>
+                                @endif
+                            </div>
+                            @endif
+
+                            <div class="mt-auto pt-6 border-t border-slate-100 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{{ $room->type }} Selection</span>
+                                    <a href="{{ route('rooms.show', $room) }}" class="text-[10px] font-bold text-accent-500 hover:text-accent-600 uppercase tracking-widest transition-colors">
+                                        View Details →
+                                    </a>
+                                </div>
+                                @php
+                                    $amenityList = ($room->amenities && count($room->amenities) > 0)
+                                        ? implode(', ', $room->amenities)
+                                        : 'Standard amenities';
+                                    $resLine = $room->resident_price_per_night
+                                        ? "\n💰 Resident Rate: TZS " . number_format($room->resident_price_per_night, 0) . " / night"
+                                        : '';
+                                    $roomNo = $room->room_number ? " (Room #" . $room->room_number . ")" : '';
+                                    $waMsg =
+                                        "🏕️ *SALPAT CAMP — ROOM RESERVATION REQUEST*\n" .
+                                        "━━━━━━━━━━━━━━━━━━━━\n\n" .
+                                        "📋 *Room Details*\n" .
+                                        "🛏️ Room: *{$room->name}{$roomNo}*\n" .
+                                        "🏷️ Type: " . ucfirst($room->type) . "\n" .
+                                        "💵 Rate: $" . number_format($room->price_per_night, 0) . " USD / night\n" .
+                                        "💴 Rate: TZS " . number_format($room->tzs_price, 0) . " / night" . $resLine . "\n" .
+                                        "✨ Amenities: {$amenityList}\n\n" .
+                                        "💳 *Payment Details*\n" .
+                                        "🏦 Bank: CRDB BANK\n" .
+                                        "👤 Account Holder: DAVID SALVATORY PATRICK\n" .
+                                        "🔢 Account No (TZS): 0152269300100\n" .
+                                        "🔢 Account No (USD): 0252269300100\n\n" .
+                                        "Please confirm the availability of this room. Thank you! 🙏";
+                                    $waUrl = "https://wa.me/255770307759?text=" . urlencode($waMsg);
+                                @endphp
+                                <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer"
+                                   class="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-5 rounded-2xl transition-all shadow-md hover:shadow-green-500/30 hover:-translate-y-0.5 text-sm">
+                                    <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                                     </svg>
+                                    Reserve via WhatsApp
                                 </a>
                             </div>
                         </div>
@@ -249,6 +307,46 @@
         </div>
     </div>
     
+    <!-- Map Section -->
+    <div class="bg-slate-50 py-24 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 max-w-2xl mx-auto">
+                <h2 class="text-primary-600 font-bold uppercase tracking-widest text-sm mb-3">Location</h2>
+                <h3 class="text-4xl md:text-5xl font-serif font-bold text-slate-900 mb-4">Where to Find Us</h3>
+                <div class="w-24 h-1 bg-accent-500 mx-auto rounded-full"></div>
+                <p class="mt-6 text-slate-600 max-w-xl mx-auto font-medium text-lg text-center">Visit us at Falcon Street 1, Soweto Moshi. We are perfectly situated for your Kilimanjaro adventure.</p>
+            </div>
+
+            <div class="bg-white rounded-[3rem] p-4 shadow-2xl border border-slate-100 relative overflow-hidden group">
+                <div class="relative h-[500px] w-full rounded-[2.5rem] overflow-hidden shadow-inner">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.3644149864223!2d37.32356527584145!3d-3.354093635766205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1837119ff336b907%3A0xe53fa28983808b8b!2sSalpat%20Camp!5e0!3m2!1sen!2stz!4v1710264000000!5m2!1sen!2stz" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        class="grayscale-[10%] group-hover:grayscale-0 transition-all duration-1000">
+                    </iframe>
+                </div>
+                
+                <!-- Map Overlay Label -->
+                <div class="absolute top-10 right-10 z-20 bg-white/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-200 shadow-xl hidden md:flex items-center gap-4 animate-fade-in">
+                    <div class="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Moshi, Tanzania</p>
+                        <p class="text-base font-serif font-bold text-slate-900">Salpat Camp</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     {{-- WhatsApp Floating Button --}}
     <a href="https://wa.me/255770307759" target="_blank"
         class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-green-500/40">
@@ -257,6 +355,81 @@
                 d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
         </svg>
     </a>
+
+    <!-- Scripts for Hero Slideshow -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('hero-video');
+            const slideshowContainer = document.getElementById('hero-slideshow');
+            
+            let images = [
+                "{{ asset('images/pcs1.jpeg') }}",
+                "{{ asset('images/pcs2.jpeg') }}",
+                "{{ asset('images/pcs3.jpeg') }}",
+                "{{ asset('images/pcs4.png') }}",
+                "{{ asset('images/pcs5.png') }}",
+                "{{ asset('images/pcs6.png') }}",
+                "{{ asset('images/pcs7.png') }}",
+                "{{ asset('images/pcs8.png') }}",
+                "{{ asset('images/pcs9.png') }}",
+                "{{ asset('images/pcs10.png') }}",
+                "{{ asset('images/pcs11.png') }}",
+                "{{ asset('images/pcs12.png') }}",
+                "{{ asset('images/pcs13.png') }}",
+                "{{ asset('images/pcs14.png') }}",
+                "{{ asset('images/pcs15.jpeg') }}",
+                "{{ asset('images/pcs16.png') }}",
+                "{{ asset('images/pcs17.png') }}",
+                "{{ asset('images/pcs18.png') }}"
+            ];
+            
+            let currentImageIndex = 0;
+            let slideInterval;
+
+            function updateSlide() {
+                if (!slideshowContainer) return;
+
+                const nextSlide = document.createElement('div');
+                nextSlide.className = 'absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000 opacity-0';
+                nextSlide.style.backgroundImage = `url('${images[currentImageIndex]}')`;
+                slideshowContainer.appendChild(nextSlide);
+                
+                // Trigger reflow
+                void nextSlide.offsetWidth;
+                
+                nextSlide.classList.replace('opacity-0', 'opacity-100');
+                
+                setTimeout(() => {
+                    const slides = slideshowContainer.querySelectorAll('div');
+                    if (slides.length > 2) {
+                        slides[0].remove();
+                    }
+                }, 1000);
+                
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+            }
+
+            if (video) {
+                video.addEventListener('ended', function() {
+                    video.classList.replace('opacity-100', 'opacity-0');
+                    slideshowContainer.classList.replace('opacity-0', 'opacity-100');
+                    updateSlide();
+                    slideInterval = setInterval(updateSlide, 4000);
+                });
+                
+                let playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        // Autoplay blocked, just show slideshow immediately
+                        video.classList.replace('opacity-100', 'opacity-0');
+                        slideshowContainer.classList.replace('opacity-0', 'opacity-100');
+                        updateSlide();
+                        slideInterval = setInterval(updateSlide, 4000);
+                    });
+                }
+            }
+        });
+    </script>
 @endsection
 
 @push('styles')

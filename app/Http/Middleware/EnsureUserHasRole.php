@@ -19,6 +19,11 @@ class EnsureUserHasRole
             return redirect()->route('login');
         }
 
+        // Allow Admins to bypass role restrictions
+        if ($request->user()->role === 'admin') {
+            return $next($request);
+        }
+
         if (! in_array($request->user()->role, $roles)) {
             abort(403, 'Unauthorized access.');
         }
