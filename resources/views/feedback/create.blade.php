@@ -3,19 +3,30 @@
 @section('title', 'Leave Feedback')
 
 @section('content')
-    <div class="py-20 bg-slate-50 min-h-[80vh] flex items-center justify-center">
-        <div class="max-w-2xl w-full mx-auto px-4">
-            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
-                <div
-                    class="bg-slate-900 text-white p-8 text-center bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]">
-                    <h1 class="text-4xl font-serif text-accent-400 mb-2">How Was Your Stay?</h1>
-                    <p class="text-slate-300">We'd love to hear your thoughts to help us improve.</p>
-                </div>
+    <div class="bg-creme min-h-screen pt-20 pb-40">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header Section -->
+            <div class="text-center mb-20 animate-fade-in">
+                <h2 class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] mb-8 underline decoration-gold/20 underline-offset-8">Guest Impressions</h2>
+                <h1 class="text-5xl md:text-7xl font-serif font-bold text-navy mb-8 leading-tight">Your <span class="italic font-normal text-gold italic">Experience</span></h1>
+                <p class="text-slate-500 font-light italic text-lg max-w-2xl mx-auto leading-relaxed">
+                    We invite you to share the moments that defined your stay. Your insights help us refine our sanctuary of comfort.
+                </p>
+                <div class="w-16 h-px bg-gold/40 mx-auto mt-12"></div>
+            </div>
 
-                <div class="p-8">
+            <!-- Feedback Card -->
+            <div class="bg-white rounded-[3rem] shadow-4xl overflow-hidden border border-gold/10 relative group transition-all duration-700 hover:shadow-navy/10">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-bl-[10rem] pointer-events-none transition-transform duration-1000 group-hover:scale-110"></div>
+                
+                <div class="p-10 md:p-20 relative z-10">
                     @if ($errors->any())
-                        <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-100 text-red-600">
-                            <ul class="list-disc list-inside text-sm">
+                        <div class="mb-12 p-6 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 animate-shake">
+                            <div class="flex items-center gap-4 mb-3">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span class="font-bold uppercase tracking-widest text-[10px]">Please correct the following:</span>
+                            </div>
+                            <ul class="list-disc list-inside text-xs space-y-1 font-light italic">
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
@@ -23,106 +34,68 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('feedback.store') }}" method="POST" class="space-y-6">
+                    <form action="{{ route('feedback.store') }}" method="POST" class="space-y-12">
                         @csrf
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="guest_name" class="block text-sm font-semibold text-slate-700 mb-2">Full Name
-                                    <span class="text-rose-500">*</span></label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div class="space-y-4">
+                                <label for="guest_name" class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] ml-2">Your Distinguished Name</label>
                                 <input type="text" id="guest_name" name="guest_name" value="{{ old('guest_name', $guestName) }}"
                                     required
-                                    class="w-full rounded-xl border-slate-300 focus:border-accent-500 focus:ring-accent-500 shadow-sm px-4 py-3"
-                                    placeholder="Jane Doe">
+                                    class="w-full bg-creme-dark/30 border-2 border-transparent rounded-2xl px-6 py-5 text-lg font-serif text-navy placeholder-slate-300 focus:outline-none focus:border-gold/20 focus:bg-white transition-all shadow-inner"
+                                    placeholder="Alexander Hamilton">
                             </div>
-                            <div>
+                            <div class="space-y-4">
                                 <label for="booking_reference"
-                                    class="block text-sm font-semibold text-slate-700 mb-2">Booking Reference <span
-                                        class="text-slate-400 font-normal">(Optional)</span></label>
+                                    class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] ml-2">Booking Reference</label>
                                 <input type="text" id="booking_reference" name="booking_reference"
                                     value="{{ old('booking_reference', $bookingRef) }}"
-                                    class="w-full rounded-xl border-slate-300 focus:border-accent-500 focus:ring-accent-500 shadow-sm px-4 py-3 bg-slate-50 focus:bg-white"
-                                    placeholder="SAL-...">
+                                    class="w-full bg-creme-dark/30 border-2 border-transparent rounded-2xl px-6 py-5 text-lg font-serif text-navy placeholder-slate-300 focus:outline-none focus:border-gold/20 focus:bg-white transition-all shadow-inner"
+                                    placeholder="SAL-XXXXXX (Optional)">
                             </div>
                         </div>
 
-                        <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-3">Overall Rating <span
-                                    class="text-rose-500">*</span></label>
-                            <div class="flex items-center gap-4 flex-row-reverse justify-end">
-                                <input type="radio" id="star5" name="rating" value="5" class="peer/5 hidden" required>
-                                <label for="star5"
-                                    class="text-slate-300 peer-checked/5:text-yellow-400 hover:text-yellow-400 cursor-pointer transition-colors"
-                                    title="5 Stars">
-                                    <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
-                                </label>
-
-                                <input type="radio" id="star4" name="rating" value="4" class="peer/4 hidden">
-                                <label for="star4"
-                                    class="text-slate-300 peer-checked/4:text-yellow-400 peer-checked/5:text-yellow-400 hover:text-yellow-400 cursor-pointer transition-colors"
-                                    title="4 Stars">
-                                    <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
-                                </label>
-
-                                <input type="radio" id="star3" name="rating" value="3" class="peer/3 hidden">
-                                <label for="star3"
-                                    class="text-slate-300 peer-checked/3:text-yellow-400 peer-checked/4:text-yellow-400 peer-checked/5:text-yellow-400 hover:text-yellow-400 cursor-pointer transition-colors"
-                                    title="3 Stars">
-                                    <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
-                                </label>
-
-                                <input type="radio" id="star2" name="rating" value="2" class="peer/2 hidden">
-                                <label for="star2"
-                                    class="text-slate-300 peer-checked/2:text-yellow-400 peer-checked/3:text-yellow-400 peer-checked/4:text-yellow-400 peer-checked/5:text-yellow-400 hover:text-yellow-400 cursor-pointer transition-colors"
-                                    title="2 Stars">
-                                    <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
-                                </label>
-
-                                <input type="radio" id="star1" name="rating" value="1" class="peer/1 hidden">
-                                <label for="star1"
-                                    class="text-slate-300 peer-checked/1:text-yellow-400 peer-checked/2:text-yellow-400 peer-checked/3:text-yellow-400 peer-checked/4:text-yellow-400 peer-checked/5:text-yellow-400 hover:text-yellow-400 cursor-pointer transition-colors"
-                                    title="1 Star">
-                                    <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
-                                </label>
-
+                        <!-- Refined Rating System -->
+                        <div class="space-y-6">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] ml-2 text-center">Your Overall Rating</label>
+                            <div class="flex items-center gap-4 flex-row-reverse justify-center group/stars">
+                                @foreach([5, 4, 3, 2, 1] as $star)
+                                    <input type="radio" id="star{{ $star }}" name="rating" value="{{ $star }}" class="peer/{{ $star }} hidden" {{ $star == 5 ? 'required' : '' }}>
+                                    <label for="star{{ $star }}"
+                                        class="text-slate-200 peer-checked/{{ $star }}:text-gold group-hover/stars:text-slate-200 hover:!text-gold hover:scale-125 transition-all cursor-pointer duration-300"
+                                        title="{{ $star }} Stars">
+                                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                    </label>
+                                @endforeach
                             </div>
                         </div>
 
-                        <div>
-                            <label for="comments" class="block text-sm font-semibold text-slate-700 mb-2">Your Experience
-                                <span class="text-rose-500">*</span></label>
-                            <textarea id="comments" name="comments" rows="5" required
-                                class="w-full rounded-xl border-slate-300 focus:border-accent-500 focus:ring-accent-500 shadow-sm px-4 py-3"
-                                placeholder="Tell us what you liked and how we can improve...">{{ old('comments') }}</textarea>
+                        <div class="space-y-4">
+                            <label for="comments" class="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] ml-2">A Narrative of Your Stay</label>
+                            <textarea id="comments" name="comments" rows="6" required
+                                class="w-full bg-creme-dark/30 border-2 border-transparent rounded-[2rem] px-8 py-6 text-xl font-serif text-navy placeholder-slate-300 focus:outline-none focus:border-gold/20 focus:bg-white transition-all shadow-inner resize-none italic"
+                                placeholder="Details of your experiences, the staff, the ambiance...">{{ old('comments') }}</textarea>
                         </div>
 
                         <button type="submit"
-                            class="w-full bg-accent-500 text-white font-bold py-4 px-6 rounded-xl hover:bg-accent-600 transition-colors shadow-lg hover:shadow-accent-500/30 flex justify-center items-center gap-2">
-                            <span>Submit Feedback</span>
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
+                            class="w-full bg-navy hover:bg-gold text-white font-bold py-8 px-10 rounded-2xl transition-all duration-500 shadow-2xl hover:shadow-gold/30 hover:-translate-y-2 flex justify-center items-center gap-6 group">
+                            <span class="uppercase tracking-[0.5em] text-[10px]">Submit Impressions</span>
+                            <i class="fas fa-arrow-right text-[10px] transform group-hover:translate-x-2 transition-transform"></i>
                         </button>
 
                     </form>
                 </div>
             </div>
+
+            <!-- Return Link -->
+            <div class="mt-20 text-center">
+                <a href="{{ route('home') }}" class="text-slate-400 hover:text-gold text-[10px] font-bold uppercase tracking-[0.4em] transition-all flex items-center justify-center gap-3 italic">
+                    <i class="fas fa-arrow-left text-[8px]"></i>
+                    Return to Grand Lobby
+                </a>
+            </div>
         </div>
     </div>
-@endsection
+@endsection
