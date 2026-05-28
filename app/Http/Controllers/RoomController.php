@@ -23,7 +23,7 @@ class RoomController extends Controller
             $query->where(function($q) use ($keyword) {
                 $q->where('name', 'LIKE', "%$keyword%")
                   ->orWhere('description', 'LIKE', "%$keyword%")
-                  ->orWhere('room_type', 'LIKE', "%$keyword%");
+                  ->orWhere('type', 'LIKE', "%$keyword%");
             });
         }
 

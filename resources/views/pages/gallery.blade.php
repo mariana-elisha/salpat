@@ -16,7 +16,7 @@
 
             <div class="relative z-20 text-center px-4 max-w-5xl mx-auto mt-20">
                 <h2 class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] md:text-xs mb-8 animate-fade-in text-center mx-auto">A Visual Journey</h2>
-                <h1 class="text-6xl md:text-9xl font-serif font-bold text-white mb-10 leading-tight drop-shadow-2xl animate-slide-up text-center">
+                <h1 class="text-4xl sm:text-6xl md:text-9xl font-serif font-bold text-white mb-6 md:mb-10 leading-tight drop-shadow-2xl animate-slide-up text-center">
                     The <span class="italic font-normal text-gold">Collection</span>
                 </h1>
                 <div class="w-16 h-px bg-gold/40 mx-auto animate-scale-x"></div>
@@ -24,13 +24,13 @@
         </section>
 
         <!-- Restore Original Premium Gallery Slider -->
-        <div class="mx-auto max-w-[1800px] px-4 sm:px-6 lg:px-8 py-32 relative z-20">
+        <div class="mx-auto max-w-[1800px] px-4 sm:px-6 lg:px-8 py-12 md:py-32 relative z-20">
             <div id="main-gallery-slider" class="splide" aria-label="Sanctuary Experience Collection">
                 <div class="splide__track">
                     <ul class="splide__list">
                         @forelse($galleries as $gallery)
                             <li class="splide__slide px-4">
-                                <div class="group relative overflow-hidden rounded-[4rem] shadow-4xl bg-navy h-[700px] border border-white/5">
+                                <div class="group relative overflow-hidden rounded-[2rem] md:rounded-[4rem] shadow-4xl bg-navy h-[300px] sm:h-[500px] md:h-[700px] border border-white/5">
                                     <img src="{{ asset('storage/' . $gallery->image_path) }}" 
                                         onerror="this.src='{{ asset('images/pcs1.jpeg') }}'"
                                         alt="{{ $gallery->title }}"
@@ -41,7 +41,7 @@
                                             <div class="w-12 h-px bg-gold"></div>
                                             <h3 class="text-gold font-bold uppercase tracking-[0.5em] text-[10px]">Lifestyle Experience</h3>
                                         </div>
-                                        <h3 class="text-white text-5xl md:text-7xl font-serif font-bold transition-colors delay-200 group-hover:text-gold leading-none">{{ $gallery->title }}</h3>
+                                        <h3 class="text-white text-3xl sm:text-5xl md:text-7xl font-serif font-bold transition-colors delay-200 group-hover:text-gold leading-none">{{ $gallery->title }}</h3>
                                     </div>
                                 </div>
                             </li>
@@ -93,19 +93,19 @@
         @endpush
 
         <!-- Call to Action -->
-        <section class="max-w-7xl mx-auto px-4 lg:px-8 pb-40">
-            <div class="bg-navy rounded-[4rem] p-20 md:p-32 text-center relative overflow-hidden shadow-2xl">
+        <section class="max-w-7xl mx-auto px-4 lg:px-8 pb-16 md:pb-40">
+            <div class="bg-navy rounded-[2rem] md:rounded-[4rem] p-8 sm:p-16 md:p-32 text-center relative overflow-hidden shadow-2xl">
                 <!-- Decorative Gold Accent -->
                 <div class="absolute top-0 right-0 w-1/2 h-full bg-gold/5 -skew-x-12 translate-x-20"></div>
                 
                 <div class="relative z-10 max-w-4xl mx-auto">
                     <h2 class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] mb-10 underline decoration-gold/20 underline-offset-8">Reserved for the Elite</h2>
-                    <h3 class="text-5xl md:text-8xl font-serif font-bold text-white mb-12 leading-tight">Live the <span class="italic font-normal text-gold">Adventure</span></h3>
+                    <h3 class="text-3xl sm:text-5xl md:text-8xl font-serif font-bold text-white mb-8 md:mb-12 leading-tight">Live the <span class="italic font-normal text-gold">Adventure</span></h3>
                     <p class="text-slate-400 font-light mb-16 text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto italic">
                         Every frame captures a moment of peace, every corner tells a story of prestige. Your next legacy begins here.
                     </p>
                     <a href="{{ route('rooms.index') }}"
-                        class="inline-block bg-gold hover:bg-gold-dark text-white px-16 py-6 rounded-2xl font-bold uppercase tracking-widest text-xs transition-all transform hover:-translate-y-2 shadow-2xl shadow-gold/20">
+                        class="inline-block bg-gold hover:bg-gold-dark text-white px-8 md:px-16 py-5 md:py-6 rounded-2xl font-bold uppercase tracking-widest text-sm transition-all transform hover:-translate-y-2 shadow-2xl shadow-gold/20">
                         Begin Your Reservation
                     </a>
                 </div>

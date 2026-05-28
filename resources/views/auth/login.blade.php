@@ -43,7 +43,7 @@
             </div>
 
             <!-- Login Card -->
-            <div class="bg-white/[0.03] backdrop-blur-3xl border border-white/10 p-12 md:p-20 rounded-[4rem] shadow-4xl relative overflow-hidden group">
+            <div class="bg-white/[0.03] backdrop-blur-3xl border border-white/10 p-8 md:p-20 rounded-[2rem] md:rounded-[4rem] shadow-4xl relative overflow-hidden group">
                 <div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-gold to-transparent opacity-60"></div>
                 
                 <div class="mb-14 text-center">

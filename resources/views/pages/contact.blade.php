@@ -21,7 +21,7 @@
                     <h2 class="text-gold font-black uppercase tracking-[0.6em] text-xs md:text-sm drop-shadow-lg">Est. 2024</h2>
                     <div class="h-px w-12 bg-gold"></div>
                 </div>
-                <h1 class="text-7xl md:text-[11rem] font-serif font-bold text-white mb-10 leading-none drop-shadow-3xl animate-slide-up tracking-tighter">
+                <h1 class="text-5xl sm:text-7xl md:text-[11rem] font-serif font-bold text-white mb-6 md:mb-10 leading-none drop-shadow-3xl animate-slide-up tracking-tighter">
                     Reach <span class="italic font-normal text-gold block md:inline">Out</span>
                 </h1>
                 <div class="w-20 h-px bg-gold/50 mx-auto mb-10 animate-scale-x"></div>
@@ -32,8 +32,8 @@
         </section>
 
         <!-- Main Contact Grid -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-40 relative z-20">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-40 relative z-20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-24">
                 
                 <!-- Contact Info Column (Left) -->
                 <div class="lg:col-span-4 space-y-20">
@@ -44,8 +44,8 @@
                             <!-- Email -->
                             <div class="group">
                                 <p class="text-[8px] font-bold text-slate-400 uppercase tracking-[0.4em] mb-4">Email Address</p>
-                                <a href="mailto:salpatcamp@gmail.com" class="text-2xl md:text-3xl font-serif font-bold text-navy hover:text-gold transition-colors duration-500 block">
-                                    salpatcamp@gmail.com
+                                <a href="mailto:info@salpatcamp.com" class="text-2xl md:text-3xl font-serif font-bold text-navy hover:text-gold transition-colors duration-500 block">
+                                    info@salpatcamp.com
                                 </a>
                             </div>
 
@@ -61,8 +61,8 @@
                             <div class="group">
                                 <p class="text-[8px] font-bold text-slate-400 uppercase tracking-[0.4em] mb-4">Our Physical Address</p>
                                 <address class="text-xl md:text-2xl font-serif font-bold text-navy not-italic leading-relaxed">
-                                    Falcon Street 1, Soweto<br>
-                                    Moshi-Kilimanjaro, Tanzania
+                                    Master's Street 1, Soweto<br>
+                                    Moshi Kilimanjaro, Tanzania
                                 </address>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
         </div>
 
         <!-- Luxury Map Section -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-40">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-40">
             <div class="relative group rounded-[4rem] overflow-hidden shadow-3xl bg-navy p-6 border border-white/5 animate-slide-up">
                 <div class="h-[700px] w-full rounded-[3.5rem] overflow-hidden relative">
                     <iframe 

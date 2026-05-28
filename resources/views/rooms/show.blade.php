@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Image Gallery Section -->
-    <div class="relative h-[85vh] min-h-[700px] w-full overflow-hidden bg-navy group" 
+    <div class="relative h-[55vh] sm:h-[70vh] md:h-[85vh] min-h-[400px] md:min-h-[700px] w-full overflow-hidden bg-navy group" 
          x-data="{ activeImage: 0, images: {{ json_encode($room->images ? array_merge([$room->image], $room->images) : [$room->image]) }} }">
         
         <template x-for="(img, index) in images" :key="index">
@@ -39,14 +39,14 @@
         </div>
 
         <!-- Hero Content -->
-        <div class="absolute inset-0 flex flex-col justify-end z-20 pb-32">
+        <div class="absolute inset-0 flex flex-col justify-end z-20 pb-10 md:pb-32">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div class="space-y-6 max-w-4xl">
                     <div class="flex items-center gap-4 animate-fade-in">
                         <span class="h-px w-12 bg-gold"></span>
                         <span class="text-gold font-bold uppercase tracking-[0.4em] text-[10px]">{{ $room->type }} Collection</span>
                     </div>
-                    <h1 class="text-6xl md:text-9xl font-serif font-bold text-white tracking-tight leading-tight animate-slide-up drop-shadow-2xl text-left">
+                    <h1 class="text-4xl sm:text-6xl md:text-9xl font-serif font-bold text-white tracking-tight leading-tight animate-slide-up drop-shadow-2xl text-left">
                         {{ $room->name }}
                     </h1>
                     <div class="flex flex-wrap items-center gap-8 text-white/80 font-bold uppercase tracking-[0.2em] text-[10px] animate-fade-in animation-delay-300">
@@ -64,12 +64,12 @@
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative z-40 pb-32">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 md:-mt-24 relative z-40 pb-16 md:pb-32">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-16">
             <!-- Room Details -->
             <div class="lg:col-span-2 space-y-16">
                 <!-- Navigation & Price -->
-                <div class="bg-white rounded-[3rem] p-10 md:p-12 shadow-2xl border border-slate-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
+                <div class="bg-white rounded-[2rem] md:rounded-[3rem] p-6 md:p-12 shadow-2xl border border-slate-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 md:gap-10">
                     <div class="text-left">
                         <nav class="flex mb-6 text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 gap-3">
                             <a href="{{ route('home') }}" class="hover:text-gold transition-colors">The Camp</a>
@@ -94,7 +94,7 @@
                 </div>
 
                 <!-- Description -->
-                <div class="bg-white rounded-[3rem] p-10 md:p-20 shadow-2xl border border-slate-50 relative overflow-hidden">
+                <div class="bg-white rounded-[2rem] md:rounded-[3rem] p-8 md:p-20 shadow-2xl border border-slate-50 relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-12 opacity-[0.03]">
                         <svg class="w-64 h-64 text-navy" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
                     </div>
@@ -134,7 +134,7 @@
                 </div>
 
                 <!-- Policies -->
-                <div class="bg-navy rounded-[4rem] p-12 md:p-20 text-white relative overflow-hidden shadow-2xl shadow-navy/40">
+                <div class="bg-navy rounded-[2rem] md:rounded-[4rem] p-8 md:p-20 text-white relative overflow-hidden shadow-2xl shadow-navy/40">
                     <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
                     <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-20">
                         <div class="space-y-10">
@@ -256,17 +256,10 @@
                                    class="w-full bg-navy text-white py-6 rounded-2xl font-bold uppercase tracking-[0.3em] text-[10px] shadow-2xl shadow-navy/20 hover:bg-gold transition-all block text-center">
                                     Secure via WhatsApp
                                 </a>
-                                @auth
                                 <a href="{{ route('bookings.create', $room) }}"
                                    class="w-full bg-gold/10 text-gold py-6 rounded-2xl font-bold uppercase tracking-[0.3em] text-[10px] hover:bg-gold hover:text-white transition-all block text-center">
                                     System Reservation
                                 </a>
-                                @else
-                                <a href="{{ route('login') }}"
-                                   class="w-full bg-slate-50 text-slate-400 py-6 rounded-2xl font-bold uppercase tracking-[0.3em] text-[10px] border border-slate-100 block text-center">
-                                    Login to Reserve
-                                </a>
-                                @endauth
                             </div>
 
                             <p class="text-[8px] text-slate-400 text-center uppercase tracking-widest font-medium">Standard terms & conditions apply for all stays</p>
@@ -284,16 +277,16 @@
                             </div>
                             <div class="flex justify-between items-center py-2 border-b border-slate-100 uppercase">
                                 <span class="text-[8px] font-bold text-slate-400 uppercase">A/C Holder</span>
-                                 <span class="text-[10px] font-bold text-navy uppercase">SALPAT CAMP LODGE-MOSHI</span>
+                                 <span class="text-[10px] font-bold text-navy uppercase">SALPAT CAMP</span>
                             </div>
                             <div class="space-y-4 pt-2 text-left">
                                 <div>
                                     <p class="text-[8px] font-bold text-gold uppercase mb-1">Domestic (TZS)</p>
-                                    <p class="text-sm font-mono font-bold text-navy tracking-widest">0152269300100</p>
+                                    <p class="text-sm font-mono font-bold text-navy tracking-widest">10284710563</p>
                                 </div>
                                 <div>
                                     <p class="text-[8px] font-bold text-gold uppercase mb-1">Global (USD)</p>
-                                    <p class="text-sm font-mono font-bold text-navy tracking-widest">0252269300100</p>
+                                    <p class="text-sm font-mono font-bold text-navy tracking-widest">10285045563</p>
                                 </div>
                             </div>
                         </div>

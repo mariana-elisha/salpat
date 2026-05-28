@@ -324,7 +324,7 @@
         <div class="footer">
             <p>
                 <span class="accent">{{ config('app.name') }}</span><br>
-                Wailes Street, Soweto Moshi, Kilimanjaro, Tanzania<br>
+                Master's Street 1, Soweto<br>Moshi Kilimanjaro, Tanzania<br>
                 <a href="tel:+255770307759">+255 770 307 759</a> &middot;
                 <a href="mailto:info@salpatcamp.com">info@salpatcamp.com</a>
             </p>

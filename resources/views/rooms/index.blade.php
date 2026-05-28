@@ -17,7 +17,7 @@
 
             <div class="relative z-20 text-center px-4 max-w-5xl mx-auto mt-20">
                 <h2 class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] md:text-xs mb-8 animate-fade-in text-center mx-auto">Private Retreats</h2>
-                <h1 class="text-6xl md:text-9xl font-serif font-bold text-white mb-10 leading-tight drop-shadow-2xl animate-slide-up text-center">
+                <h1 class="text-4xl sm:text-6xl md:text-9xl font-serif font-bold text-white mb-6 md:mb-10 leading-tight drop-shadow-2xl animate-slide-up text-center">
                     The <span class="italic font-normal text-gold">Collection</span>
                 </h1>
                 <div class="w-16 h-px bg-gold/50 mx-auto animate-scale-x"></div>
@@ -25,23 +25,23 @@
         </section>
 
         <!-- Refined Booking Filter Bar -->
-        <div class="mx-auto max-w-6xl px-4 lg:px-8 -mt-24 relative z-40 mb-32">
-            <div class="bg-navy p-3 rounded-[2.5rem] shadow-2xl border border-white/5 backdrop-blur-md">
-                <form action="{{ route('rooms.index') }}" method="GET" class="flex flex-col lg:flex-row items-stretch lg:items-center">
-                    <div class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-2 p-3">
-                        <div class="bg-white/5 group hover:bg-white/10 transition-all p-5 rounded-2xl border border-white/5 text-left">
+        <div class="mx-auto max-w-6xl px-4 lg:px-8 -mt-12 md:-mt-24 relative z-40 mb-16 md:mb-32">
+            <div class="bg-navy p-3 rounded-[1.5rem] md:rounded-[2.5rem] shadow-2xl border border-white/5 backdrop-blur-md">
+                <form action="{{ route('rooms.index') }}" method="GET" class="flex flex-col gap-2">
+                    <div class="flex-grow grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 md:p-3">
+                        <div class="bg-white/5 group hover:bg-white/10 transition-all p-4 md:p-5 rounded-2xl border border-white/5 text-left">
                             <label class="block text-[8px] font-bold text-gold uppercase tracking-[0.3em] mb-3">Entrance Date</label>
                             <input type="date" name="check_in" value="{{ request('check_in') }}" min="{{ date('Y-m-d') }}"
                                    class="w-full bg-transparent border-0 p-0 text-white focus:ring-0 text-sm font-bold selection:bg-gold cursor-pointer">
                         </div>
-                        <div class="bg-white/5 group hover:bg-white/10 transition-all p-5 rounded-2xl border border-white/5 text-left">
+                        <div class="bg-white/5 group hover:bg-white/10 transition-all p-4 md:p-5 rounded-2xl border border-white/5 text-left">
                             <label class="block text-[8px] font-bold text-gold uppercase tracking-[0.3em] mb-3">Departure Date</label>
                             <input type="date" name="check_out" value="{{ request('check_out') }}" min="{{ date('Y-m-d', strtotime('+1 day')) }}"
                                    class="w-full bg-transparent border-0 p-0 text-white focus:ring-0 text-sm font-bold cursor-pointer">
                         </div>
                     </div>
-                    <div class="p-3 lg:w-56">
-                        <button type="submit" class="w-full h-full bg-gold hover:bg-gold-dark text-white py-5 lg:py-0 rounded-2xl font-bold uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95 text-[10px]">
+                    <div class="p-2 md:p-3">
+                        <button type="submit" class="w-full bg-gold hover:bg-gold-dark text-white py-4 md:py-5 rounded-2xl font-bold uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95 text-[10px]">
                             Check Availability
                         </button>
                     </div>
@@ -50,12 +50,12 @@
         </div>
 
         <!-- Premium Rooms Grid -->
-        <div class="mx-auto max-w-7xl px-4 lg:px-8 pb-40" id="browse-rooms">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+        <div class="mx-auto max-w-7xl px-4 lg:px-8 pb-16 md:pb-40" id="browse-rooms">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16">
                 @forelse($rooms as $room)
                     <div class="group bg-white rounded-[3rem] overflow-hidden shadow-[0_20px_50px_rgba(11,16,33,0.05)] hover:shadow-[0_40px_80px_rgba(11,16,33,0.12)] transition-all duration-700 flex flex-col border border-slate-50 hover:-translate-y-4">
                         <!-- Image Container -->
-                        <div class="relative h-[450px] overflow-hidden">
+                        <div class="relative h-[280px] sm:h-[350px] md:h-[450px] overflow-hidden">
                             @if($room->image)
                                 <img src="{{ asset('storage/' . $room->image) }}" alt="{{ $room->name }}"
                                     class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000">

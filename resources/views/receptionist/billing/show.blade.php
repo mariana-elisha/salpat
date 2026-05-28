@@ -14,9 +14,9 @@
             </div>
             <div class="text-right">
                 <h2 class="text-xl font-bold text-primary-600">Salpat Camp Hotel</h2>
-                <p class="text-sm text-slate-500">Falcon Street 1, Soweto Moshi, Kilimanjaro, Tanzania</p>
+                <p class="text-sm text-slate-500">Master's Street 1, Soweto, Moshi Kilimanjaro, Tanzania</p>
                 <p class="text-sm text-slate-500">+255 0770 307 759</p>
-                <p class="text-sm text-slate-500">salpatcamp@gmail.com</p>
+                <p class="text-sm text-slate-500">info@salpatcamp.com</p>
             </div>
         </div>
 

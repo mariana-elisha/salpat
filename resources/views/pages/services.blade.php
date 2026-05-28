@@ -16,7 +16,7 @@
 
             <div class="relative z-20 text-center px-4 max-w-5xl mx-auto mt-20">
                 <h2 class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] md:text-xs mb-8 animate-fade-in text-center mx-auto">Exceptional Comfort</h2>
-                <h1 class="text-6xl md:text-9xl font-serif font-bold text-white mb-10 leading-tight drop-shadow-2xl animate-slide-up text-center">
+                <h1 class="text-4xl sm:text-6xl md:text-9xl font-serif font-bold text-white mb-6 md:mb-10 leading-tight drop-shadow-2xl animate-slide-up text-center">
                     The <span class="italic font-normal text-gold">Sanctuary</span> Services
                 </h1>
                 <div class="w-16 h-px bg-gold/40 mx-auto animate-scale-x"></div>
@@ -24,9 +24,9 @@
         </section>
 
         <!-- Luxury Booking Strip -->
-        <div class="max-w-6xl mx-auto px-4 -mt-20 relative z-30 mb-40">
-            <div class="bg-navy rounded-[3rem] shadow-2xl border border-white/5 p-4 backdrop-blur-md">
-                <form action="{{ route('rooms.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4 p-4">
+        <div class="max-w-6xl mx-auto px-4 -mt-10 md:-mt-20 relative z-30 mb-16 md:mb-40">
+            <div class="bg-navy rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-white/5 p-4 backdrop-blur-md">
+                <form action="{{ route('rooms.index') }}" method="GET" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 p-2 md:p-4">
                     <div class="bg-white/5 p-6 rounded-2xl border border-white/5 group hover:bg-white/10 transition-all text-left">
                         <label class="block text-[8px] font-bold text-gold uppercase tracking-[0.3em] mb-4">Check-In</label>
                         <input type="date" name="check_in" min="{{ date('Y-m-d') }}"
@@ -73,7 +73,7 @@
                 <div class="w-12 h-px bg-gold/40 mx-auto mt-10"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16">
                 @php
                     $services = [
                         ['icon' => 'home', 'title' => 'Accommodation', 'desc' => 'Meticulously designed rooms providing a sanctuary of calm and luxury.'],
@@ -101,7 +101,7 @@
         </div>
 
         <!-- Luxury Testimonials -->
-        <div class="bg-navy py-40 relative overflow-hidden">
+        <div class="bg-navy py-16 md:py-40 relative overflow-hidden">
             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
             
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
@@ -111,7 +111,7 @@
                     <div class="w-16 h-px bg-gold/40 mx-auto mt-12"></div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-16">
                     @foreach([
                         ['name' => 'Sarah Johnson', 'role' => 'Global Traveler', 'quote' => 'An absolute sanctuary of calm and luxury in Moshi. The attention to detail and personalized service is unmatched.'],
                         ['name' => 'Michael Smith', 'role' => 'Corporate Guest', 'quote' => 'Superb hospitality. The environment was incredibly peaceful, and the dining experience exceeded all expectations.'],

@@ -14,16 +14,17 @@
         <div class="absolute inset-0 z-10 bg-gradient-to-b from-navy/60 via-transparent to-navy/80 pointer-events-none"></div>
 
         <div class="relative z-20 text-center px-4 max-w-5xl mx-auto mt-20">
-            <h2 class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] md:text-xs mb-8 animate-reveal">Experience Luxury Environment</h2>
-            <h1 class="text-5xl md:text-[8rem] font-serif font-bold text-white mb-10 leading-[0.85] drop-shadow-3xl animate-reveal animation-delay-300">
-                Experience Comfort <span class="italic font-normal text-gold block mt-6">& Luxury in Moshi</span>
+            <h2 class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] md:text-xs mb-8 animate-reveal">Welcome to Salpat Camp</h2>
+            <h1 class="text-4xl sm:text-6xl md:text-[7rem] lg:text-[8rem] font-serif font-bold text-white mb-6 md:mb-10 leading-[0.9] drop-shadow-3xl animate-reveal animation-delay-300">
+                Comfortable Rooms <span class="italic font-normal text-gold block mt-3 md:mt-6">& Best Service in Moshi</span>
             </h1>
             <div class="w-16 h-px bg-gold/40 mx-auto mb-12 animate-slide-up-fade animation-delay-600"></div>
             <p class="text-lg md:text-xl text-slate-100 mb-20 font-light max-w-4xl mx-auto leading-relaxed animate-slide-up-fade animation-delay-900 balance overflow-hidden">
-                Discover Salpat Camp Lodge, a comfortable and welcoming place to stay in Moshi, Tanzania. Enjoy well-designed accommodation, quality service, and a relaxing environment perfect for travelers and business guests.
+                Salpat Camp is a premium lodge located in the peaceful Soweto district of Moshi. While located near the mountain, we specialize in providing dedicated accommodations primarily for those embarking on mountain climbing expeditions. We are dedicated to providing a superior experience for tourists, families, and business travelers, offering high-quality accommodation and genuine Tanzanian hospitality for a perfect stay.
             </p>
-            <div class="animate-slide-up-fade animation-delay-1200 mt-12">
-                <a href="{{ route('rooms.index') }}" class="bg-gold hover:bg-gold-dark text-white px-12 py-5 rounded-2xl font-bold uppercase tracking-[0.3em] text-[10px] transition-all shadow-2xl shadow-gold/30 hover:-translate-y-1 active:scale-95 inline-block">
+            <div class="mt-8 md:mt-12">
+                <a href="{{ route('rooms.index') }}" class="inline-flex items-center gap-3 bg-gold hover:bg-gold-dark text-white px-8 sm:px-12 py-4 sm:py-5 rounded-2xl font-bold uppercase tracking-widest text-sm shadow-2xl shadow-gold/40 hover:-translate-y-1 active:scale-95 border-2 border-white/30 transition-all duration-300">
+                    <i class="fas fa-bed"></i>
                     Discover Our Rooms
                 </a>
             </div>
@@ -40,56 +41,56 @@
     </section>
 
     <!-- Integrated Luxury Booking Bar -->
-    <section id="booking-anchor" class="relative z-30 -mt-20 max-w-7xl mx-auto px-4 lg:px-8">
-        <div class="bg-white rounded-[3rem] shadow-[0_40px_100px_rgba(11,16,33,0.15)] p-4 md:p-6 border border-slate-100 backdrop-blur-3xl">
-            <form action="{{ route('rooms.index') }}" method="GET" class="flex flex-col lg:flex-row items-stretch gap-4">
-                <div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-slate-50 group hover:bg-gold/5 transition-colors p-6 rounded-2xl border border-transparent hover:border-gold/20">
-                        <label class="block text-[8px] font-bold text-gold uppercase tracking-[0.4em] mb-4">Check-In</label>
+    <section id="booking-anchor" class="relative z-30 -mt-10 md:-mt-20 max-w-7xl mx-auto px-4 lg:px-8">
+        <div class="bg-white rounded-[2rem] md:rounded-[3rem] shadow-[0_40px_100px_rgba(11,16,33,0.15)] p-4 md:p-6 border border-slate-100 backdrop-blur-3xl">
+            <form action="{{ route('rooms.index') }}" method="GET" class="flex flex-col gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-slate-50 group hover:bg-gold/5 transition-colors p-4 md:p-6 rounded-2xl border border-transparent hover:border-gold/20">
+                        <label class="block text-[8px] font-bold text-gold uppercase tracking-[0.4em] mb-2 md:mb-4">Check-In</label>
                         <input type="date" name="check_in" value="{{ request('check_in') }}" min="{{ date('Y-m-d') }}" required
-                               class="w-full bg-transparent border-0 p-0 text-navy focus:ring-0 text-xl font-serif font-bold cursor-pointer">
+                               class="w-full bg-transparent border-0 p-0 text-navy focus:ring-0 text-lg md:text-xl font-serif font-bold cursor-pointer">
                     </div>
-                    <div class="bg-slate-50 group hover:bg-gold/5 transition-colors p-6 rounded-2xl border border-transparent hover:border-gold/20">
-                        <label class="block text-[8px] font-bold text-gold uppercase tracking-[0.4em] mb-4">Check-Out</label>
+                    <div class="bg-slate-50 group hover:bg-gold/5 transition-colors p-4 md:p-6 rounded-2xl border border-transparent hover:border-gold/20">
+                        <label class="block text-[8px] font-bold text-gold uppercase tracking-[0.4em] mb-2 md:mb-4">Check-Out</label>
                         <input type="date" name="check_out" value="{{ request('check_out') }}" min="{{ date('Y-m-d', strtotime('+1 day')) }}" required
-                               class="w-full bg-transparent border-0 p-0 text-navy focus:ring-0 text-xl font-serif font-bold cursor-pointer">
+                               class="w-full bg-transparent border-0 p-0 text-navy focus:ring-0 text-lg md:text-xl font-serif font-bold cursor-pointer">
                     </div>
-                    <div class="bg-slate-50 group hover:bg-gold/5 transition-colors p-6 rounded-2xl border border-transparent hover:border-gold/20">
-                        <label class="block text-[8px] font-bold text-gold uppercase tracking-[0.4em] mb-4">Guests</label>
-                        <select name="guests" class="w-full bg-transparent border-0 p-0 text-navy focus:ring-0 text-xl font-serif font-bold appearance-none cursor-pointer">
+                    <div class="bg-slate-50 group hover:bg-gold/5 transition-colors p-4 md:p-6 rounded-2xl border border-transparent hover:border-gold/20 sm:col-span-2 lg:col-span-1">
+                        <label class="block text-[8px] font-bold text-gold uppercase tracking-[0.4em] mb-2 md:mb-4">Guests</label>
+                        <select name="guests" class="w-full bg-transparent border-0 p-0 text-navy focus:ring-0 text-lg md:text-xl font-serif font-bold appearance-none cursor-pointer">
                             @for($i = 1; $i <= 10; $i++)
                                 <option value="{{ $i }}" {{ request('guests', 1) == $i ? 'selected' : '' }}>{{ $i }} {{ Str::plural('Guest', $i) }}</option>
                             @endfor
                         </select>
                     </div>
                 </div>
-                <!-- Room Category Select -->
-                <div class="lg:w-64 bg-slate-50 group hover:bg-gold/5 transition-colors p-6 rounded-2xl border border-transparent hover:border-gold/20">
-                    <label class="block text-[8px] font-bold text-gold uppercase tracking-[0.4em] mb-4">Room Category</label>
-                    <select name="room_type" class="w-full bg-transparent border-0 p-0 text-navy focus:ring-0 text-sm font-serif font-bold appearance-none cursor-pointer">
-                        <option value="">All Categories</option>
-                        @foreach($roomTypes as $type)
-                            <option value="{{ $type }}" {{ request('room_type') == $type ? 'selected' : '' }}>{{ $type }}</option>
-                        @endforeach
-                    </select>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <!-- Room Category Select -->
+                    <div class="flex-grow bg-slate-50 group hover:bg-gold/5 transition-colors p-4 md:p-6 rounded-2xl border border-transparent hover:border-gold/20">
+                        <label class="block text-[8px] font-bold text-gold uppercase tracking-[0.4em] mb-2 md:mb-4">Room Category</label>
+                        <select name="room_type" class="w-full bg-transparent border-0 p-0 text-navy focus:ring-0 text-sm font-serif font-bold appearance-none cursor-pointer">
+                            <option value="">All Categories</option>
+                            @foreach($roomTypes as $type)
+                                <option value="{{ $type }}" {{ request('room_type') == $type ? 'selected' : '' }}>{{ $type }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="sm:w-64 bg-navy hover:bg-navy-dark text-gold py-5 md:py-0 rounded-[1.5rem] md:rounded-[2rem] font-bold uppercase tracking-[0.4em] text-[10px] transition-all shadow-2xl shadow-navy/20 active:scale-95 flex items-center justify-center gap-4">
+                        Check Availability
+                        <i class="fas fa-search text-xs"></i>
+                    </button>
                 </div>
-                <button type="submit" class="lg:w-72 bg-navy hover:bg-navy-dark text-gold py-8 lg:py-0 rounded-[2rem] font-bold uppercase tracking-[0.4em] text-[10px] transition-all shadow-2xl shadow-navy/20 active:scale-95 flex items-center justify-center gap-4">
-                    Check Availability
-                    <i class="fas fa-search text-xs"></i>
-                </button>
             </form>
         </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="relative z-10 py-32 bg-navy/5 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
+    </section>    <!-- Features Section -->
+    <section class="relative z-10 py-16 md:py-32 bg-navy/5 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-24">
                 <h2 class="text-gold font-bold uppercase tracking-[0.3em] text-xs mb-4">Elevating Your Journey</h2>
                 <h3 class="text-4xl md:text-5xl font-serif font-bold text-navy">Why Choose Us</h3>
                 <div class="w-16 h-1 bg-gold mx-auto mt-6"></div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-16">
                 <!-- Feature 1 -->
                 <div class="group text-center">
                     <div class="w-20 h-20 mx-auto mb-8 bg-slate-50 text-gold rounded-3xl flex items-center justify-center transition-all duration-300 group-hover:bg-gold group-hover:text-white group-hover:-translate-y-2 shadow-sm">
@@ -125,12 +126,11 @@
         </div>
     </section>
 
-
     <!-- Home Page About Section -->
-    <section class="py-40 bg-slate-50 relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/gplay.png')]">
+    <section class="py-20 md:py-40 bg-slate-50 relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/gplay.png')]">
         <div class="absolute -top-32 -left-32 w-96 h-96 bg-gold/5 rounded-full blur-3xl animate-pulse"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-24 items-center">
                 <div class="relative group">
                     <div class="relative rounded-[3.5rem] overflow-hidden shadow-4xl border-8 border-white group-hover:-translate-y-4 transition-all duration-1000">
                         <img src="{{ asset('images/pcs17.png') }}" alt="Salpat Lodge Story" class="w-full h-[600px] object-cover scale-105 group-hover:scale-100 transition-transform duration-[3s]">
@@ -142,11 +142,11 @@
                         <div class="w-16 h-px bg-gold"></div>
                         <h2 class="text-gold font-bold uppercase tracking-[0.6em] text-[10px]">A Great Story in Moshi</h2>
                     </div>
-                    <h3 class="text-5xl md:text-7xl font-serif font-bold text-navy leading-tight">
+                    <h3 class="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-navy leading-tight">
                         Our <span class="text-gold italic font-normal">History</span>
                     </h3>
                     <p class="text-slate-500 font-light leading-relaxed text-xl first-letter:text-6xl first-letter:font-serif first-letter:text-gold first-letter:mr-4 first-letter:float-left first-letter:leading-[0.8]">
-                        Salpat Lodge is a comfortable place in Moshi, located in the quiet Soweto district near the tall <strong class="text-navy font-bold">Mount Kilimanjaro</strong>. We provide a great experience for tourists, travelers, and families looking for a nice stay.
+                        Salpat Camp is a premium lodge located in the peaceful Soweto district of Moshi. While located near the mountain, we specialize in providing dedicated accommodations primarily for those embarking on mountain climbing expeditions. We are dedicated to providing a superior experience for tourists, families, and business travelers, offering high-quality accommodation and genuine Tanzanian hospitality for a perfect stay.
                     </p>
                     <div class="pt-8">
                         <a href="{{ route('about') }}" class="inline-flex items-center gap-6 text-gold font-bold uppercase tracking-[0.5em] text-[10px] hover:text-navy transition-colors group">
@@ -158,18 +158,17 @@
             </div>
         </div>
     </section>
-
     <!-- Culinary Excellence Section -->
-    <section class="py-40 bg-white relative overflow-hidden">
+    <section class="py-20 md:py-40 bg-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-24 items-center">
                 <div class="space-y-12">
                     <div class="inline-flex items-center gap-6">
                         <div class="w-16 h-px bg-gold"></div>
-                        <h2 class="text-gold font-bold uppercase tracking-[0.6em] text-[10px]">Gastronomy Experience</h2>
+                        <h2 class="text-gold font-bold uppercase tracking-[0.6em] text-[10px]">Our Restaurant & Bar</h2>
                     </div>
                     <h3 class="text-5xl md:text-7xl font-serif font-bold text-navy leading-tight">
-                        A Culinary <span class="text-gold italic font-normal">Journey</span>
+                        Delicious <span class="text-gold italic font-normal">Dining</span>
                     </h3>
                     <p class="text-slate-500 font-light leading-relaxed text-xl italic">
                         "Enjoy delicious Tanzanian and international food at our restaurant. From drinks at the Pool Bar to nice private dinners, we make every meal special for you."
@@ -186,16 +185,42 @@
                     </div>
                 </div>
                 <div class="relative group">
-                    <div class="relative rounded-[4rem] overflow-hidden shadow-4xl group-hover:scale-105 transition-transform duration-[2s]">
-                        <img src="{{ asset('images/pcs3.jpeg') }}" alt="Salpat Dining" class="w-full h-[700px] object-cover">
-                        <div class="absolute inset-0 bg-navy/20"></div>
+                    <div id="dining-slider" class="splide rounded-[4rem] overflow-hidden shadow-4xl border border-slate-100">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                <li class="splide__slide">
+                                    <div class="relative h-[700px]">
+                                        <img src="{{ asset('images/pcs3.jpeg') }}" class="w-full h-full object-cover">
+                                        <div class="absolute inset-0 bg-navy/20"></div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="relative h-[700px]">
+                                        <img src="{{ asset('images/pcs15.jpeg') }}" class="w-full h-full object-cover">
+                                        <div class="absolute inset-0 bg-navy/20"></div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="relative h-[700px]">
+                                        <img src="{{ asset('images/pcs1.jpeg') }}" class="w-full h-full object-cover">
+                                        <div class="absolute inset-0 bg-navy/20"></div>
+                                    </div>
+                                </li>
+                                <li class="splide__slide">
+                                    <div class="relative h-[700px]">
+                                        <img src="{{ asset('images/pcs14.png') }}" class="w-full h-full object-cover">
+                                        <div class="absolute inset-0 bg-navy/20"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-40 bg-navy relative overflow-hidden">
+    <section class="py-20 md:py-40 bg-navy relative overflow-hidden">
         <div class="absolute inset-0 z-0">
             <img src="{{ asset('images/pcs16.png') }}" alt="Background" class="w-full h-full object-cover opacity-10">
             <div class="absolute inset-0 bg-navy/60"></div>
@@ -207,7 +232,7 @@
                 <div class="w-20 h-px bg-gold/40 mx-auto mt-12"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16">
                 @php
                     $homeServices = [
                         ['icon' => 'home', 'title' => 'Accommodation', 'desc' => 'Meticulously designed rooms providing a sanctuary of calm and luxury.'],
@@ -240,14 +265,14 @@
     </section>
 
     <!-- Experience Our Collection (Featured Rooms) -->
-    <section class="py-40 bg-slate-50 relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/graphy-very-light.png')]">
+    <section class="py-20 md:py-40 bg-slate-50 relative overflow-hidden bg-[url('https://www.transparenttextures.com/patterns/graphy-very-light.png')]">
         <div class="absolute top-0 right-0 w-1/2 h-full bg-navy/[0.02] -skew-x-12 translate-x-32 pointer-events-none"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-32 gap-12">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-32 gap-8 md:gap-12">
                 <div class="max-w-2xl">
                     <h2 class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] mb-6">Selected Experiences</h2>
-                    <h3 class="text-5xl md:text-7xl font-serif font-bold text-navy leading-none">The <span class="italic font-normal text-gold block mt-2">Residential Suite</span></h3>
+                    <h3 class="text-4xl sm:text-5xl md:text-7xl font-serif font-bold text-navy leading-none">The <span class="italic font-normal text-gold block mt-2">Residential Suite</span></h3>
                 </div>
                 <a href="{{ route('rooms.index') }}" class="group flex items-center gap-8 bg-white px-12 py-6 rounded-2xl shadow-xl hover:bg-navy hover:text-white transition-all duration-700">
                     <span class="text-[10px] font-bold uppercase tracking-[0.4em]">View Grand Collection</span>
@@ -348,7 +373,7 @@
     @endif
     
     <!-- Frequently Asked Questions -->
-    <section class="py-40 bg-slate-50 bg-[url('https://www.transparenttextures.com/patterns/gplay.png')]">
+    <section class="py-16 md:py-40 bg-slate-50 bg-[url('https://www.transparenttextures.com/patterns/gplay.png')]">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-32">
                 <h2 class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] mb-6">Refining Your Stay</h2>
@@ -360,7 +385,7 @@
                     $faqs = [
                         [
                             'q' => 'Where is Salpat Lodge-Moshi located?',
-                            'a' => 'We are located at Falcon Street 1, Soweto, in the quiet and safe district of Moshi near Mount Kilimanjaro.'
+                            'a' => 'We are located at Master\'s Street 1, Soweto, in the quiet and safe district of Moshi Kilimanjaro; while located near the mountain, we specialize in providing dedicated accommodations primarily for those embarking on mountain climbing expeditions.'
                         ],
                         [
                             'q' => 'What time can I check-in and check-out?',
@@ -407,7 +432,7 @@
     </section>
 
     <!-- Sanctuary Map Section -->
-    <section class="py-40 bg-white">
+    <section class="py-16 md:py-40 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-navy rounded-[4rem] overflow-hidden shadow-4xl group border border-white/5 relative">
                 <div class="grid grid-cols-1 lg:grid-cols-2">
@@ -425,7 +450,7 @@
                                 </div>
                                 <div>
                                     <p class="text-[8px] font-bold text-white/40 uppercase tracking-[0.3em] mb-2">Location Identity</p>
-                                    <p class="text-2xl font-serif font-bold">Falcon Street 1, Soweto<br>Moshi, Tanzania</p>
+                                    <p class="text-2xl font-serif font-bold">Master's Street 1, Soweto<br>Moshi Kilimanjaro, Tanzania</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-8 group/item">
@@ -538,6 +563,19 @@
                     pauseOnHover: false,
                     pauseOnFocus: false,
                     easing: 'linear',
+                }).mount();
+            }
+
+            // Initialize Dining Slider
+            if (document.querySelector('#dining-slider')) {
+                new Splide('#dining-slider', {
+                    type   : 'fade',
+                    rewind: true,
+                    autoplay: true,
+                    interval: 4000,
+                    arrows: false,
+                    pagination: false,
+                    speed: 2000,
                 }).mount();
             }
         });

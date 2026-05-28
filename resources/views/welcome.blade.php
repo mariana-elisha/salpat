@@ -32,7 +32,7 @@
             </h1>
 
             <p class="mt-8 text-lg md:text-2xl text-white/80 max-w-3xl mx-auto font-light leading-relaxed mb-16 animate-slide-up animation-delay-200">
-                A boutique collection of private sanctuaries nestled at the foot of Kilimanjaro. Experience the ultimate expression of Tanzanian hospitality.
+                Salpat Camp is a premium lodge located in the peaceful Soweto district of Moshi. While located near the mountain, we specialize in providing dedicated accommodations primarily for those embarking on mountain climbing expeditions. We provide a superior experience for tourists, families, and business travelers, ensuring a comfortable and memorable stay.
             </p>
 
             <div class="flex flex-col sm:flex-row items-center justify-center gap-6 animate-slide-up animation-delay-400">
@@ -82,7 +82,7 @@
                         </svg>
                     </div>
                     <h4 class="text-2xl font-bold text-navy mb-6 font-serif">Premium Sanctuaries</h4>
-                    <p class="text-slate-500 font-light leading-relaxed">Retreat to architectural masterpieces designed to echo the grandeur of Kilimanjaro.</p>
+                    <p class="text-slate-500 font-light leading-relaxed">Retreat to architectural masterpieces perfectly situated to provide the ultimate rest and preparation environment for your premium Kilimanjaro climbing expedition.</p>
                 </div>
 
                 <!-- Feature 2 -->
@@ -108,7 +108,7 @@
                         </svg>
                     </div>
                     <h4 class="text-2xl font-bold text-navy mb-6 font-serif">Noble Position</h4>
-                    <p class="text-slate-500 font-light leading-relaxed">Strategically poised in Moshi, providing a majestic gateway to the Roof of Africa.</p>
+                    <p class="text-slate-500 font-light leading-relaxed">We have meticulously appointed rooms designed for your absolute comfort. Situated near Mount Kilimanjaro, we specialize in providing dedicated accommodations primarily for climbers.</p>
                 </div>
             </div>
         </div>

@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 // Auth routes (guest only)
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:6,1');
 
     // Password Reset Routes
     Route::get('/forgot-password', [\App\Http\Controllers\Auth\PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
@@ -41,7 +41,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/services', [PageController::class, 'services'])->name('services');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
+Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit')->middleware('throttle:3,1');
 Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery');
 Route::get('/privacy', [PageController::class, 'privacy'])->name('privacy');
 
@@ -56,7 +56,7 @@ Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show')
 // Bookings
 Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
 Route::get('/rooms/{room}/book', [BookingController::class, 'create'])->name('bookings.create');
-Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store')->middleware('throttle:5,1');
     // Administrative booking actions requiring authentication
     Route::middleware(['auth'])->group(function () {
         Route::get('/bookings/{booking}/extend', [BookingController::class, 'extendShow'])->name('bookings.extend');

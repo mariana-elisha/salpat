@@ -3,7 +3,7 @@
 @section('title', 'Book Room')
 
 @section('content')
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10"
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10"
      x-data="{ 
           bookingType: '{{ old('booking_type', 'individual') }}', 
           residentStatus: '{{ old('resident_status', 'non-resident') }}',
@@ -13,7 +13,7 @@
           lightboxImage: 0,
           images: {{ json_encode($room->images ?? [$room->image]) }}
       }">
-    <div class="mb-12 p-8 md:p-12 bg-navy rounded-[2rem] text-white relative overflow-hidden shadow-2xl border border-white/5">
+    <div class="mb-6 md:mb-12 p-6 md:p-12 bg-navy rounded-[1.5rem] md:rounded-[2rem] text-white relative overflow-hidden shadow-2xl border border-white/5">
         <div class="absolute inset-0 bg-gradient-to-r from-gold/5 via-transparent to-gold/5 opacity-40"></div>
         <div class="relative z-10 flex flex-col md:flex-row md:justify-between md:items-center gap-8">
             <div>
@@ -175,11 +175,11 @@
 
                         <div>
                             <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-6 ml-1 text-center md:text-left">Communication Preference</label>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="grid grid-cols-3 gap-3 md:gap-6">
                                 @foreach(['email' => 'Digital Mail', 'phone' => 'Direct Call', 'whatsapp' => 'WhatsApp'] as $value => $label)
                                     <label class="relative flex flex-col items-center gap-4 cursor-pointer group">
                                         <input type="radio" name="contact_preference" value="{{ $value }}" x-model="contactPreference" class="absolute inset-0 opacity-0 z-20">
-                                        <div class="w-full p-8 border rounded-2xl text-center transition-all duration-500"
+                                        <div class="w-full p-4 md:p-8 border rounded-2xl text-center transition-all duration-500"
                                              :class="contactPreference === '{{ $value }}' ? 'border-gold bg-gold/5 ring-1 ring-gold shadow-2xl' : 'border-slate-100 bg-white group-hover:bg-slate-50'">
                                             <span class="text-[10px] font-bold uppercase tracking-[0.2em]"
                                                   :class="contactPreference === '{{ $value }}' ? 'text-gold' : 'text-slate-400'">{{ $label }}</span>
@@ -204,7 +204,7 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div class="p-6 bg-white/5 border border-white/10 rounded-2xl">
                                         <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-2">Account Holder</p>
-                                        <p class="text-xs font-bold text-white uppercase tracking-widest">Salpat Luxury Hotel</p>
+                                        <p class="text-xs font-bold text-white uppercase tracking-widest">Salpat Camp</p>
                                     </div>
                                     <div class="p-6 bg-white/5 border border-white/10 rounded-2xl">
                                         <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-2">Bank Institution</p>
@@ -212,11 +212,11 @@
                                     </div>
                                     <div class="p-6 bg-gold/10 border border-gold/20 rounded-2xl">
                                         <p class="text-[8px] font-bold text-gold/60 uppercase tracking-widest mb-2">Tanzanian Shillings</p>
-                                        <p class="text-sm font-serif font-bold text-gold tracking-widest">0152269300100</p>
+                                        <p class="text-sm font-serif font-bold text-gold tracking-widest">10284710563</p>
                                     </div>
                                     <div class="p-6 bg-gold/10 border border-gold/20 rounded-2xl">
                                         <p class="text-[8px] font-bold text-gold/60 uppercase tracking-widest mb-2">United States Dollars</p>
-                                        <p class="text-sm font-serif font-bold text-gold tracking-widest">0252269300100</p>
+                                        <p class="text-sm font-serif font-bold text-gold tracking-widest">10285045563</p>
                                     </div>
                                 </div>
                             </div>

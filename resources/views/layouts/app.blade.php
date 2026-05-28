@@ -94,14 +94,14 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
             <div class="flex justify-between items-center h-full min-h-[90px]">
                 <div class="flex items-center">
-                    <a href="{{ route('home') }}" class="flex items-center gap-16 group">
+                    <a href="{{ route('home') }}" class="flex items-center gap-3 md:gap-16 group">
                         <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Salpat Luxury Logo"
-                             class="h-28 w-28 bg-white rounded-full object-contain shadow-2xl transition-all duration-700 transform group-hover:rotate-[360deg] group-hover:scale-110 logo-img border border-transparent">
+                             class="h-14 w-14 sm:h-20 sm:w-20 md:h-28 md:w-28 bg-white rounded-full object-contain shadow-2xl transition-all duration-700 transform group-hover:rotate-[360deg] group-hover:scale-110 logo-img border border-transparent">
                         <div class="flex flex-col">
-                            <span class="text-xl md:text-3xl font-serif font-bold tracking-tight logo-text transition-colors leading-none"
-                                  :class="scrolled ? 'text-navy' : 'text-white'">Salpat Camp Lodge-Moshi</span>
-                            <span class="text-[9px] font-bold uppercase tracking-[0.4em] transition-colors mt-1"
-                                  :class="scrolled ? 'text-gold' : 'text-gold/90'">Luxury Sanctuary</span>
+                            <span class="text-base sm:text-xl md:text-3xl font-serif font-bold tracking-tight logo-text transition-colors leading-none"
+                                  :class="scrolled ? 'text-navy' : 'text-white'">Salpat Camp</span>
+                            <span class="hidden sm:block text-[9px] font-bold uppercase tracking-[0.4em] transition-colors mt-1"
+                                  :class="scrolled ? 'text-gold' : 'text-gold/90'">Comfort & Hospitality</span>
                         </div>
                     </a>
                 </div>
@@ -301,7 +301,7 @@
     </div>
 
     <!-- Main Content -->
-    <main class="flex-grow animate-reveal overflow-x-hidden">
+    <main class="flex-grow overflow-x-hidden">
         @yield('content')
     </main>
 
@@ -312,19 +312,19 @@
         <div class="absolute bottom-0 left-0 w-1/4 h-1/2 bg-gold/5 skew-x-12 transform -translate-x-16"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mb-32">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-20 mb-16 md:mb-32">
                 <!-- Brand Info -->
                 <div class="space-y-10 lg:col-span-1">
                     <a href="{{ route('home') }}" class="flex items-center gap-5 group">
                         <img src="{{ asset('images/logo.png') }}?v={{ time() }}" alt="Salpat Luxury Logo"
                              class="h-20 w-20 bg-white rounded-full p-2 shadow-3xl transition-all duration-700 group-rotate-[360deg] group-hover:scale-110">
                         <div class="flex flex-col">
-                            <span class="text-2xl font-serif font-bold tracking-widest uppercase">Salpat Camp Lodge-Moshi</span>
-                            <span class="text-[9px] font-bold text-gold uppercase tracking-[0.5em] mt-1">Luxury Sanctuary</span>
+                            <span class="text-2xl font-serif font-bold tracking-widest uppercase">Salpat Camp</span>
+                            <span class="text-[9px] font-bold text-gold uppercase tracking-[0.5em] mt-1">Comfort & Hospitality</span>
                         </div>
                     </a>
                     <p class="text-slate-400 font-light leading-relaxed text-lg italic">
-                        "Where every journey finds its perfect resting place. A boutique sanctuary at the foot of Mount Kilimanjaro."
+                        "Salpat Camp provides comfortable rooms near Mount Kilimanjaro, specializing in dedicated accommodations primarily for those embarking on mountain climbing expeditions."
                     </p>
                     <div class="flex gap-6">
                         @foreach(['facebook', 'instagram', 'twitter'] as $social)
@@ -365,7 +365,7 @@
                             <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gold border border-white/5 group-hover:bg-gold group-hover:text-white transition-all">
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
-                            <span class="text-slate-400 font-light leading-relaxed">Falcon Street 1, Soweto<br>Moshi-Kilimanjaro, TZ</span>
+                            <span class="text-slate-400 font-light leading-relaxed">Master's Street 1, Soweto<br>Moshi Kilimanjaro, Tanzania</span>
                         </li>
                         <li class="flex items-center gap-5 group">
                             <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-gold border border-white/5 group-hover:bg-gold group-hover:text-white transition-all">
@@ -430,7 +430,7 @@
                 <div class="flex flex-col items-center md:items-start">
                     <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.4em] mb-2">Developed with Excellence</p>
                     <p class="text-slate-400 text-sm">
-                        &copy; {{ date('Y') }} <span class="text-white font-bold">Salpat Camp Lodge-Moshi</span>. All rights reserved.
+                        &copy; {{ date('Y') }} <span class="text-white font-bold">Salpat Camp</span>. All rights reserved.
                     </p>
                 </div>
                 <div class="flex gap-10 text-[10px] font-bold text-slate-500 tracking-[0.3em] uppercase">

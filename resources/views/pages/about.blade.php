@@ -16,7 +16,7 @@
 
             <div class="relative z-20 text-center px-4 max-w-5xl mx-auto mt-20">
                 <h2 class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] md:text-xs mb-8 animate-fade-in text-center mx-auto">Our History</h2>
-                <h1 class="text-6xl md:text-9xl font-serif font-bold text-white mb-10 leading-tight drop-shadow-2xl animate-slide-up text-center">
+                <h1 class="text-4xl sm:text-6xl md:text-9xl font-serif font-bold text-white mb-6 md:mb-10 leading-tight drop-shadow-2xl animate-slide-up text-center">
                     Our <span class="italic font-normal text-gold">Story</span>
                 </h1>
                 <div class="w-16 h-px bg-gold/40 mx-auto animate-scale-x"></div>
@@ -24,7 +24,7 @@
         </section>
 
         <!-- Main Content -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 relative z-30 pb-40 space-y-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 md:-mt-20 relative z-30 pb-16 md:pb-40 space-y-16 md:space-y-40">
 
             <!-- Story Section -->
             <section class="relative animate-slide-up">
@@ -39,7 +39,7 @@
                             <div class="relative rounded-[4rem] overflow-hidden shadow-4xl border-8 border-white group-hover:-translate-y-4 transition-all duration-1000">
                                 <img src="{{ asset('images/pcs17.png') }}"
                                     alt="Salpat Luxury Exterior"
-                                    class="w-full object-cover h-[800px] scale-105 group-hover:scale-100 transition-transform duration-[3s]">
+                                    class="w-full object-cover h-[350px] sm:h-[500px] md:h-[800px] scale-105 group-hover:scale-100 transition-transform duration-[3s]">
                                 <div class="absolute inset-0 bg-navy/10 group-hover:bg-transparent transition-colors duration-1000"></div>
                             </div>
 
@@ -55,14 +55,14 @@
                                 <h2 class="text-gold font-bold uppercase tracking-[0.6em] text-[10px]">A Great Place in Moshi</h2>
                             </div>
                             
-                            <h3 class="text-6xl md:text-8xl font-serif font-bold text-navy leading-[1.1] tracking-tight">
+                            <h3 class="text-3xl sm:text-5xl md:text-8xl font-serif font-bold text-navy leading-[1.1] tracking-tight">
                                 The Art of <br>
                                 <span class="text-gold italic font-normal">Great Service</span>
                             </h3>
 
                             <div class="space-y-10 text-slate-500 font-light leading-relaxed text-xl text-justify">
                                 <p class="first-letter:text-7xl first-letter:font-serif first-letter:font-bold first-letter:text-gold first-letter:mr-4 first-letter:float-left first-letter:leading-[0.8]">
-                                    Salpat Lodge is a comfortable place in Moshi, located in the quiet Soweto district near the tall <strong class="text-navy font-bold">Mount Kilimanjaro</strong>. We provide a great experience for tourists, travelers, and families looking for a nice stay.
+                                    Salpat Camp is a premium lodge located in the peaceful Soweto district of Moshi. While located near the mountain, we specialize in providing dedicated accommodations primarily for those embarking on mountain climbing expeditions. We are dedicated to providing a superior experience for tourists, families, and business travelers, offering high-quality accommodation and genuine Tanzanian hospitality for a perfect stay.
                                 </p>
                                 <p class="italic text-slate-400">
                                     "Whether you're preparing for climbing Kilimanjaro, going on a safari, or visiting for business, our well-designed rooms offer the perfect place for you."
@@ -119,7 +119,7 @@
                     <div class="w-16 h-px bg-gold/40 mx-auto mt-12"></div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 md:gap-16">
                     @foreach([
                         ['icon' => 'crown', 'title' => 'Elite Comfort', 'desc' => 'Spacious accommodations with bespoke amenities thoughtfully curated for your ultimate distinction.'],
                         ['icon' => 'user-clock', 'title' => 'Concierge 24/7', 'desc' => 'Our dedicated professional staff is always available around the clock to cater to your every whim.'],
@@ -138,19 +138,19 @@
             </section>
 
             <!-- CTA -->
-            <section class="bg-navy rounded-[5rem] p-24 md:p-40 text-center relative overflow-hidden shadow-4xl border border-white/5">
+            <section class="bg-navy rounded-[2rem] md:rounded-[5rem] p-10 sm:p-16 md:p-40 text-center relative overflow-hidden shadow-4xl border border-white/5">
                 <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-linen.png')] opacity-10"></div>
                 <!-- Decorative Gold Accent -->
                 <div class="absolute -top-32 -right-32 w-96 h-96 bg-gold/10 rounded-full blur-3xl"></div>
                 
                 <div class="relative z-10 max-w-4xl mx-auto">
                     <h2 class="text-gold font-bold uppercase tracking-[0.5em] text-[10px] mb-12">Book Your Stay</h2>
-                    <h3 class="text-5xl md:text-9xl font-serif font-bold text-white mb-16 leading-none">Your Private <br><span class="italic font-normal text-gold">Lodge</span></h3>
+                    <h3 class="text-4xl sm:text-6xl md:text-9xl font-serif font-bold text-white mb-8 md:mb-16 leading-none">Your Private <br><span class="italic font-normal text-gold">Lodge</span></h3>
                     <p class="text-slate-400 font-light mb-20 text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto italic">
                         Whether you are climbing the mountain or just relaxing in Moshi, experience our kindness and great service.
                     </p>
                     <a href="{{ route('rooms.index') }}"
-                        class="inline-block bg-gold hover:bg-white hover:text-navy text-white px-20 py-8 rounded-3xl font-black uppercase tracking-[0.4em] text-[10px] transition-all transform hover:-translate-y-2 shadow-2xl shadow-gold/20">
+                        class="inline-block bg-gold hover:bg-white hover:text-navy text-white px-8 sm:px-16 md:px-20 py-5 md:py-8 rounded-3xl font-black uppercase tracking-[0.4em] text-sm transition-all transform hover:-translate-y-2 shadow-2xl shadow-gold/20">
                         Book Your Stay Now
                     </a>
                 </div>

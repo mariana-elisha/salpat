@@ -16,12 +16,13 @@ class ReceptionistDashboardController extends Controller
     {
         $stats = [
             'rooms' => Room::count('*'),
-            'today_checkins' => Booking::whereDate('check_in', '=', today())->whereIn('status', ['pending', 'confirmed'])->count('*'),
-            'today_checkouts' => Booking::whereDate('check_out', '=', today())->where('status', '=', 'confirmed')->count('*'),
+            'today_bookings' => Booking::whereDate('created_at', today())->count(),
+            'pending_checkins' => Booking::whereDate('check_in', '=', today())->whereIn('status', ['pending', 'confirmed'])->count('*'),
+            'pending_checkouts' => Booking::whereDate('check_out', '=', today())->whereIn('status', ['confirmed', 'checked_in'])->count('*'),
             'pending_bookings' => Booking::where('status', '=', 'pending')->count('*'),
         ];
 
-        $upcomingBookings = Booking::with('room')
+        $recentBookings = Booking::with('room')
             ->whereIn('status', ['pending', 'confirmed'])
             ->where('check_in', '>=', today())
             ->orderBy('check_in')
@@ -31,7 +32,7 @@ class ReceptionistDashboardController extends Controller
         $recentReports = \App\Models\StaffReport::with('user')->where('section', 'Reception')->latest()->take(5)->get();
         // Removed recentActivity and staffActivity as per request to hide system activity from receptionists
 
-        return view('receptionist.dashboard', compact('stats', 'upcomingBookings', 'recentReports'));
+        return view('receptionist.dashboard', compact('stats', 'recentBookings', 'recentReports'));
     }
 
     /**

@@ -24,9 +24,8 @@ class SecurityHeaders
             $response->header('X-Content-Type-Options', 'nosniff');
             $response->header('Referrer-Policy', 'strict-origin-when-cross-origin');
             $response->header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-            
-            // Allow basic assets and scripts (adjust Content-Security-Policy as needed for your application)
-            $response->header('Content-Security-Policy', "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: http: data:;");
+            $response->header('Content-Security-Policy', "default-src 'self' https: fonts.googleapis.com fonts.gstatic.com cdn.jsdelivr.net unpkg.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https: cdn.jsdelivr.net fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https: fonts.gstatic.com; connect-src 'self' https:;");
+            $response->header('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
         }
 
         return $response;
